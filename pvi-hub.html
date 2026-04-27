@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PVI Website Hub — SEO Playbook & Launch Tracker</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────────────────────── */
+    :root {
+      --navy:     #03213d;
+      --navy2:    #052843;
+      --blue:     #294d6b;
+      --gold:     #c9a96e;
+      --gold2:    #e0c48a;
+      --cream:    #f0e6d3;
+      --white:    #ffffff;
+      --gray:     #babab9;
+      --light:    #f5f5f3;
+      --red:      #c0392b;
+      --orange:   #e67e22;
+      --green:    #27ae60;
+      --border:   rgba(201,169,110,0.18);
+      --serif:    'Cormorant Garamond', Georgia, serif;
+      --sans:     'Montserrat', Arial, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--light); color: var(--navy); }
+
+    /* ── HEADER ─────────────────────────────────────────────────────────── */
+    .site-header {
+      background: var(--navy);
+      border-bottom: 2px solid var(--gold);
+      padding: 0 40px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+    .header-brand { display: flex; align-items: center; gap: 14px; }
+    .header-mark {
+      width: 36px; height: 36px; border: 2px solid var(--gold); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif); font-size: 16px; color: var(--gold); font-weight: 600;
+    }
+    .header-name { font-family: var(--serif); font-size: 17px; color: var(--white); font-weight: 600; }
+    .header-sub  { font-size: 9px; color: var(--gold); letter-spacing: .18em; text-transform: uppercase; }
+    .header-links { display: flex; gap: 6px; }
+    .header-pill {
+      font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 3px; cursor: pointer; border: none;
+      background: transparent; color: var(--gray); transition: all .2s;
+    }
+    .header-pill:hover, .header-pill.active { background: rgba(201,169,110,.12); color: var(--gold); }
+
+    /* ── HERO BAR ────────────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      padding: 36px 40px 30px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero h1 { font-family: var(--serif); font-size: 36px; color: var(--white); font-weight: 600; margin-bottom: 4px; }
+    .hero h1 em { color: var(--gold); font-style: italic; }
+    .hero-sub { font-size: 10px; color: var(--gray); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 24px; }
+    .stat-row { display: flex; gap: 16px; flex-wrap: wrap; }
+    .stat-card {
+      background: rgba(255,255,255,.06); border: 1px solid var(--border);
+      border-radius: 6px; padding: 14px 20px; flex: 1; min-width: 140px;
+    }
+    .stat-num { font-family: var(--serif); font-size: 28px; color: var(--gold); line-height: 1; }
+    .stat-lbl { font-size: 9px; color: var(--gray); letter-spacing: .1em; text-transform: uppercase; margin-top: 4px; }
+    .stat-bar { height: 3px; background: rgba(255,255,255,.08); border-radius: 2px; margin-top: 8px; overflow: hidden; }
+    .stat-fill { height: 100%; background: var(--gold); border-radius: 2px; transition: width .6s ease; }
+
+    /* ── TAB NAV ─────────────────────────────────────────────────────────── */
+    .tab-nav {
+      background: var(--navy);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; padding: 14px 18px; background: transparent; border: none;
+      color: var(--gray); cursor: pointer; border-bottom: 2px solid transparent;
+      white-space: nowrap; transition: all .2s; flex-shrink: 0;
+    }
+    .tab-btn:hover { color: var(--white); }
+    .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+    /* ── LAYOUT ──────────────────────────────────────────────────────────── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ── SEO PAGES ───────────────────────────────────────────────────────── */
+    .seo-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: calc(100vh - 200px);
+    }
+    .seo-sidebar {
+      background: var(--navy); padding: 28px 18px;
+      border-right: 1px solid var(--border);
+      position: sticky; top: 64px; align-self: start;
+      height: calc(100vh - 64px); overflow-y: auto;
+    }
+    .seo-sidebar-title {
+      font-size: 9px; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--gold); font-weight: 700; margin-bottom: 12px;
+      padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    }
+    .seo-nav-link {
+      display: block; padding: 8px 12px; border-radius: 4px;
+      font-size: 11px; font-weight: 500; color: var(--gray);
+      text-decoration: none; margin-bottom: 2px; transition: all .2s; cursor: pointer;
+    }
+    .seo-nav-link:hover { background: rgba(201,169,110,.1); color: var(--gold); }
+    .seo-nav-link.sub { padding-left: 22px; font-size: 10px; }
+
+    .seo-content { padding: 36px 44px; max-width: 860px; }
+
+    /* ── SECTION BLOCKS ──────────────────────────────────────────────────── */
+    .seo-section { margin-bottom: 52px; }
+    .seo-section-head {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .seo-section-icon {
+      width: 34px; height: 34px; background: var(--navy); border-radius: 6px;
+      display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;
+    }
+    .seo-section-title { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--navy); }
+
+    .seo-h3 { font-family: var(--serif); font-size: 17px; font-weight: 600; color: var(--blue); margin: 24px 0 10px; }
+    .seo-p  { font-size: 12.5px; line-height: 1.75; color: #3a3a3a; margin-bottom: 14px; }
+
+    /* bullets */
+    .seo-ul { list-style: none; margin-bottom: 14px; }
+    .seo-ul li { font-size: 12.5px; color: #3a3a3a; line-height: 1.6; padding: 5px 0 5px 20px; position: relative; border-bottom: 1px solid rgba(0,0,0,.05); }
+    .seo-ul li::before { content: '○'; position: absolute; left: 0; color: var(--gold); font-size: .7rem; top: 7px; }
+    .seo-ul li:last-child { border-bottom: none; }
+    .seo-ul li b { color: var(--navy); }
+
+    /* callout */
+    .callout {
+      display: flex; gap: 0; border-radius: 4px; overflow: hidden;
+      margin: 16px 0; border: 1px solid var(--border);
+    }
+    .callout-label {
+      background: var(--gold); padding: 14px 16px;
+      font-size: 10px; font-weight: 700; color: var(--navy);
+      letter-spacing: .08em; text-transform: uppercase;
+      display: flex; align-items: center; writing-mode: vertical-rl;
+      text-orientation: mixed; transform: rotate(180deg); flex-shrink: 0;
+    }
+    .callout-body { background: #fdf6ec; padding: 14px 18px; font-size: 12px; color: #4a3a1a; line-height: 1.65; }
+
+    /* code */
+    .code-block {
+      background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px;
+      padding: 14px 18px; margin: 12px 0; overflow-x: auto;
+    }
+    .code-block code { font-family: 'Courier New', monospace; font-size: 11.5px; color: #2d6a4f; line-height: 1.7; display: block; white-space: pre; }
+
+    /* data table */
+    .data-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 12px; }
+    .data-table th { background: var(--navy); color: var(--gold); font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; padding: 10px 14px; text-align: left; }
+    .data-table td { padding: 9px 14px; color: #3a3a3a; border-bottom: 1px solid #eee; vertical-align: top; }
+    .data-table tr:nth-child(even) td { background: var(--light); }
+    .data-table tr:hover td { background: #eef3f7; }
+    .data-table td b { color: var(--navy); }
+
+    /* status badge */
+    .badge {
+      display: inline-block; padding: 2px 8px; border-radius: 3px;
+      font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    }
+    .badge-done     { background: rgba(39,174,96,.12);  color: #27ae60; }
+    .badge-critical { background: rgba(192,57,43,.12);  color: #c0392b; }
+    .badge-high     { background: rgba(230,126,34,.12); color: #e67e22; }
+    .badge-medium   { background: rgba(41,77,107,.12);  color: var(--blue); }
+
+    /* ── TRACKER PAGE ────────────────────────────────────────────────────── */
+    .tracker-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: calc(100vh - 200px);
+    }
+    .tracker-sidebar {
+      background: var(--navy); padding: 28px 18px;
+      border-right: 1px solid var(--border);
+      position: sticky; top: 64px; align-self: start;
+      height: calc(100vh - 64px); overflow-y: auto;
+    }
+    .tracker-main { padding: 32px 40px; }
+
+    /* filter btn */
+    .filter-btn {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; background: transparent; border: none;
+      padding: 8px 12px; border-radius: 4px; cursor: pointer;
+      font-family: var(--sans); font-size: 11px; font-weight: 500;
+      color: var(--gray); text-align: left; transition: all .2s; margin-bottom: 2px;
+    }
+    .filter-btn:hover, .filter-btn.active { background: rgba(201,169,110,.12); color: var(--gold); }
+    .filter-btn .cnt {
+      font-size: 10px; background: rgba(255,255,255,.08);
+      border-radius: 10px; padding: 1px 7px;
+    }
+    .filter-btn.active .cnt { background: var(--gold); color: var(--navy); }
+
+    /* section block */
+    .t-section { margin-bottom: 32px; }
+    .t-section-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 14px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .t-section-icon {
+      width: 30px; height: 30px; background: var(--navy);
+      border-radius: 5px; display: flex; align-items: center;
+      justify-content: center; font-size: 14px;
+    }
+    .t-section-title { font-family: var(--serif); font-size: 18px; font-weight: 600; color: var(--navy); }
+    .t-section-prog { margin-left: auto; font-size: 10px; color: var(--gray); font-weight: 600; }
+
+    /* task card */
+    .task-card {
+      background: var(--white); border: 1px solid rgba(0,0,0,.07);
+      border-left: 3px solid transparent; border-radius: 6px;
+      padding: 13px 16px; margin-bottom: 7px;
+      display: flex; align-items: flex-start; gap: 12px;
+      transition: all .2s; cursor: pointer;
+    }
+    .task-card:hover { box-shadow: 0 2px 12px rgba(3,33,61,.08); transform: translateX(2px); }
+    .task-card.done { opacity: .48; background: var(--light); }
+    .task-card.done .task-title { text-decoration: line-through; color: var(--gray); }
+    .task-card[data-priority="critical"] { border-left-color: var(--red); }
+    .task-card[data-priority="high"]     { border-left-color: var(--orange); }
+    .task-card[data-priority="medium"]   { border-left-color: var(--green); }
+
+    .task-check {
+      width: 18px; height: 18px; border: 2px solid #ddd; border-radius: 3px;
+      flex-shrink: 0; margin-top: 2px; display: flex; align-items: center;
+      justify-content: center; transition: all .2s;
+    }
+    .task-card.done .task-check { background: var(--gold); border-color: var(--gold); }
+    .task-check::after { content: '✓'; font-size: 11px; color: var(--white); display: none; font-weight: 700; }
+    .task-card.done .task-check::after { display: block; }
+
+    .task-body { flex: 1; }
+    .task-top  { display: flex; align-items: center; gap: 7px; margin-bottom: 3px; flex-wrap: wrap; }
+    .task-title { font-size: 12.5px; font-weight: 600; color: var(--navy); }
+    .task-notes { font-size: 11px; color: var(--gray); line-height: 1.5; }
+
+    .t-badge { font-size: 9px; letter-spacing: .06em; text-transform: uppercase; font-weight: 700; padding: 2px 6px; border-radius: 3px; }
+    .t-critical { background: rgba(192,57,43,.12); color: var(--red); }
+    .t-high     { background: rgba(230,126,34,.12); color: var(--orange); }
+    .t-medium   { background: rgba(39,174,96,.12);  color: var(--green); }
+    .t-owner    { background: rgba(41,77,107,.1); color: var(--blue); font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 3px; letter-spacing: .04em; text-transform: uppercase; }
+
+    /* sidebar divider */
+    .sdiv { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+
+    /* legend */
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 10px; color: var(--gray); margin-bottom: 5px; }
+
+    /* ── MISC ────────────────────────────────────────────────────────────── */
+    .sidebar-head {
+      font-size: 9px; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--gold); font-weight: 700; margin-bottom: 12px;
+      padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    }
+    .quick-link { display: block; font-size: 11px; color: var(--gold); text-decoration: none; margin-bottom: 7px; }
+    .quick-link:hover { color: var(--gold2); }
+    .btn-reset {
+      font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; background: transparent; border: 1px solid rgba(201,169,110,.4);
+      color: var(--gold); padding: 5px 12px; border-radius: 3px; cursor: pointer; transition: all .2s;
+    }
+    .btn-reset:hover { background: rgba(201,169,110,.1); }
+    .save-note { font-size: 10px; color: var(--gray); }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 860px) {
+      .seo-layout, .tracker-layout { grid-template-columns: 1fr; }
+      .seo-sidebar, .tracker-sidebar { position: static; height: auto; }
+      .site-header, .hero, .seo-content, .tracker-main { padding-left: 20px; padding-right: 20px; }
+      .tab-nav { padding: 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-brand">
+    <div class="header-mark">PV</div>
+    <div>
+      <div class="header-name">Pine Valley Investments</div>
+      <div class="header-sub">Website Operations Hub</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span class="save-note" id="savedNote">Progress saved locally</span>
+    <button class="btn-reset" onclick="resetAll()">Reset Tracker</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Website <em>Operations</em> Hub</h1>
+  <p class="hero-sub">pinevalleyinvestments.com &nbsp;·&nbsp; Vercel + GitHub Pages &nbsp;·&nbsp; April 2026</p>
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num" id="statTotal">0</div>
+      <div class="stat-lbl">Total Tasks</div>
+      <div class="stat-bar"><div class="stat-fill" id="barTotal" style="width:0%"></div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statDone">0</div>
+      <div class="stat-lbl">Completed</div>
+      <div class="stat-bar"><div class="stat-fill" id="barDone" style="width:0%;background:#27ae60"></div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statCrit">0</div>
+      <div class="stat-lbl">Critical Open</div>
+      <div class="stat-bar"><div class="stat-fill" id="barCrit" style="width:100%;background:#c0392b"></div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statPct">0%</div>
+      <div class="stat-lbl">Overall Progress</div>
+      <div class="stat-bar"><div class="stat-fill" id="barPct" style="width:0%"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB NAV -->
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('tracker',this)">📋 Launch Tracker</button>
+  <button class="tab-btn" onclick="switchTab('seo-overview',this)">🗺 SEO Overview</button>
+  <button class="tab-btn" onclick="switchTab('seo-branded',this)">🏷 Branded SEO</button>
+  <button class="tab-btn" onclick="switchTab('seo-local',this)">📍 Local SEO</button>
+  <button class="tab-btn" onclick="switchTab('seo-technical',this)">⚙️ Technical</button>
+  <button class="tab-btn" onclick="switchTab('seo-geo',this)">🤖 GEO / AI Search</button>
+  <button class="tab-btn" onclick="switchTab('seo-calendar',this)">📅 Post-Launch</button>
+  <button class="tab-btn" onclick="switchTab('seo-directories',this)">📂 Directories</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE: TRACKER                                                          -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="page active" id="page-tracker">
+  <div class="tracker-layout">
+    <aside class="tracker-sidebar">
+      <div class="sidebar-head">Filter by Category</div>
+      <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">All Tasks <span class="cnt" id="cnt-all">0</span></button>
+      <button class="filter-btn" data-filter="prelaunch"  onclick="setFilter('prelaunch',this)">🔴 Pre-Launch <span class="cnt" id="cnt-prelaunch">0</span></button>
+      <button class="filter-btn" data-filter="recurring"  onclick="setFilter('recurring',this)">🗓 Recurring <span class="cnt" id="cnt-recurring">0</span></button>
+      <button class="filter-btn" data-filter="personnel"  onclick="setFilter('personnel',this)">👥 Personnel <span class="cnt" id="cnt-personnel">0</span></button>
+      <button class="filter-btn" data-filter="forms"      onclick="setFilter('forms',this)">📬 Forms &amp; Leads <span class="cnt" id="cnt-forms">0</span></button>
+      <button class="filter-btn" data-filter="compliance" onclick="setFilter('compliance',this)">🔒 Compliance <span class="cnt" id="cnt-compliance">0</span></button>
+      <button class="filter-btn" data-filter="technical"  onclick="setFilter('technical',this)">🛠 Technical <span class="cnt" id="cnt-technical">0</span></button>
+      <button class="filter-btn" data-filter="content"    onclick="setFilter('content',this)">✏️ Content <span class="cnt" id="cnt-content">0</span></button>
+      <hr class="sdiv"/>
+      <div class="sidebar-head">Priority Key</div>
+      <div class="legend-item"><span style="color:#c0392b;font-size:14px">●</span> Critical — fix now</div>
+      <div class="legend-item"><span style="color:#e67e22;font-size:14px">●</span> High — fix soon</div>
+      <div class="legend-item"><span style="color:#27ae60;font-size:14px">●</span> Medium — can wait</div>
+      <hr class="sdiv"/>
+      <div class="sidebar-head">Quick Links</div>
+      <a class="quick-link" href="https://pvi-website.vercel.app" target="_blank">↗ Vercel Staging</a>
+      <a class="quick-link" href="https://github.com/modica21-code/pvi-website" target="_blank">↗ GitHub Repo</a>
+      <a class="quick-link" href="https://formspree.io" target="_blank">↗ Formspree</a>
+      <a class="quick-link" href="https://search.google.com/search-console" target="_blank">↗ Search Console</a>
+    </aside>
+    <main class="tracker-main" id="trackerMain"><!-- rendered by JS --></main>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE: SEO OVERVIEW                                                     -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-seo-overview">
+  <div class="seo-layout">
+    <aside class="seo-sidebar">
+      <div class="seo-sidebar-title">SEO Playbook</div>
+      <span class="seo-nav-link" onclick="switchTab('seo-overview',document.querySelector('[onclick*=seo-overview]'))">📋 Overview</span>
+      <span class="seo-nav-link" onclick="switchTab('seo-branded',document.querySelector('[onclick*=seo-branded]'))">🏷 Branded SEO</span>
+      <span class="seo-nav-link" onclick="switchTab('seo-local',document.querySelector('[onclick*=seo-local]'))">📍 Local SEO</span>
+      <span class="seo-nav-link" onclick="switchTab('seo-technical',document.querySelector('[onclick*=seo-technical]'))">⚙️ Technical</span>
+      <span class="seo-nav-link" onclick="switchTab('seo-geo',document.querySelector('[onclick*=seo-geo]'))">🤖 GEO / AI Search</span>
+      <span class="seo-nav-link" onclick="switchTab('seo-calendar',document.querySelector('[onclick*=seo-calendar]'))">📅 Post-Launch</span>
+      <span class="seo-nav-link" onclick="switchTab('seo-directories',document.querySelector('[onclick*=seo-directories]'))">📂 Directories</span>
+      <hr class="sdiv"/>
+      <div class="seo-sidebar-title">Work Done ✓</div>
+      <span class="seo-nav-link sub">vercel.json + noindex</span>
+      <span class="seo-nav-link sub">robots.txt AI crawlers</span>
+      <span class="seo-nav-link sub">FinancialService schema</span>
+      <span class="seo-nav-link sub">40 × Person schema</span>
+      <span class="seo-nav-link sub">BreadcrumbList (all bios)</span>
+      <span class="seo-nav-link sub">FAQPage (services/contact)</span>
+      <span class="seo-nav-link sub">Meta titles + descriptions</span>
+      <span class="seo-nav-link sub">LCP fetchpriority fix</span>
+      <span class="seo-nav-link sub">llms.txt</span>
+    </aside>
+    <div class="seo-content">
+      <div class="seo-section">
+        <div class="seo-section-head">
+          <div class="seo-section-icon">🗺</div>
+          <div class="seo-section-title">Strategic Overview</div>
+        </div>
+        <p class="seo-p">PVI can dominate both branded and local search in the South Jersey/Philadelphia corridor through a coordinated six-front strategy. The work below has been organized by impact — start with what's done, execute what remains in order.</p>
+        <div class="callout">
+          <div class="callout-label">KEY STAT</div>
+          <div class="callout-body"><b>AI-referred sessions convert at 14.2% vs Google organic's 2.8% — roughly 5x higher.</b> 38% of people seeking financial advice now use AI tools as their first research step. A firm PVI's size has an asymmetric GEO opportunity most competing advisors haven't considered.</div>
+        </div>
+        <h3 class="seo-h3">Six Strategic Fronts</h3>
+        <table class="data-table">
+          <thead><tr><th>Front</th><th>Key Action</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><b>Branded SEO</b></td><td>Person schema + unique meta on all 40 bio pages</td><td><span class="badge badge-done">✓ Done</span></td></tr>
+            <tr><td><b>Local SEO</b></td><td>Google Business Profile + town-level pages</td><td><span class="badge badge-critical">Pending DNS</span></td></tr>
+            <tr><td><b>Technical SEO</b></td><td>vercel.json, canonicals, Core Web Vitals</td><td><span class="badge badge-done">✓ Done</span></td></tr>
+            <tr><td><b>GEO / AI Search</b></td><td>llms.txt, FAQPage schema, question-content</td><td><span class="badge badge-done">✓ Foundation</span></td></tr>
+            <tr><td><b>Post-Launch Calendar</b></td><td>30/60/90 day Search Console + directory plan</td><td><span class="badge badge-high">After DNS</span></td></tr>
+            <tr><td><b>Directories</b></td><td>Wealthtender, NAPFA, GBP, BrokerCheck</td><td><span class="badge badge-high">After DNS</span></td></tr>
+          </tbody>
+        </table>
+        <h3 class="seo-h3">What's Already Live in the Repo</h3>
+        <ul class="seo-ul">
+          <li><b>vercel.json</b> — Staging domain returns X-Robots-Tag: noindex + 301 redirect to production (activates when DNS switches). Security headers: HSTS, X-Frame-Options, Referrer-Policy.</li>
+          <li><b>robots.txt</b> — All AI crawlers explicitly allowed: GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, PerplexityBot, Google-Extended, Applebot-Extended, Bytespider.</li>
+          <li><b>llms.txt</b> — AI site structure file live at /llms.txt. Adopted by 844,000+ websites including Anthropic, Cloudflare, and Stripe.</li>
+          <li><b>FinancialService schema</b> — Homepage, about, services, contact upgraded with @id, GPS coordinates, areaServed (8 cities), OfferCatalog (6 services), FAQPage (8 questions total).</li>
+          <li><b>Person schema × 40</b> — All bio pages upgraded with @id, worksFor @id reference, givenName/familyName, knowsAbout, sameAs (LinkedIn + SEC IAPD). BreadcrumbList added to all 40.</li>
+          <li><b>Meta titles × 40</b> — Format: "Name | Title | Pine Valley Investments". Previously missing job titles.</li>
+          <li><b>Meta descriptions × 40</b> — All unique and personalized. Previously all identical generic template.</li>
+          <li><b>LCP portrait image fix</b> — loading="lazy" removed, fetchpriority="high" added on all 40 bio pages. Critical Core Web Vitals improvement.</li>
+          <li><b>Alt text audit</b> — 100% coverage confirmed across all 60 pages.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE: BRANDED SEO                                                      -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-seo-branded">
+  <div class="seo-layout">
+    <aside class="seo-sidebar">
+      <div class="seo-sidebar-title">On This Page</div>
+      <span class="seo-nav-link">Title tag format</span>
+      <span class="seo-nav-link">Person schema fields</span>
+      <span class="seo-nav-link">External profiles</span>
+      <span class="seo-nav-link">E-E-A-T signals</span>
+    </aside>
+    <div class="seo-content">
+      <div class="seo-section">
+        <div class="seo-section-head"><div class="seo-section-icon">🏷</div><div class="seo-section-title">Branded SEO — Advisor Name Searches</div></div>
+        <p class="seo-p">Each advisor's bio page serves as their <b>entity home</b> — the canonical page Google associates with that person. For branded searches like "Jason Braatz financial advisor" or "Nick Lampone Pine Valley Investments", these are the levers that move rankings.</p>
+        <h3 class="seo-h3">Title Tag Format (Live)</h3>
+        <div class="code-block"><code>[Full Name] | [Job Title] | Pine Valley Investments
+→ Jason Braatz | President, BWA | Pine Valley Investments
+→ Harry Morad | CEO & Co-Founder | Pine Valley Investments</code></div>
+        <h3 class="seo-h3">Meta Description Format (Live)</h3>
+        <div class="code-block"><code>Meet [Name], [Title] at Pine Valley Investments. Serving South Jersey
+and the Philadelphia area from Marlton, NJ. Schedule a consultation today.</code></div>
+        <h3 class="seo-h3">Person Schema — Key Fields (Live on All 40 Bios)</h3>
+        <ul class="seo-ul">
+          <li><b>@id</b> — Unique identifier linking the person entity back to their bio page URL. Creates a stable Knowledge Graph node.</li>
+          <li><b>sameAs</b> — The critical connector. Links LinkedIn + FINRA BrokerCheck + SEC IAPD to the same entity. Google stops treating these as separate competing results.</li>
+          <li><b>worksFor @id</b> — References the firm's FinancialService @id, creating a graph connection between advisor and firm.</li>
+          <li><b>hasCredential</b> — Formally marks CFP®, CFA, ChFC designations with the recognizing organization (Chris O'Neill's CFA is live).</li>
+          <li><b>knowsAbout</b> — Keyword array tailored by role (e.g., "Retirement Planning", "Portfolio Management", "Regulatory Compliance").</li>
+          <li><b>BreadcrumbList</b> — Pine Valley Investments → Meet Your Team → Advisor Name. Powers the breadcrumb trail in Google results.</li>
+        </ul>
+        <h3 class="seo-h3">External Profiles That Shape Advisor SERPs</h3>
+        <table class="data-table">
+          <thead><tr><th>Platform</th><th>Priority</th><th>Action Needed</th></tr></thead>
+          <tbody>
+            <tr><td><b>LinkedIn</b></td><td><span class="badge badge-critical">Critical</span></td><td>Match name spelling, headshot, title, and company exactly to PVI website</td></tr>
+            <tr><td><b>FINRA BrokerCheck</b></td><td><span class="badge badge-critical">Critical</span></td><td>Ensure filing is current — cannot edit directly, update via FINRA filings</td></tr>
+            <tr><td><b>SEC IAPD</b></td><td><span class="badge badge-critical">Critical</span></td><td>Keep ADV filing current — high-authority regulatory citation</td></tr>
+            <tr><td><b>Wealthtender</b></td><td><span class="badge badge-high">High</span></td><td>Create profiles + collect 3–4 verified reviews for star ratings in SERPs</td></tr>
+            <tr><td><b>CFP Board LetsMakeAPlan.org</b></td><td><span class="badge badge-high">High</span></td><td>Free opt-in for CFP® holders — frequently cited by AI search engines</td></tr>
+          </tbody>
+        </table>
+        <h3 class="seo-h3">E-E-A-T Signals (Financial = YMYL)</h3>
+        <div class="callout">
+          <div class="callout-label">YMYL</div>
+          <div class="callout-body">Google classifies financial content as "Your Money or Your Life", applying stricter quality standards. Every signal that demonstrates Experience, Expertise, Authoritativeness, and Trustworthiness moves the needle more for financial advisors than almost any other industry.</div>
+        </div>
+        <ul class="seo-ul">
+          <li>Credentials in title tags, schema, author bylines, and bio text — not just one place</li>
+          <li>Blog posts attributed to named advisors with author box linking to bio page (never "PVI Team")</li>
+          <li>ADV Part 2A and Form CRS linked from every page footer — required by regulation and a strong transparency signal</li>
+          <li>Client testimonials via Wealthtender's SEC-compliant review platform add star ratings to SERPs</li>
+          <li>CRD numbers on advisor bios where applicable — links to FINRA BrokerCheck for transparency</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE: LOCAL SEO                                                        -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-seo-local">
+  <div class="seo-layout">
+    <aside class="seo-sidebar">
+      <div class="seo-sidebar-title">On This Page</div>
+      <span class="seo-nav-link">Google Business Profile</span>
+      <span class="seo-nav-link">Keyword tiers</span>
+      <span class="seo-nav-link">NAP consistency</span>
+      <span class="seo-nav-link">Location pages</span>
+    </aside>
+    <div class="seo-content">
+      <div class="seo-section">
+        <div class="seo-section-head"><div class="seo-section-icon">📍</div><div class="seo-section-title">Local SEO — South Jersey / Philadelphia Metro</div></div>
+        <h3 class="seo-h3">Google Business Profile Setup</h3>
+        <p class="seo-p">GBP drives approximately <b>42% of local search clicks</b> through the Map Pack. It's the single highest-leverage local action.</p>
+        <ul class="seo-ul">
+          <li><b>Primary category:</b> "Financial Planner" — Secondary: "Investment Service", "Financial Consultant"</li>
+          <li>Create <b>practitioner GBP listings</b> for top 5–10 senior advisors: "Pine Valley Investments: Jason Braatz"</li>
+          <li>Upload 10+ high-quality office and team photos — businesses with photos get 35% more clicks</li>
+          <li>Seed Q&A: "Are you a fiduciary?", "What are your fees?", "Do you work with business owners?"</li>
+          <li>Post weekly — market insights, community involvement, award announcements</li>
+          <li>Solicit Google reviews systematically — SEC Marketing Rule allows this when sent to all clients equally</li>
+        </ul>
+        <h3 class="seo-h3">Keyword Tiers</h3>
+        <table class="data-table">
+          <thead><tr><th>Tier</th><th>Keywords</th><th>Priority</th></tr></thead>
+          <tbody>
+            <tr><td><b>Tier 1</b> — Highest intent</td><td>"financial advisor Cherry Hill NJ", "wealth management Cherry Hill NJ", "fiduciary financial advisor Cherry Hill"</td><td><span class="badge badge-critical">Critical</span></td></tr>
+            <tr><td><b>Tier 2</b> — Regional</td><td>"wealth management South Jersey", "financial advisor Philadelphia area", "retirement planning South Jersey"</td><td><span class="badge badge-high">High</span></td></tr>
+            <tr><td><b>Tier 3</b> — Surrounding towns</td><td>Haddonfield NJ, Voorhees NJ, Marlton NJ, Moorestown NJ, Mount Laurel NJ, Medford NJ + "financial advisor"</td><td><span class="badge badge-high">High</span></td></tr>
+            <tr><td><b>Tier 4</b> — Long-tail service</td><td>"retirement planning advisor Cherry Hill", "fee-only financial advisor NJ", "estate planning Cherry Hill"</td><td><span class="badge badge-medium">Medium</span></td></tr>
+          </tbody>
+        </table>
+        <h3 class="seo-h3">Master NAP Format</h3>
+        <div class="callout">
+          <div class="callout-label">NAP</div>
+          <div class="callout-body">Name, Address, Phone must be <b>identical everywhere</b>. Even "Street" vs "St." causes Google to fragment authority across what it perceives as separate businesses. Use this exact format on every directory, social profile, and webpage.</div>
+        </div>
+        <div class="code-block"><code>Pine Valley Investments
+10 E Stow Rd, Suite 200
+Marlton, NJ 08053
+(856) 334-8260</code></div>
+        <h3 class="seo-h3">Location Pages to Build (After DNS)</h3>
+        <ul class="seo-ul">
+          <li><b>Phase 1:</b> Cherry Hill, Haddonfield, Voorhees, Marlton, Moorestown</li>
+          <li><b>Phase 2:</b> Mount Laurel, Medford, Collingswood, Pennsauken, Cinnaminson</li>
+          <li>Each page needs <b>unique local content</b> — not just the town name swapped into a template</li>
+          <li>Page title format: "Financial Advisor in Cherry Hill, NJ | Pine Valley Investments"</li>
+          <li>Include embedded Google Map, local landmark references, and community connection</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE: TECHNICAL                                                        -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-seo-technical">
+  <div class="seo-layout">
+    <aside class="seo-sidebar">
+      <div class="seo-sidebar-title">On This Page</div>
+      <span class="seo-nav-link">vercel.json (live)</span>
+      <span class="seo-nav-link">Canonical tags</span>
+      <span class="seo-nav-link">Path rules</span>
+      <span class="seo-nav-link">Core Web Vitals</span>
+      <span class="seo-nav-link">Sitemap</span>
+    </aside>
+    <div class="seo-content">
+      <div class="seo-section">
+        <div class="seo-section-head"><div class="seo-section-icon">⚙️</div><div class="seo-section-title">Technical SEO — Vercel Static Site</div></div>
+        <h3 class="seo-h3">vercel.json — Current Configuration (Live)</h3>
+        <p class="seo-p">The live vercel.json prevents the staging domain from getting indexed and prepares automatic redirection for when DNS switches.</p>
+        <ul class="seo-ul">
+          <li><b>X-Robots-Tag: noindex</b> on pvi-website.vercel.app — Google won't index the staging URL</li>
+          <li><b>301 redirect</b> from www.pinevalleyinvestments.com → apex domain (activates on DNS switch)</li>
+          <li><b>Security headers:</b> HSTS (63072000s preload), X-Frame-Options SAMEORIGIN, Referrer-Policy strict-origin, X-Content-Type-Options nosniff</li>
+          <li><b>Immutable caching</b> on all static assets (images, CSS, JS) — 1 year max-age</li>
+          <li><b>HTML caching:</b> max-age=3600 with stale-while-revalidate=86400</li>
+        </ul>
+        <div class="callout">
+          <div class="callout-label">⚠️</div>
+          <div class="callout-body">The staging → production redirect in vercel.json was <b>temporarily disabled</b> because DNS still points to Wix. Re-enable it once DNS switches to Vercel by adding back the pvi-website.vercel.app redirect rule.</div>
+        </div>
+        <h3 class="seo-h3">Critical Path Rules — Never Violate</h3>
+        <div class="code-block"><code>NEVER:  /pvi-website/Headshots/name.avif   ← breaks Vercel
+
+Root pages (index.html, about.html, etc.):
+  ✓  Headshots/name.avif
+  ✓  bios/slug.html
+
+Bio pages (in /bios/ subdirectory):
+  ✓  ../Headshots/name.avif
+  ✓  ../index.html</code></div>
+        <h3 class="seo-h3">Core Web Vitals Targets</h3>
+        <table class="data-table">
+          <thead><tr><th>Metric</th><th>Target</th><th>Status</th><th>Key Action</th></tr></thead>
+          <tbody>
+            <tr><td><b>LCP</b> — Largest Contentful Paint</td><td>&lt; 2.5s</td><td><span class="badge badge-done">Fixed</span></td><td>Portrait images now have fetchpriority="high" — never lazy-load LCP image</td></tr>
+            <tr><td><b>INP</b> — Interaction to Next Paint</td><td>&lt; 200ms</td><td><span class="badge badge-done">Good</span></td><td>No heavy JS on static pages — naturally passes</td></tr>
+            <tr><td><b>CLS</b> — Cumulative Layout Shift</td><td>&lt; 0.1</td><td><span class="badge badge-high">Verify</span></td><td>Ensure all img tags have explicit width and height attributes</td></tr>
+          </tbody>
+        </table>
+        <h3 class="seo-h3">Sitemap Structure</h3>
+        <p class="seo-p">Current sitemap.xml contains 49 URLs. Once DNS is live, submit to Google Search Console AND Bing Webmaster Tools (Bing powers ChatGPT search).</p>
+        <ul class="seo-ul">
+          <li>All canonical URLs use pinevalleyinvestments.com domain (not staging URL)</li>
+          <li>Sitemap referenced in robots.txt</li>
+          <li>After adding location pages, update sitemap and resubmit</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE: GEO                                                              -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-seo-geo">
+  <div class="seo-layout">
+    <aside class="seo-sidebar">
+      <div class="seo-sidebar-title">On This Page</div>
+      <span class="seo-nav-link">Why GEO matters</span>
+      <span class="seo-nav-link">Content signals</span>
+      <span class="seo-nav-link">llms.txt (live)</span>
+      <span class="seo-nav-link">Bing + ChatGPT</span>
+      <span class="seo-nav-link">Question content</span>
+    </aside>
+    <div class="seo-content">
+      <div class="seo-section">
+        <div class="seo-section-head"><div class="seo-section-icon">🤖</div><div class="seo-section-title">GEO — Generative Engine Optimization</div></div>
+        <p class="seo-p">GEO optimizes content to appear in AI-generated answers from ChatGPT, Perplexity, Google AI Overviews, and Claude. AI systems use Retrieval-Augmented Generation: they search a web index, retrieve top results, read them, and synthesize an answer citing the most relevant sources.</p>
+        <div class="callout">
+          <div class="callout-label">STAT</div>
+          <div class="callout-body"><b>Pages ranked 5th in traditional SERPs gained 115% visibility improvement from GEO tactics.</b> 80% of sources cited by AI platforms don't appear in Google's top 100. This is a significant asymmetric opportunity for a firm PVI's size. (Princeton University, 2024)</div>
+        </div>
+        <h3 class="seo-h3">Content Signals That Get Cited by AI</h3>
+        <ul class="seo-ul">
+          <li><b>Statistics +41% visibility</b> — Include concrete numbers every ~80 words: "$2.65B AUM", "40+ credentialed advisors", "serving 500+ families since 2015"</li>
+          <li><b>Answer capsules</b> — Each H2 followed by a 40–60-word self-contained answer. ChatGPT draws 44% of citations from the first 30% of a page. Front-load the answer.</li>
+          <li><b>Expert citations +30–40%</b> — Reference CFP Board data, Vanguard research, SEC guidelines with attribution</li>
+          <li><b>Avoid promotional language −26%</b> — Educate first, sell second. Service pages should answer questions, not pitch</li>
+          <li><b>Content freshness ×3.2</b> — Pages updated within 30 days receive 3.2x more Perplexity citations. Refresh key pages quarterly.</li>
+        </ul>
+        <h3 class="seo-h3">llms.txt (Live at /llms.txt)</h3>
+        <p class="seo-p">The llms.txt file is live and provides AI systems with a structured overview of the site. It follows the emerging standard at llmstxt.org and is now adopted by 844,000+ websites including Anthropic, Cloudflare, and Stripe. No AI company has officially confirmed reading it, but it's zero-risk to implement.</p>
+        <h3 class="seo-h3">Bing Webmaster Tools — Day One Priority</h3>
+        <div class="callout">
+          <div class="callout-label">⚡</div>
+          <div class="callout-body">Bing powers ChatGPT's real-time search and heavily influences Perplexity results. <b>Submit the sitemap to Bing Webmaster Tools on the same day you submit to Google Search Console.</b> Most firms only do Google — this is a competitive gap to exploit.</div>
+        </div>
+        <h3 class="seo-h3">Question-Titled Content to Publish</h3>
+        <p class="seo-p">These titles match exact prompts people type into AI assistants. Each article should open with a direct, factual answer paragraph before expanding.</p>
+        <ul class="seo-ul">
+          <li>How Should I Choose a Financial Advisor in South Jersey?</li>
+          <li>How Much Does a Financial Advisor Cost in New Jersey?</li>
+          <li>Should I Roll Over My 401(k) When Changing Jobs?</li>
+          <li>Fee-Only vs. Commission-Based Advisors: What's the Difference?</li>
+          <li>What Is a Fiduciary Financial Advisor and Why Does It Matter?</li>
+          <li>What Is the Minimum Investment for a Private Wealth Manager?</li>
+          <li>How Do I Know If My Financial Advisor Is Acting in My Best Interest?</li>
+          <li>What Is the Difference Between a CFP and a Financial Advisor?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE: POST-LAUNCH CALENDAR                                             -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-seo-calendar">
+  <div class="seo-layout">
+    <aside class="seo-sidebar">
+      <div class="seo-sidebar-title">On This Page</div>
+      <span class="seo-nav-link">Days 1–30</span>
+      <span class="seo-nav-link">Days 31–60</span>
+      <span class="seo-nav-link">Days 61–90</span>
+    </aside>
+    <div class="seo-content">
+      <div class="seo-section">
+        <div class="seo-section-head"><div class="seo-section-icon">📅</div><div class="seo-section-title">Post-Launch Calendar — 30 / 60 / 90 Days</div></div>
+        <h3 class="seo-h3">Days 1–7 — Launch Week</h3>
+        <ul class="seo-ul">
+          <li>Switch DNS to Vercel. Add A record (76.76.21.21). Confirm SSL auto-provisions.</li>
+          <li>Verify X-Robots-Tag: noindex on pvi-website.vercel.app with <code style="font-family:monospace;font-size:11px;background:#f4f4f4;padding:1px 4px">curl -I https://pvi-website.vercel.app</code></li>
+          <li>Re-enable staging redirect in vercel.json (was temporarily disabled)</li>
+          <li>Submit sitemap to <b>Google Search Console</b> AND <b>Bing Webmaster Tools</b></li>
+          <li>Use URL Inspection to request immediate indexing on 10 key pages</li>
+          <li>Update Google Business Profile URL → pinevalleyinvestments.com</li>
+          <li>Update all social profiles (LinkedIn company, Twitter, Instagram) with new domain</li>
+          <li>Monitor Search Console daily for crawl errors, 5xx responses, indexing issues</li>
+        </ul>
+        <h3 class="seo-h3">Days 8–30 — Foundation</h3>
+        <ul class="seo-ul">
+          <li>Run full site crawl with Screaming Frog — check for broken links, redirect chains</li>
+          <li>Claim and fully optimize Google Business Profile (services, photos, Q&A, first posts)</li>
+          <li>Create practitioner GBP listings for top 5–10 senior advisors</li>
+          <li>Verify all 40+ FINRA BrokerCheck and SEC IAPD profiles are current</li>
+          <li>Opt in all CFP® advisors to CFP Board's LetsMakeAPlan.org directory</li>
+          <li>Claim free listings: Yelp, BBB, Bing Places, Apple Business Connect</li>
+          <li>Begin systematic Google review solicitation (SEC-compliant — sent to all clients)</li>
+          <li>Validate all JSON-LD schema with Google's Rich Results Test</li>
+        </ul>
+        <h3 class="seo-h3">Days 31–60 — Authority Building</h3>
+        <ul class="seo-ul">
+          <li>Create Wealthtender profiles for firm and all advisors. Collect first verified reviews.</li>
+          <li>Join NAPFA (fee-only) and optimize directory profile</li>
+          <li>Join Cherry Hill and South Jersey Chambers of Commerce for local backlinks</li>
+          <li>Publish first 5 location-specific service pages: Cherry Hill, Haddonfield, Voorhees, Marlton, Moorestown</li>
+          <li>Publish first 3–5 question-titled AI-optimized articles</li>
+          <li>Launch press outreach: Philadelphia Business Journal, South Jersey Biz, Courier-Post</li>
+          <li>Conduct full NAP audit with BrightLocal; fix all inconsistencies</li>
+          <li>Monitor Core Web Vitals in Search Console (field data takes 28 days to populate)</li>
+        </ul>
+        <h3 class="seo-h3">Days 61–90 — Content Acceleration</h3>
+        <ul class="seo-ul">
+          <li>Publish location pages: Mount Laurel, Medford, Collingswood, Moorestown</li>
+          <li>Publish 5–10 more question-titled educational articles</li>
+          <li>Create "NJ Retirement Planning Guide" as a linkable asset for PR</li>
+          <li>Begin CPA/attorney cross-referral program with mutual Resources page links</li>
+          <li>Evaluate SmartAsset AMP with a 1–2 advisor pilot before committing firm-wide</li>
+          <li>Publish weekly GBP posts; maintain content freshness on key pages</li>
+          <li>Run first quarterly GEO audit: test 25–50 prompts across ChatGPT, Perplexity, Google AI Overviews</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PAGE: DIRECTORIES                                                      -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-seo-directories">
+  <div class="seo-layout">
+    <aside class="seo-sidebar">
+      <div class="seo-sidebar-title">On This Page</div>
+      <span class="seo-nav-link">Tier 1 — Essential (Free)</span>
+      <span class="seo-nav-link">Tier 2 — High Value (Paid)</span>
+      <span class="seo-nav-link">Tier 3 — Conditional</span>
+      <span class="seo-nav-link">Skip These</span>
+    </aside>
+    <div class="seo-content">
+      <div class="seo-section">
+        <div class="seo-section-head"><div class="seo-section-icon">📂</div><div class="seo-section-title">Directory Strategy — What Actually Matters</div></div>
+        <h3 class="seo-h3">Tier 1 — Essential (Free, Do All of These)</h3>
+        <table class="data-table">
+          <thead><tr><th>Directory</th><th>Cost</th><th>Why It Matters</th></tr></thead>
+          <tbody>
+            <tr><td><b>Google Business Profile</b></td><td>Free</td><td>Drives more traffic than any other listing. Controls the Map Pack for local searches. Non-negotiable.</td></tr>
+            <tr><td><b>FINRA BrokerCheck</b></td><td>Free (required)</td><td>High-authority regulatory citation. Ranks prominently for advisor name searches. Already live.</td></tr>
+            <tr><td><b>SEC IAPD</b></td><td>Free (required)</td><td>sec.gov authority. Corroborates entity identity for Google's Knowledge Graph. Already live.</td></tr>
+            <tr><td><b>CFP Board LetsMakeAPlan.org</b></td><td>Free with CFP®</td><td>Very high DA. Frequently cited by AI search. Consumer-facing advisor finder — sign up all CFP® holders.</td></tr>
+            <tr><td><b>Yelp</b></td><td>Free listing</td><td>Extremely high DA. Ranks for "[service] + [city]" queries. Never pay for Yelp ads.</td></tr>
+            <tr><td><b>BBB</b></td><td>Free listing</td><td>Massive DA. Free listing is a no-brainer. Accreditation ($300–500/yr) is optional.</td></tr>
+            <tr><td><b>Bing Places</b></td><td>Free</td><td>Powers ChatGPT search. Often overlooked by competitors — easy win.</td></tr>
+            <tr><td><b>Apple Business Connect</b></td><td>Free</td><td>Feeds Apple Maps and Siri local recommendations.</td></tr>
+          </tbody>
+        </table>
+        <h3 class="seo-h3">Tier 2 — High Value (Worth Paying For)</h3>
+        <table class="data-table">
+          <thead><tr><th>Directory</th><th>Cost</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td><b>Wealthtender</b></td><td>~$200–400/mo</td><td><b>Best ROI of any paid listing.</b> SEO-optimized profiles with review schema, FAQ schema, and star ratings in SERPs. Growing AI citation rate. SEC Marketing Rule compliant reviews.</td></tr>
+            <tr><td><b>NAPFA</b></td><td>$695–1,200/yr</td><td>Strong DA, high-trust leads, frequently cited by AI. Only available for fee-only RIAs.</td></tr>
+            <tr><td><b>FPA PlannerSearch</b></td><td>Included w/ FPA</td><td>Free backlink for existing FPA members. Decent DA.</td></tr>
+          </tbody>
+        </table>
+        <h3 class="seo-h3">Tier 3 — Conditional</h3>
+        <table class="data-table">
+          <thead><tr><th>Directory</th><th>Cost</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td><b>SmartAsset AMP</b></td><td>~$25,000+/yr</td><td>Mixed reviews. Pilot with 1–2 advisors before committing. Requires dedicated follow-up infrastructure. Not a directory — it's a lead-gen platform.</td></tr>
+            <tr><td><b>Zoe Financial</b></td><td>Free (referral fee)</td><td>Targets $150K+ investable assets. No upfront cost. Rejects 95% of applicants but worth applying.</td></tr>
+            <tr><td><b>Paladin Registry</b></td><td>Free</td><td>Provides backlink and lead matching. Low effort. Worth joining.</td></tr>
+            <tr><td><b>XY Planning Network</b></td><td>$369–599/mo</td><td>Only if PVI targets younger Gen X/Millennial clients. Expensive for directory-only value.</td></tr>
+          </tbody>
+        </table>
+        <h3 class="seo-h3">Skip These</h3>
+        <ul class="seo-ul">
+          <li><b>FA-Mag / InvestmentNews</b> — Industry-facing, not consumer-facing. Minimal lead value.</li>
+          <li><b>Manta / Superpages</b> — Relevant only for NAP consistency citations, not lead generation.</li>
+          <li><b>Yellow Pages</b> — Negligible DA and consumer usage in this category.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT                                                             -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<script>
+// ── TAB SWITCHING ────────────────────────────────────────────────────────
+function switchTab(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const pg = document.getElementById('page-' + id);
+  if (pg) pg.classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ── TRACKER DATA ─────────────────────────────────────────────────────────
+const sections = [
+  { id:'prelaunch', icon:'🔴', title:'Pre-Launch Blockers', tasks:[
+    { id:'pl1',  priority:'critical', owner:'Mike M. / IT',  title:'Point pinevalleyinvestments.com DNS to Vercel', notes:'Switch from Wix — requires DNS A record update at domain registrar.' },
+    { id:'pl2',  priority:'critical', owner:'Dev / Mike M.', title:'Configure custom domain on Vercel project', notes:'Map vercel.app URL → pinevalleyinvestments.com in Vercel dashboard settings.' },
+    { id:'pl3',  priority:'critical', owner:'Dev',           title:'Verify HTTPS / SSL certificate on custom domain', notes:'Vercel handles automatically once domain is connected — confirm it\'s active.' },
+    { id:'pl4',  priority:'critical', owner:'Dev',           title:'Re-enable staging redirect in vercel.json', notes:'Temporarily disabled because DNS still pointed to Wix. Must re-enable once DNS switches.' },
+    { id:'pl5',  priority:'critical', owner:'Dev',           title:'Wire up main Contact page form', notes:'Verify Formspree endpoint xbdpyzgz is live and submitting correctly.' },
+    { id:'pl6',  priority:'critical', owner:'Dev',           title:'Wire up "Schedule a Consultation" CTA button', notes:'Most valuable CTA on the site. Formspree endpoint xpqyylag.' },
+    { id:'pl7',  priority:'critical', owner:'Compliance',    title:'Add investment disclaimer to footer', notes:'"Past performance is not indicative of future results" — required language for RIA websites.' },
+    { id:'pl8',  priority:'critical', owner:'Each Advisor',  title:'Review all 40 bio page bios for accuracy', notes:'Each advisor confirms name, title, bio text, and contact info are correct.' },
+    { id:'pl9',  priority:'critical', owner:'Mike M.',       title:'Confirm all headshots are final', notes:'4 advisors still using placeholder: mike-carter, mark-cole, danon-robinson, max-schatzow.' },
+    { id:'pl10', priority:'critical', owner:'Compliance',    title:'Address Max Schatzow compliance feedback (4/24/26)', notes:'Items #2 hero copy, #5 "extraordinary" language, #9–11 value-prop blocks still open.' },
+  ]},
+  { id:'recurring', icon:'🗓️', title:'Recurring Maintenance', tasks:[
+    { id:'rec1', priority:'high',   owner:'Mike C.', title:'Monthly: Review GA4 traffic & form submissions', notes:'Check sessions, top pages, form completions, and CTA clicks each month.' },
+    { id:'rec2', priority:'high',   owner:'Mike C.', title:'Monthly: Check Google Search Console for errors', notes:'Review indexing status, crawl errors, and keyword rankings.' },
+    { id:'rec3', priority:'high',   owner:'Mike C.', title:'Monthly: Confirm all 40 bio forms are working', notes:'Test 2–3 random bio page contact forms to verify Formspree delivery.' },
+    { id:'rec4', priority:'medium', owner:'Mike M.', title:'Quarterly: Run Google PageSpeed Insights', notes:'Target 90+ on mobile and desktop. Run from pagespeed.web.dev.' },
+    { id:'rec5', priority:'medium', owner:'Mike M.', title:'As-needed: Update AUM figure across the site', notes:'Homepage hero and About timeline show current AUM — update as firm grows.' },
+    { id:'rec6', priority:'medium', owner:'Mike C.', title:'As-needed: Post to Company Announcements page', notes:'Page exists at announcements.html — populate with press releases, news, awards.' },
+    { id:'rec7', priority:'medium', owner:'Mike M.', title:'Set up UptimeRobot monitoring (free)', notes:'Get alerted instantly if site goes down. Free at uptimerobot.com.' },
+    { id:'rec8', priority:'medium', owner:'Dev',     title:'Annual: Refresh disclosure PDFs in /disclosures/', notes:'Replace Form CRS, ADV Part 2A, and Privacy Policy PDFs after each annual ADV amendment.' },
+  ]},
+  { id:'personnel', icon:'👥', title:'Personnel Changes', tasks:[
+    { id:'per1', priority:'high',   owner:'Mike C. + Dev', title:'New advisor: generate bio page from template', notes:'Provide name, title, email, group, bio, and headshot. Claude generates bios/[slug].html and adds to team.html.' },
+    { id:'per2', priority:'high',   owner:'Mike C. + Dev', title:'New advisor: add headshot to /Headshots/', notes:'Upload as "first last.avif" (lowercase, space-separated). See project docs for filename exceptions.' },
+    { id:'per3', priority:'high',   owner:'Mike C.',       title:'Departed advisor: remove from team.html grid', notes:'Decide whether bio page stays (for SEO equity) or is redirected to team page.' },
+    { id:'per4', priority:'medium', owner:'Mike C. + Dev', title:'Title/bio changes: update bio page and team card', notes:'Tell Claude what changed — updates bios/[slug].html and the team.html card.' },
+    { id:'per5', priority:'medium', owner:'Compliance',    title:'Compliance review of bios after any title change', notes:'Credential language and titles must be reviewed before publishing.' },
+  ]},
+  { id:'forms', icon:'📬', title:'Forms & Lead Management', tasks:[
+    { id:'frm1', priority:'high',   owner:'Mike M.', title:'Set up Outlook forwarding rules (8 priority advisors)', notes:'Route [PVI Contact] emails: Harry Morad, Joseph Duncan, Mike Modica, Chris O\'Neill, Nick Lampone, Jason Braatz, Jonathan Markoe, Kate Fay.' },
+    { id:'frm2', priority:'high',   owner:'Mike M.', title:'Upgrade Formspree + connect HubSpot integration', notes:'Requires Formspree premium. Auto-creates HubSpot contacts from bio form submissions.' },
+    { id:'frm3', priority:'medium', owner:'Dev',     title:'Add thank-you / confirmation page after form submit', notes:'Currently redirects to Formspree default page. Create branded /thank-you.html.' },
+    { id:'frm4', priority:'medium', owner:'Mike M.', title:'Monthly: Review Formspree inbox for missed leads', notes:'Log in to formspree.io to ensure all submissions are being received and routed.' },
+  ]},
+  { id:'compliance', icon:'🔒', title:'Compliance & Legal', tasks:[
+    { id:'cmp1', priority:'critical', owner:'Compliance', title:'Annual: Review all bio pages for compliance language', notes:'Check titles, credentials, and performance claims against current SEC/FINRA standards.' },
+    { id:'cmp2', priority:'high',     owner:'Compliance', title:'Update ADV Part 2 link when firm files updated ADV', notes:'Typically filed annually. Footer link must always point to the current filing.' },
+    { id:'cmp3', priority:'medium',   owner:'Compliance', title:'Add CRD numbers to advisor bios where applicable', notes:'Links to FINRA BrokerCheck for transparency. Compliance to supply list.' },
+    { id:'cmp4', priority:'high',     owner:'Dev',        title:'Add cookie consent banner', notes:'Required for GDPR compliance. Simple accept/decline banner is sufficient.' },
+    { id:'cmp5', priority:'medium',   owner:'Mike M.',    title:'Annual: Review Privacy Policy page for accuracy', notes:'Ensure it reflects all data collected: GA4, Formspree, HubSpot, and any new tools.' },
+  ]},
+  { id:'technical', icon:'🛠️', title:'Technical & Performance', tasks:[
+    { id:'tch1', priority:'high',   owner:'Mike M.', title:'Register Google Search Console + submit sitemap', notes:'Submit pinevalleyinvestments.com/sitemap.xml once DNS is live. Day-one priority.' },
+    { id:'tch2', priority:'high',   owner:'Mike M.', title:'Register Bing Webmaster Tools + submit sitemap', notes:'Bing powers ChatGPT search. Submit same day as Google. Competitors often skip this.' },
+    { id:'tch3', priority:'high',   owner:'Mike M.', title:'Install Google Analytics 4 (GA4) — set up conversion events', notes:'GA4 tracking script is live on all 60 pages. Now configure conversion events: form submits, CTA clicks, Client Login clicks.' },
+    { id:'tch4', priority:'high',   owner:'Mike M.', title:'Connect GA4 to Google Search Console', notes:'Combines SEO data (impressions, clicks) with behavior data (sessions, conversions).' },
+    { id:'tch5', priority:'high',   owner:'Dev',     title:'Verify Core Web Vitals in Search Console (28 days post-launch)', notes:'Field data takes 28 days to populate. Check LCP, INP, and CLS after first month.' },
+    { id:'tch6', priority:'medium', owner:'Dev',     title:'Set up 301 redirects from old Wix URLs', notes:'Preserve SEO equity from old Wix site. Map old slugs to new pages in vercel.json.' },
+    { id:'tch7', priority:'medium', owner:'Mike M.', title:'Test all 40 bio page headshots load correctly', notes:'Spot check on both Vercel and pinevalleyinvestments.com after DNS switch.' },
+    { id:'tch8', priority:'medium', owner:'Dev',     title:'Audit color contrast ratios (WCAG AA)', notes:'Gold (#c9a96e) on navy (#03213d) — verify meets 4.5:1 contrast ratio for body text.' },
+  ]},
+  { id:'content', icon:'✏️', title:'Content & Brand', tasks:[
+    { id:'cnt1', priority:'high',   owner:'Mike M.', title:'Final proofread of all main pages', notes:'Home, About, Services, Team, Announcements — review for typos and consistency.' },
+    { id:'cnt2', priority:'medium', owner:'Mike M.', title:'Add initial Company Announcements content', notes:'Page exists but is empty. Add first 1–3 posts: awards, milestones, team news.' },
+    { id:'cnt3', priority:'medium', owner:'Mike M.', title:'Confirm Client Login portal links are correct', notes:'Verify all 6 portal URLs: RightCapital, Monarch, Schwab, Altruist, eMoney, Tamarac.' },
+    { id:'cnt4', priority:'medium', owner:'Mike M.', title:'Register Google Business Profile for PVI', notes:'Shows PVI in Google Maps + local search. Free at business.google.com.' },
+    { id:'cnt5', priority:'medium', owner:'Mike C.', title:'Publish first question-titled SEO article', notes:'Target: "How Should I Choose a Financial Advisor in South Jersey?" — see GEO tab.' },
+    { id:'cnt6', priority:'medium', owner:'Mike C.', title:'Build first 5 location-specific service pages', notes:'Cherry Hill, Haddonfield, Voorhees, Marlton, Moorestown. Unique content per page.' },
+  ]},
+];
+
+// ── STATE ────────────────────────────────────────────────────────────────
+let done = {};
+try { done = JSON.parse(localStorage.getItem('pvi_hub_done') || '{}'); } catch(e) {}
+let currentFilter = 'all';
+
+// ── RENDER TRACKER ───────────────────────────────────────────────────────
+function renderTracker() {
+  const main = document.getElementById('trackerMain');
+  main.innerHTML = '';
+  sections.forEach(section => {
+    const block = document.createElement('div');
+    block.className = 't-section';
+    block.dataset.section = section.id;
+    const comp = section.tasks.filter(t => done[t.id]).length;
+    block.innerHTML = `
+      <div class="t-section-header">
+        <div class="t-section-icon">${section.icon}</div>
+        <h2 class="t-section-title">${section.title}</h2>
+        <span class="t-section-prog">${comp}/${section.tasks.length}</span>
+      </div>
+      ${section.tasks.map(task => `
+        <div class="task-card ${done[task.id]?'done':''}" data-id="${task.id}" data-priority="${task.priority}" data-section="${section.id}" onclick="toggle('${task.id}')">
+          <div class="task-check"></div>
+          <div class="task-body">
+            <div class="task-top">
+              <span class="task-title">${task.title}</span>
+              <span class="t-badge t-${task.priority}">${task.priority}</span>
+              <span class="t-owner">${task.owner}</span>
+            </div>
+            <div class="task-notes">${task.notes}</div>
+          </div>
+        </div>`).join('')}`;
+    main.appendChild(block);
+  });
+  applyFilter();
+  updateStats();
+  updateCounts();
+}
+
+function applyFilter() {
+  document.querySelectorAll('.t-section').forEach(b => {
+    b.classList.toggle('hidden', currentFilter !== 'all' && b.dataset.section !== currentFilter);
+  });
+}
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilter();
+}
+function toggle(id) {
+  done[id] = !done[id];
+  try { localStorage.setItem('pvi_hub_done', JSON.stringify(done)); } catch(e) {}
+  const card = document.querySelector(`.task-card[data-id="${id}"]`);
+  if (card) {
+    card.classList.toggle('done', done[id]);
+    const sec = card.closest('.t-section');
+    if (sec) {
+      const s = sections.find(s => s.id === sec.dataset.section);
+      const c = s.tasks.filter(t => done[t.id]).length;
+      sec.querySelector('.t-section-prog').textContent = `${c}/${s.tasks.length}`;
+    }
+  }
+  updateStats();
+}
+function updateStats() {
+  const all = sections.flatMap(s => s.tasks);
+  const total = all.length;
+  const doneCount = all.filter(t => done[t.id]).length;
+  const critOpen = all.filter(t => t.priority==='critical' && !done[t.id]).length;
+  const pct = total ? Math.round(doneCount/total*100) : 0;
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statDone').textContent  = doneCount;
+  document.getElementById('statCrit').textContent  = critOpen;
+  document.getElementById('statPct').textContent   = pct + '%';
+  document.getElementById('barDone').style.width   = pct + '%';
+  document.getElementById('barPct').style.width    = pct + '%';
+  const critTotal = all.filter(t => t.priority==='critical').length;
+  const critDone  = all.filter(t => t.priority==='critical' && done[t.id]).length;
+  document.getElementById('barCrit').style.width   = (critTotal ? Math.round(critDone/critTotal*100) : 0) + '%';
+}
+function updateCounts() {
+  const all = sections.flatMap(s => s.tasks);
+  document.getElementById('cnt-all').textContent = all.length;
+  sections.forEach(s => {
+    const el = document.getElementById('cnt-' + s.id);
+    if (el) el.textContent = s.tasks.length;
+  });
+}
+function resetAll() {
+  if (!confirm('Reset all task progress? This cannot be undone.')) return;
+  done = {};
+  try { localStorage.removeItem('pvi_hub_done'); } catch(e) {}
+  renderTracker();
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────
+renderTracker();
+</script>
+</body>
+</html>
