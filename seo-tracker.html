@@ -865,7 +865,10 @@ async function loadProperties() {
     showStatus('No Search Console properties found. Make sure the site is verified in GSC.', 'error');
     return;
   }
-  state.properties = data.siteEntry;
+  state.properties = data.siteEntry.sort((a, b) => {
+    const pvi = (s) => s.siteUrl.includes('pinevalleyinvestments.com') || s.siteUrl.includes('pvi-website') ? 0 : 1;
+    return pvi(a) - pvi(b);
+  });
   const sel = document.getElementById('property-select');
   sel.innerHTML = state.properties.map(p => `<option value="${p.siteUrl}">${p.siteUrl.replace(/^https?:\/\//, '')}</option>`).join('');
 
