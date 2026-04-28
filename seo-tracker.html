@@ -711,6 +711,25 @@
     </div>
   </div>
 
+  <!-- KEYWORD WATCHLIST -->
+  <div class="section-grid full" style="padding: 0 32px; margin-bottom: 16px;">
+    <div class="panel">
+      <div class="panel-header">
+        <div>
+          <div class="panel-title">Keyword Watchlist</div>
+          <div class="panel-subtitle">Track specific keywords — add any term to monitor its ranking</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input type="text" id="watchlist-input" placeholder="e.g. financial advisor cherry hill" onkeydown="if(event.key==='Enter')addWatchKeyword()" style="background:rgba(0,0,0,0.25);border:1px solid rgba(201,169,110,0.3);border-radius:3px;padding:7px 12px;color:var(--white);font-family:'Montserrat',sans-serif;font-size:11px;outline:none;width:280px;">
+          <button class="btn btn-gold" onclick="addWatchKeyword()" style="padding:7px 16px;">+ Add</button>
+        </div>
+      </div>
+      <div id="watchlist-body">
+        <div class="loading-state"><span class="empty-text">Add keywords above to start tracking them. Tip: try your advisors' names, your firm name, and service keywords like "financial advisor" + your city.</span></div>
+      </div>
+    </div>
+  </div>
+
   <!-- QUERIES + DEVICES -->
   <div class="section-grid thirds">
     <!-- Top Queries -->
@@ -721,6 +740,9 @@
           <div class="panel-subtitle">Ranked by clicks</div>
         </div>
         <span class="panel-badge" id="query-count-badge">—</span>
+      </div>
+      <div style="padding:10px 20px 0;">
+        <input type="text" id="query-filter" placeholder="Filter queries…" oninput="filterQueries()" style="width:100%;background:rgba(0,0,0,0.2);border:1px solid rgba(201,169,110,0.2);border-radius:3px;padding:7px 12px;color:var(--white);font-family:'Montserrat',sans-serif;font-size:11px;outline:none;">
       </div>
       <div id="queries-body">
         <div class="loading-state"><div class="spinner"></div><span class="empty-text">Loading…</span></div>
@@ -919,8 +941,9 @@ async function refreshData() {
 
 // ── RENDER ─────────────────────────────────────────────────────────────
 function setLoadingAll() {
-  ['queries-body','pages-body','device-body','opps-body'].forEach(id => {
-    document.getElementById(id).innerHTML = `<div class="loading-state"><div class="spinner"></div></div>`;
+  ['queries-body','pages-body','device-body','opps-body','watchlist-body'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = `<div class="loading-state"><div class="spinner"></div></div>`;
   });
   ['kpi-clicks','kpi-impressions','kpi-ctr','kpi-position'].forEach(id => {
     document.getElementById(id).textContent = '…';
@@ -940,30 +963,12 @@ function renderKPIs({ clicks, impressions, ctr, position }) {
 }
 
 function renderQueries(rows) {
+  state.data.queries = rows; // store for filter + watchlist
   const el = document.getElementById('queries-body');
   document.getElementById('query-count-badge').textContent = rows.length + ' queries';
-  if (!rows.length) { el.innerHTML = emptyState('No query data yet'); return; }
-
-  const maxClicks = Math.max(...rows.map(r=>r.clicks),1);
-  el.innerHTML = `<table class="data-table">
-    <thead><tr>
-      <th>Query</th>
-      <th class="right">Clicks</th>
-      <th class="right">Impr.</th>
-      <th class="right">CTR</th>
-      <th class="right">Pos.</th>
-    </tr></thead>
-    <tbody>
-    ${rows.slice(0,20).map(r=>`
-      <tr>
-        <td class="query-cell">${escHtml(r.keys[0])}</td>
-        <td class="right">${fmtNum(r.clicks)}</td>
-        <td class="right">${fmtNum(r.impressions)}</td>
-        <td class="right"><div class="ctr-bar-wrap"><div class="ctr-bar-bg"><div class="ctr-bar-fill" style="width:${Math.min(r.ctr*100*4,100)}%"></div></div><span class="ctr-val">${(r.ctr*100).toFixed(1)}%</span></div></td>
-        <td class="right">${posBadge(r.position)}</td>
-      </tr>`).join('')}
-    </tbody>
-  </table>`;
+  if (!rows.length) { el.innerHTML = emptyState('No query data yet'); renderWatchlist(); return; }
+  renderQueriesFiltered(rows);
+  renderWatchlist();
 }
 
 function renderPages(rows) {
@@ -1072,7 +1077,115 @@ function emptyState(msg) {
   return `<div class="loading-state"><span class="empty-text">${msg}</span></div>`;
 }
 
-// ── DATE TABS ──────────────────────────────────────────────────────────
+// ── KEYWORD WATCHLIST ──────────────────────────────────────────────────
+function loadWatchlist() {
+  try { return JSON.parse(localStorage.getItem('pvi-watchlist') || '[]'); } catch { return []; }
+}
+function saveWatchlist(list) {
+  localStorage.setItem('pvi-watchlist', JSON.stringify(list));
+}
+
+function addWatchKeyword() {
+  const input = document.getElementById('watchlist-input');
+  const kw = input.value.trim().toLowerCase();
+  if (!kw) return;
+  const list = loadWatchlist();
+  if (list.includes(kw)) { input.value = ''; return; }
+  list.push(kw);
+  saveWatchlist(list);
+  input.value = '';
+  renderWatchlist();
+}
+
+function removeWatchKeyword(kw) {
+  const list = loadWatchlist().filter(k => k !== kw);
+  saveWatchlist(list);
+  renderWatchlist();
+}
+
+function renderWatchlist() {
+  const el = document.getElementById('watchlist-body');
+  const list = loadWatchlist();
+  if (!list.length) {
+    el.innerHTML = emptyState('Add keywords above to start tracking them. Tip: try your advisors\' names, your firm name, and service keywords like "financial advisor" + your city.');
+    return;
+  }
+
+  // Match against loaded query data
+  const queryData = state.data.queries || [];
+
+  el.innerHTML = `<table class="data-table">
+    <thead><tr>
+      <th>Keyword</th>
+      <th class="right">Position</th>
+      <th class="right">Clicks</th>
+      <th class="right">Impressions</th>
+      <th class="right">CTR</th>
+      <th class="right">Status</th>
+      <th></th>
+    </tr></thead>
+    <tbody>
+    ${list.map(kw => {
+      // Find exact or partial match in query data
+      const match = queryData.find(r => r.keys[0].toLowerCase() === kw) ||
+                    queryData.find(r => r.keys[0].toLowerCase().includes(kw));
+      if (match) {
+        const status = match.position <= 3 ? '🟢 Top 3' : match.position <= 10 ? '🟡 Page 1' : match.position <= 20 ? '🟠 Page 2' : '🔴 Page 3+';
+        return `<tr>
+          <td style="font-weight:600;color:var(--white);">${escHtml(kw)}</td>
+          <td class="right">${posBadge(match.position)}</td>
+          <td class="right">${fmtNum(match.clicks)}</td>
+          <td class="right">${fmtNum(match.impressions)}</td>
+          <td class="right"><div class="ctr-bar-wrap"><div class="ctr-bar-bg"><div class="ctr-bar-fill" style="width:${Math.min(match.ctr*100*4,100)}%"></div></div><span class="ctr-val">${(match.ctr*100).toFixed(1)}%</span></div></td>
+          <td class="right" style="font-size:10px;">${status}</td>
+          <td><button onclick="removeWatchKeyword('${escHtml(kw)}')" style="background:none;border:none;color:var(--gray);cursor:pointer;font-size:14px;padding:0 4px;" title="Remove">×</button></td>
+        </tr>`;
+      } else {
+        return `<tr>
+          <td style="font-weight:600;color:var(--white);">${escHtml(kw)}</td>
+          <td class="right" colspan="4" style="color:var(--gray);font-size:10px;">No data yet — not ranking or below threshold</td>
+          <td class="right" style="font-size:10px;">⚫ No data</td>
+          <td><button onclick="removeWatchKeyword('${escHtml(kw)}')" style="background:none;border:none;color:var(--gray);cursor:pointer;font-size:14px;padding:0 4px;" title="Remove">×</button></td>
+        </tr>`;
+      }
+    }).join('')}
+    </tbody>
+  </table>`;
+}
+
+// ── QUERY FILTER ───────────────────────────────────────────────────────
+function filterQueries() {
+  const filter = document.getElementById('query-filter').value.trim().toLowerCase();
+  const rows = state.data.queries || [];
+  const filtered = filter ? rows.filter(r => r.keys[0].toLowerCase().includes(filter)) : rows;
+  renderQueriesFiltered(filtered);
+}
+
+function renderQueriesFiltered(rows) {
+  const el = document.getElementById('queries-body');
+  if (!rows.length) { el.innerHTML = emptyState('No matching queries'); return; }
+  el.innerHTML = `<table class="data-table">
+    <thead><tr>
+      <th>Query</th>
+      <th class="right">Clicks</th>
+      <th class="right">Impr.</th>
+      <th class="right">CTR</th>
+      <th class="right">Pos.</th>
+    </tr></thead>
+    <tbody>
+    ${rows.slice(0,50).map(r=>`
+      <tr>
+        <td class="query-cell">${escHtml(r.keys[0])}</td>
+        <td class="right">${fmtNum(r.clicks)}</td>
+        <td class="right">${fmtNum(r.impressions)}</td>
+        <td class="right"><div class="ctr-bar-wrap"><div class="ctr-bar-bg"><div class="ctr-bar-fill" style="width:${Math.min(r.ctr*100*4,100)}%"></div></div><span class="ctr-val">${(r.ctr*100).toFixed(1)}%</span></div></td>
+        <td class="right">${posBadge(r.position)}</td>
+      </tr>`).join('')}
+    </tbody>
+  </table>`;
+}
+
+
 function setDays(d) {
   state.days = d;
   document.querySelectorAll('.date-tab').forEach(t => {
