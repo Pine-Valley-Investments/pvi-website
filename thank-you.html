@@ -58,6 +58,15 @@
     <p class="footer-note">
       Questions? Call us at <a href="tel:8563348260">856-334-8260</a>
     </p>
+    <p class="footer-note" style="margin-top:24px;font-size:9px;letter-spacing:0.08em;opacity:0.6;">
+      <a href="disclosures/form-crs.pdf" target="_blank" rel="noopener" style="color:rgba(186,186,185,0.7);">Form CRS</a>
+      &nbsp;&middot;&nbsp;
+      <a href="disclosures/privacy-policy.pdf" target="_blank" rel="noopener" style="color:rgba(186,186,185,0.7);">Privacy Policy</a>
+      &nbsp;&middot;&nbsp;
+      <a href="terms.html" style="color:rgba(186,186,185,0.7);">Terms of Use</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://adviserinfo.sec.gov/firm/summary/173995" target="_blank" rel="noopener" style="color:rgba(186,186,185,0.7);">SEC IAPD</a>
+    </p>
 
   </div>
 <div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(3,33,61,0.97);border-top:1px solid rgba(201,169,110,0.25);backdrop-filter:blur(12px);padding:18px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
@@ -117,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // 3. Form submissions — Formspree forms
+  // 3. Form submissions - Formspree forms
   document.querySelectorAll('form[action*="formspree"]').forEach(function(form) {
     form.addEventListener('submit', function() {
       gtag('event', 'form_submit', {

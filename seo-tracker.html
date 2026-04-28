@@ -608,7 +608,7 @@
 <!-- SETUP PANEL -->
 <div id="setup-panel">
   <h2>SEO Dashboard Setup</h2>
-  <p class="subtitle">Connect your Google Search Console property to track keyword rankings, clicks, impressions, and opportunities — all free, no third-party subscriptions needed.</p>
+  <p class="subtitle">Connect your Google Search Console property to track keyword rankings, clicks, impressions, and opportunities - all free, no third-party subscriptions needed.</p>
 
   <div class="setup-step">
     <div class="step-num">1</div>
@@ -660,7 +660,7 @@
   </button>
 
   <p style="margin-top:16px; font-size:10px; color:var(--gray); line-height:1.7;">
-    This page only requests <strong>read-only</strong> access to your Search Console data. No data is sent to any external server — everything runs directly in your browser. Once set up, save the file to the PVI repo so both Mike M. and Mike C. can use it.
+    This page only requests <strong>read-only</strong> access to your Search Console data. No data is sent to any external server - everything runs directly in your browser. Once set up, save the file to the PVI repo so both Mike M. and Mike C. can use it.
   </p>
 </div>
 
@@ -691,22 +691,22 @@
   <div class="kpi-grid">
     <div class="kpi-card">
       <div class="kpi-label">Total Clicks</div>
-      <div class="kpi-value" id="kpi-clicks">—</div>
+      <div class="kpi-value" id="kpi-clicks">-</div>
       <div class="kpi-delta" id="kpi-clicks-delta"></div>
     </div>
     <div class="kpi-card">
       <div class="kpi-label">Total Impressions</div>
-      <div class="kpi-value" id="kpi-impressions">—</div>
+      <div class="kpi-value" id="kpi-impressions">-</div>
       <div class="kpi-delta" id="kpi-impressions-delta"></div>
     </div>
     <div class="kpi-card">
       <div class="kpi-label">Avg. CTR</div>
-      <div class="kpi-value" id="kpi-ctr">—</div>
+      <div class="kpi-value" id="kpi-ctr">-</div>
       <div class="kpi-delta" id="kpi-ctr-delta"></div>
     </div>
     <div class="kpi-card">
       <div class="kpi-label">Avg. Position</div>
-      <div class="kpi-value" id="kpi-position">—</div>
+      <div class="kpi-value" id="kpi-position">-</div>
       <div class="kpi-delta" id="kpi-position-delta"></div>
     </div>
   </div>
@@ -717,7 +717,7 @@
       <div class="panel-header">
         <div>
           <div class="panel-title">Keyword Watchlist</div>
-          <div class="panel-subtitle">Track specific keywords — add any term to monitor its ranking</div>
+          <div class="panel-subtitle">Track specific keywords - add any term to monitor its ranking</div>
         </div>
         <div style="display:flex;gap:8px;align-items:center;">
           <input type="text" id="watchlist-input" placeholder="e.g. financial advisor cherry hill" onkeydown="if(event.key==='Enter')addWatchKeyword()" style="background:rgba(0,0,0,0.25);border:1px solid rgba(201,169,110,0.3);border-radius:3px;padding:7px 12px;color:var(--white);font-family:'Montserrat',sans-serif;font-size:11px;outline:none;width:280px;">
@@ -739,7 +739,7 @@
           <div class="panel-title">Top Queries</div>
           <div class="panel-subtitle">Ranked by clicks</div>
         </div>
-        <span class="panel-badge" id="query-count-badge">—</span>
+        <span class="panel-badge" id="query-count-badge">-</span>
       </div>
       <div style="padding:10px 20px 0;">
         <input type="text" id="query-filter" placeholder="Filter queries…" oninput="filterQueries()" style="width:100%;background:rgba(0,0,0,0.2);border:1px solid rgba(201,169,110,0.2);border-radius:3px;padding:7px 12px;color:var(--white);font-family:'Montserrat',sans-serif;font-size:11px;outline:none;">
@@ -771,7 +771,7 @@
           <div class="panel-title">Top Pages</div>
           <div class="panel-subtitle">Ranked by impressions</div>
         </div>
-        <span class="panel-badge" id="pages-count-badge">—</span>
+        <span class="panel-badge" id="pages-count-badge">-</span>
       </div>
       <div id="pages-body">
         <div class="loading-state"><div class="spinner"></div><span class="empty-text">Loading…</span></div>
@@ -785,7 +785,7 @@
       <div class="panel-header">
         <div>
           <div class="panel-title">CTR Opportunities</div>
-          <div class="panel-subtitle">High impressions, low click-through — quick wins if you improve title or meta description</div>
+          <div class="panel-subtitle">High impressions, low click-through - quick wins if you improve title or meta description</div>
         </div>
         <span class="panel-badge" style="background:rgba(76,175,130,0.1);color:var(--green);border-color:rgba(76,175,130,0.2);">Quick Wins</span>
       </div>
@@ -921,7 +921,7 @@ async function refreshData() {
     querySearchConsole(['device'], 10)
   ]);
 
-  // Totals — sum all rows from a no-dimension call
+  // Totals - sum all rows from a no-dimension call
   const totalsAll = await querySearchConsole([], 1000);
   let clicks=0, impressions=0, ctrSum=0, posSum=0, rows=0;
   if (totalsAll?.rows) {
@@ -957,8 +957,8 @@ function renderKPIs({ clicks, impressions, ctr, position }) {
   document.getElementById('kpi-clicks').textContent = fmtNum(clicks);
   document.getElementById('kpi-impressions').textContent = fmtNum(impressions);
   document.getElementById('kpi-ctr').textContent = (ctr*100).toFixed(1) + '%';
-  document.getElementById('kpi-position').textContent = position ? position.toFixed(1) : '—';
-  // Deltas would need a comparison period fetch — skipped for now, show context hint
+  document.getElementById('kpi-position').textContent = position ? position.toFixed(1) : '-';
+  // Deltas would need a comparison period fetch - skipped for now, show context hint
   document.getElementById('kpi-clicks-delta').innerHTML = `<span class="delta-neutral">last ${state.days}d</span>`;
   document.getElementById('kpi-impressions-delta').innerHTML = `<span class="delta-neutral">last ${state.days}d</span>`;
   document.getElementById('kpi-ctr-delta').innerHTML = `<span class="delta-neutral">${impressions>0?(clicks/impressions*100).toFixed(2)+'% raw':''}</span>`;
@@ -1030,7 +1030,7 @@ function renderOpportunities(rows) {
     .slice(0, 15);
 
   if (!opps.length) {
-    el.innerHTML = emptyState('No obvious CTR opportunities right now — that\'s a good sign!');
+    el.innerHTML = emptyState('No obvious CTR opportunities right now - that\'s a good sign!');
     return;
   }
 
@@ -1146,7 +1146,7 @@ function renderWatchlist() {
       } else {
         return `<tr>
           <td style="font-weight:600;color:var(--white);">${escHtml(kw)}</td>
-          <td class="right" colspan="4" style="color:var(--gray);font-size:10px;">No data yet — not ranking or below threshold</td>
+          <td class="right" colspan="4" style="color:var(--gray);font-size:10px;">No data yet - not ranking or below threshold</td>
           <td class="right" style="font-size:10px;">⚫ No data</td>
           <td><button onclick="removeWatchKeyword('${escHtml(kw)}')" style="background:none;border:none;color:var(--gray);cursor:pointer;font-size:14px;padding:0 4px;" title="Remove">×</button></td>
         </tr>`;

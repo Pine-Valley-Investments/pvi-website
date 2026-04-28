@@ -541,9 +541,9 @@
 
     <div class="sidebar-heading">Priority Key</div>
     <div class="priority-legend">
-      <div class="legend-item"><span style="color:#c0392b;font-size:14px">●</span> Critical — fix now</div>
-      <div class="legend-item"><span style="color:#e67e22;font-size:14px">●</span> High — fix soon</div>
-      <div class="legend-item"><span style="color:#27ae60;font-size:14px">●</span> Medium — can wait</div>
+      <div class="legend-item"><span style="color:#c0392b;font-size:14px">●</span> Critical - fix now</div>
+      <div class="legend-item"><span style="color:#e67e22;font-size:14px">●</span> High - fix soon</div>
+      <div class="legend-item"><span style="color:#27ae60;font-size:14px">●</span> Medium - can wait</div>
     </div>
 
     <hr class="sidebar-divider" />
@@ -575,15 +575,15 @@ const sections = [
     icon: '🔴',
     title: 'Pre-Launch Blockers',
     tasks: [
-      { id:'pl1', priority:'critical', owner:'Mike M. / IT', title:'Point pinevalleyinvestments.com DNS to Vercel', notes:'Switch from Wix — requires DNS record update at domain registrar.' },
+      { id:'pl1', priority:'critical', owner:'Mike M. / IT', title:'Point pinevalleyinvestments.com DNS to Vercel', notes:'Switch from Wix - requires DNS record update at domain registrar.' },
       { id:'pl2', priority:'critical', owner:'Dev / Mike M.', title:'Configure custom domain on Vercel project', notes:'Map vercel.app URL → pinevalleyinvestments.com in Vercel dashboard.' },
-      { id:'pl3', priority:'critical', owner:'Dev', title:'Verify HTTPS / SSL certificate on custom domain', notes:'Vercel handles automatically once domain is connected — just confirm it\'s active.' },
+      { id:'pl3', priority:'critical', owner:'Dev', title:'Verify HTTPS / SSL certificate on custom domain', notes:'Vercel handles automatically once domain is connected - just confirm it\'s active.' },
       { id:'pl4', priority:'critical', owner:'Dev', title:'Wire up main Contact page form', notes:'Currently unclear if it submits anywhere. Must post to Formspree endpoint.' },
-      { id:'pl5', priority:'critical', owner:'Dev', title:'Wire up "Schedule a Consultation" CTA button', notes:'Most valuable CTA on the site — must be functional before launch.' },
-      { id:'pl6', priority:'critical', owner:'Legal / Mike M.', title:'Add Privacy Policy page', notes:'Required — covers form data and analytics cookies.' },
+      { id:'pl5', priority:'critical', owner:'Dev', title:'Wire up "Schedule a Consultation" CTA button', notes:'Most valuable CTA on the site - must be functional before launch.' },
+      { id:'pl6', priority:'critical', owner:'Legal / Mike M.', title:'Add Privacy Policy page', notes:'Required - covers form data and analytics cookies.' },
       { id:'pl7', priority:'critical', owner:'Legal / Mike M.', title:'Add Terms of Use page', notes:'Standard requirement for financial advisory websites.' },
       { id:'pl8', priority:'critical', owner:'Compliance', title:'Add ADV Part 2 / Disclosure link in footer', notes:'SEC requirement for registered investment advisor (RIA) websites.' },
-      { id:'pl9', priority:'critical', owner:'Compliance', title:'Add investment disclaimer to footer', notes:'"Past performance is not indicative of future results" — required language.' },
+      { id:'pl9', priority:'critical', owner:'Compliance', title:'Add investment disclaimer to footer', notes:'"Past performance is not indicative of future results" - required language.' },
       { id:'pl10', priority:'critical', owner:'Each Advisor', title:'Review all 40 bio pages for accuracy', notes:'Each advisor to confirm their name, title, and bio text are correct.' },
       { id:'pl11', priority:'critical', owner:'Mike M.', title:'Confirm all headshots are final', notes:'4 advisors still using placeholder: mike-carter, mark-cole, danon-robinson, max-schatzow.' },
       { id:'pl12', priority:'critical', owner:'Mike M.', title:'Fix $XXm placeholder in AUM timeline (2015)', notes:'Replace "$XXm" with "$30M" on both index.html and about.html.' },
@@ -598,8 +598,8 @@ const sections = [
       { id:'rec2', priority:'high', owner:'Mike C.', title:'Monthly: Check Google Search Console for errors', notes:'Review indexing status, crawl errors, and keyword rankings.' },
       { id:'rec3', priority:'high', owner:'Mike C.', title:'Monthly: Confirm all 40 bio forms are working', notes:'Test 2–3 random bio page contact forms to verify Formspree delivery.' },
       { id:'rec4', priority:'medium', owner:'Mike M.', title:'Quarterly: Run Google PageSpeed Insights', notes:'Target 90+ on mobile and desktop. Run from: pagespeed.web.dev.' },
-      { id:'rec5', priority:'medium', owner:'Mike M.', title:'As-needed: Update AUM figure across the site', notes:'Homepage hero and About timeline show current AUM — update as firm grows.' },
-      { id:'rec6', priority:'medium', owner:'Mike C.', title:'As-needed: Post to Company Announcements page', notes:'Page exists at announcements.html — populate with press releases, news, awards.' },
+      { id:'rec5', priority:'medium', owner:'Mike M.', title:'As-needed: Update AUM figure across the site', notes:'Homepage hero and About timeline show current AUM - update as firm grows.' },
+      { id:'rec6', priority:'medium', owner:'Mike C.', title:'As-needed: Post to Company Announcements page', notes:'Page exists at announcements.html - populate with press releases, news, awards.' },
       { id:'rec7', priority:'medium', owner:'Mike M.', title:'Set up UptimeRobot monitoring (free)', notes:'Get alerted instantly if site goes down. Free at uptimerobot.com.' },
     ]
   },
@@ -611,7 +611,7 @@ const sections = [
       { id:'per1', priority:'high', owner:'Mike C. + Dev', title:'New advisor: generate bio page from template', notes:'Provide name, title, email, group, bio, and headshot. Claude generates bios/[slug].html and adds to team.html.' },
       { id:'per2', priority:'high', owner:'Mike C. + Dev', title:'New advisor: add headshot to /Headshots/', notes:'Upload file as "first last.avif" (lowercase, space-separated). Exceptions noted in project docs.' },
       { id:'per3', priority:'high', owner:'Mike C.', title:'Departed advisor: remove from team.html grid', notes:'Remove their advisor card from team.html. Decide if bio page stays (for SEO) or is redirected.' },
-      { id:'per4', priority:'medium', owner:'Mike C. + Dev', title:'Title/bio changes: update bio page and team card', notes:'Tell Claude what changed — they\'ll update bios/[slug].html and the team.html card.' },
+      { id:'per4', priority:'medium', owner:'Mike C. + Dev', title:'Title/bio changes: update bio page and team card', notes:'Tell Claude what changed - they\'ll update bios/[slug].html and the team.html card.' },
       { id:'per5', priority:'medium', owner:'Mike M.', title:'Compliance review of bios after any title change', notes:'Credential language and titles must be reviewed by compliance before publishing.' },
     ]
   },
@@ -655,7 +655,7 @@ const sections = [
       { id:'tch9', priority:'medium', owner:'Dev', title:'Add favicon + Apple touch icon', notes:'Currently may be missing or using placeholder. Add to repo root and reference in all pages.' },
       { id:'tch10', priority:'medium', owner:'Dev', title:'Set up 301 redirects from old Wix URLs', notes:'Preserve any existing SEO equity from old Wix site. Map old slugs to new pages.' },
       { id:'tch11', priority:'medium', owner:'Dev', title:'Test all 40 bio page headshots load correctly', notes:'Spot check on both Vercel and GitHub Pages. Check filenames match exactly.' },
-      { id:'tch12', priority:'medium', owner:'Dev', title:'Audit color contrast ratios (WCAG AA)', notes:'Gold (#c9a96e) on navy (#03213d) — verify meets 4.5:1 contrast ratio for body text.' },
+      { id:'tch12', priority:'medium', owner:'Dev', title:'Audit color contrast ratios (WCAG AA)', notes:'Gold (#c9a96e) on navy (#03213d) - verify meets 4.5:1 contrast ratio for body text.' },
       { id:'tch13', priority:'medium', owner:'Dev', title:'Create llms.txt for AI crawlers', notes:'Helps ChatGPT, Claude, and Perplexity understand the site structure. Like robots.txt for AI.' },
       { id:'tch14', priority:'medium', owner:'Dev', title:'Configure Vercel caching headers for static assets', notes:'Improves repeat visit performance for images, CSS, and fonts.' },
     ]
@@ -665,11 +665,11 @@ const sections = [
     icon: '✏️',
     title: 'Content & Brand',
     tasks: [
-      { id:'cnt1', priority:'high', owner:'Mike M.', title:'Final proofread of all main pages', notes:'Home, About, Services, Team, Announcements — review copy for errors and consistency.' },
+      { id:'cnt1', priority:'high', owner:'Mike M.', title:'Final proofread of all main pages', notes:'Home, About, Services, Team, Announcements - review copy for errors and consistency.' },
       { id:'cnt2', priority:'high', owner:'Mike M.', title:'Replace $XXm placeholder on About timeline (2015)', notes:'Correct value is $30M (PVI founding AUM). Fix on both index.html and about.html.' },
       { id:'cnt3', priority:'medium', owner:'Mike M.', title:'Add initial Company Announcements content', notes:'Page exists but is empty. Add first 1–3 posts (e.g., awards, milestones, team news).' },
       { id:'cnt4', priority:'medium', owner:'Mike M.', title:'Confirm Client Login portal links are correct', notes:'Verify all 6 portal URLs: RightCapital, Monarch, Schwab, Altruist, eMoney, Tamarac.' },
-      { id:'cnt5', priority:'medium', owner:'Mike M.', title:'Register Google Business Profile for PVI', notes:'Shows PVI in Google Maps + local search results. Free — maps.google.com/business.' },
+      { id:'cnt5', priority:'medium', owner:'Mike M.', title:'Register Google Business Profile for PVI', notes:'Shows PVI in Google Maps + local search results. Free - maps.google.com/business.' },
     ]
   },
 ];
