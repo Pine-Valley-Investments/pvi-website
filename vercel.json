@@ -2,14 +2,7 @@
   "rewrites": [
     { "source": "/api/:path*", "destination": "/api/:path*" }
   ],
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.pinevalleyinvestments.com" }],
-      "destination": "https://pinevalleyinvestments.com/:path*",
-      "permanent": true
-    }
-  ],
+
   "headers": [
     {
       "source": "/(.*)",
