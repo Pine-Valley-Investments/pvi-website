@@ -1,8 +1,19 @@
 {
+  "redirects": [
+    { "source": "/ria", "destination": "/for-advisors", "permanent": true },
+    { "source": "/asset-management", "destination": "/services", "permanent": true },
+    { "source": "/careers", "destination": "/for-advisors", "permanent": true },
+    { "source": "/advisory-services", "destination": "/services", "permanent": true },
+    { "source": "/contact-us.html", "destination": "/contact", "permanent": true },
+    { "source": "/contact-us", "destination": "/contact", "permanent": true },
+    { "source": "/client-access", "destination": "/client-login", "permanent": true },
+    { "source": "/our-team", "destination": "/team", "permanent": true },
+    { "source": "/about-us", "destination": "/about", "permanent": true },
+    { "source": "/home", "destination": "/", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/api/:path*", "destination": "/api/:path*" }
   ],
-
   "headers": [
     {
       "source": "/(.*)",
