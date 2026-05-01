@@ -23,10 +23,10 @@
     nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 56px;transition:background 0.4s,padding 0.4s}
     nav.scrolled{background:rgba(3,33,61,0.97);padding:14px 56px;backdrop-filter:blur(10px);border-bottom:1px solid rgba(186,186,185,0.1)}
     .nav-logo{display:flex;align-items:center;text-decoration:none}.nav-logo img{height:40px;width:auto}
-    .nav-links{display:flex;align-items:center;gap:32px;list-style:none}
+    .nav-links{display:flex;align-items:center;gap:20px;list-style:none;flex-wrap:nowrap}
     .nav-links a{font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color 0.2s}
     .nav-links a:hover{color:var(--white)}
-    .nav-btn{color:var(--white) !important;border:1px solid rgba(255,255,255,0.3);padding:9px 22px;white-space:nowrap}
+    .nav-btn{color:var(--white) !important;border:1px solid rgba(255,255,255,0.3);padding:9px 22px;white-space:nowrap;flex-shrink:0}
     .nav-btn:hover{border-color:var(--gold) !important;color:var(--gold) !important}
     .nav-phone{color:var(--gold) !important}
     .nav-dropdown{position:relative}.nav-dropdown>a,.nav-dropdown>span{display:flex;align-items:center;gap:5px}
@@ -108,8 +108,12 @@
     <li><a href="team.html">Meet Your Team</a></li>
     <li><a href="services.html">Our Services</a></li>
     <li><a href="for-advisors.html">For Advisors</a></li>
-    <li><a href="morning-core.html">Morning Core</a></li>
-    <li></li>
+    <li class="nav-dropdown">
+      <span style="font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray);cursor:default;display:flex;align-items:center;gap:5px;">Resources <span style="font-size:8px;">▾</span></span>
+      <div class="dropdown-menu">
+        <a href="morning-core.html">Morning Core</a>
+      </div>
+    </li>
     <li class="nav-dropdown">
       <span style="font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);cursor:default;display:flex;align-items:center;gap:5px;">Client Login <span style="font-size:8px;">▾</span></span>
       <div class="mega-menu">
@@ -276,7 +280,7 @@
         <div class="footer-col-title">Firm</div>
         <ul class="footer-links">
           <li><a href="about.html">About PVI</a></li>
-          <li><a href="team.html">Meet the Team</a></li>
+          <li><a href="team.html">Meet Your Team</a></li>
           <li><a href="services.html">Our Services</a></li>
     <li><a href="for-advisors.html">For Advisors</a></li>
           <li><a href="client-login.html">Client Access</a></li>
