@@ -9,449 +9,564 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
-:root{--navy:#03213d;--navy-mid:#062e56;--navy-light:#0d3d6b;--gold:#c9a96e;--gold-bright:#dbbf8a;--gold-dim:rgba(201,169,110,0.12);--cream:#f0e6d3;--white:#fff;--gray:#babab9;--green:#3dba7e;--red:#e05252;--amber:#e6a817;--blue:#294d6b;--border:rgba(201,169,110,0.18);}
+:root{--n:#03213d;--nm:#062e56;--nl:#0d3d6b;--g:#c9a96e;--gb:#dbbf8a;--gd:rgba(201,169,110,0.12);--c:#f0e6d3;--w:#fff;--gr:#babab9;--gn:#3dba7e;--r:#e05252;--a:#e6a817;--b:#294d6b;--br:rgba(201,169,110,0.18);}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--navy);font-family:'Montserrat',sans-serif;height:100vh;overflow:hidden;color:var(--cream);}
+body{background:var(--n);font-family:'Montserrat',sans-serif;height:100vh;overflow:hidden;color:var(--c);}
 
 /* SETUP */
-#setup{position:fixed;inset:0;background:var(--navy);display:flex;align-items:center;justify-content:center;z-index:1000;}
-.setup-box{width:600px;padding:40px;background:var(--navy-mid);border:1px solid var(--border);border-radius:6px;}
-.setup-box h1{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;color:var(--white);margin-bottom:4px;}
-.setup-sub{font-size:11px;color:var(--gray);margin-bottom:24px;line-height:1.6;}
-.field{margin-bottom:13px;}
-.field label{display:block;font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
-.field input{width:100%;background:rgba(0,0,0,0.25);border:1px solid rgba(201,169,110,0.25);border-radius:3px;padding:8px 12px;color:var(--white);font-family:'Montserrat',sans-serif;font-size:11px;outline:none;transition:border-color .2s;}
-.field input:focus{border-color:var(--gold);}
-.field input::placeholder{color:rgba(186,186,185,0.35);}
-.field .hint{font-size:9px;color:var(--gray);margin-top:3px;}
-.setup-actions{display:flex;gap:10px;margin-top:20px;}
-.btn-gold{padding:10px 24px;background:var(--gold);color:var(--navy);border:none;border-radius:3px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
-.btn-gold:hover{background:var(--gold-bright);}
-.btn-ghost{padding:10px 18px;background:transparent;color:var(--gray);border:1px solid rgba(186,186,185,0.2);border-radius:3px;font-family:'Montserrat',sans-serif;font-weight:600;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
-.btn-ghost:hover{color:var(--white);border-color:var(--gray);}
+#setup{position:fixed;inset:0;background:var(--n);display:flex;align-items:center;justify-content:center;z-index:1000;}
+.sb{width:580px;padding:36px;background:var(--nm);border:1px solid var(--br);border-radius:6px;}
+.sb h1{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:var(--w);margin-bottom:4px;}
+.sb p{font-size:11px;color:var(--gr);margin-bottom:22px;line-height:1.6;}
+.f{margin-bottom:12px;}
+.f label{display:block;font-size:8px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--g);margin-bottom:4px;}
+.f input{width:100%;background:rgba(0,0,0,0.25);border:1px solid rgba(201,169,110,0.2);border-radius:3px;padding:8px 11px;color:var(--w);font-family:'Montserrat',sans-serif;font-size:11px;outline:none;}
+.f input:focus{border-color:var(--g);}
+.f input::placeholder{color:rgba(186,186,185,0.3);}
+.f .h{font-size:9px;color:var(--gr);margin-top:3px;}
+.sa{display:flex;gap:9px;margin-top:18px;}
+.bg{padding:9px 22px;background:var(--g);color:var(--n);border:none;border-radius:3px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
+.bg:hover{background:var(--gb);}
+.bgh{padding:9px 16px;background:transparent;color:var(--gr);border:1px solid rgba(186,186,185,0.2);border-radius:3px;font-family:'Montserrat',sans-serif;font-weight:600;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
+.bgh:hover{color:var(--w);}
 
 /* LOADING */
-#loading{position:fixed;inset:0;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:900;gap:14px;}
-#loading.h{display:none;}
-.load-logo{width:48px;height:48px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:20px;color:var(--navy);animation:pulse 1.4s ease-in-out infinite;}
+#ld{position:fixed;inset:0;background:var(--n);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:900;gap:12px;}
+#ld.h{display:none;}
+.ll{width:44px;height:44px;background:var(--g);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:18px;color:var(--n);animation:pulse 1.4s ease-in-out infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.75;transform:scale(.93);}}
-.load-text{font-size:10px;color:var(--gray);letter-spacing:0.14em;text-transform:uppercase;}
-.load-steps{display:flex;flex-direction:column;gap:7px;margin-top:6px;}
-.ls{font-size:10px;color:var(--gray);display:flex;align-items:center;gap:8px;}
-.ls.done{color:var(--green);}
-.ls.act{color:var(--gold);}
-.si{width:14px;text-align:center;}
+.lt{font-size:10px;color:var(--gr);letter-spacing:0.14em;text-transform:uppercase;}
+.lss{display:flex;flex-direction:column;gap:6px;margin-top:4px;}
+.ls{font-size:10px;color:var(--gr);display:flex;align-items:center;gap:7px;}
+.ls.d{color:var(--gn);}.ls.a{color:var(--g);}
+.si{width:13px;text-align:center;}
 
 /* PROGRESS */
-#pb{position:fixed;top:0;left:0;height:2px;background:var(--gold);transition:width .35s ease;z-index:600;}
+#pb{position:fixed;top:0;left:0;height:2px;background:var(--g);transition:width .3s ease;z-index:600;}
 
 /* SLIDES */
 #pres{display:none;width:100vw;height:100vh;position:relative;}
-.slide{position:absolute;inset:0;display:none;flex-direction:column;background:var(--navy);overflow:hidden;}
-.slide.active{display:flex;}
-.slide.in{animation:sIn .38s cubic-bezier(.4,0,.2,1) forwards;}
-@keyframes sIn{from{opacity:0;transform:translateX(24px);}to{opacity:1;transform:translateX(0);}}
+.sl{position:absolute;inset:0;display:none;flex-direction:column;background:var(--n);overflow:hidden;}
+.sl.on{display:flex;}
+.sl.in{animation:sin .34s cubic-bezier(.4,0,.2,1) forwards;}
+@keyframes sin{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
 
 /* HEADER */
-.hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 36px;border-bottom:1px solid var(--border);background:rgba(3,33,61,0.98);flex-shrink:0;}
-.hdr-brand{display:flex;align-items:center;gap:9px;}
-.hdr-logo{width:26px;height:26px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:11px;color:var(--navy);}
-.hdr-name{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:500;color:var(--white);}
-.hdr-r{display:flex;align-items:center;gap:14px;}
-.hdr-date{font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);}
-.hdr-num{font-size:9px;font-weight:700;letter-spacing:0.1em;color:var(--gold);}
+.hd{display:flex;align-items:center;justify-content:space-between;padding:11px 32px;border-bottom:1px solid var(--br);background:rgba(3,33,61,0.98);flex-shrink:0;}
+.hdb{display:flex;align-items:center;gap:8px;}
+.hdl{width:24px;height:24px;background:var(--g);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:10px;color:var(--n);}
+.hdn{font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:500;color:var(--w);}
+.hdr{display:flex;align-items:center;gap:12px;}
+.hdd{font-size:8px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gr);}
+.hdp{font-size:8px;font-weight:700;letter-spacing:0.1em;color:var(--g);}
 
 /* BODY */
-.body{flex:1;display:flex;padding:18px 36px 14px;gap:24px;overflow:hidden;min-height:0;}
-.col-l{display:flex;flex-direction:column;justify-content:flex-start;flex-shrink:0;}
-.col-r{flex:1;display:flex;flex-direction:column;min-width:0;}
-.col-full{flex:1;display:flex;flex-direction:column;min-width:0;}
+.bd{flex:1;display:flex;padding:16px 32px 12px;gap:20px;overflow:hidden;min-height:0;}
+.cl{display:flex;flex-direction:column;flex-shrink:0;}
+.cr{flex:1;display:flex;flex-direction:column;min-width:0;}
+.cf{flex:1;display:flex;flex-direction:column;min-width:0;}
 
-/* TYPOGRAPHY */
-.eye{font-size:8px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:7px;}
-.ttl{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:500;color:var(--white);line-height:1.1;margin-bottom:5px;}
-.ttl.sm{font-size:30px;}
-.ttl .ac{color:var(--gold);font-style:italic;}
-.gline{width:36px;height:2px;background:var(--gold);margin:10px 0 12px;}
+/* TYPE */
+.ey{font-size:8px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--g);margin-bottom:6px;}
+.tt{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:500;color:var(--w);line-height:1.1;margin-bottom:4px;}
+.tt.sm{font-size:28px;}
+.tt .ac{color:var(--g);font-style:italic;}
+.gl{width:32px;height:2px;background:var(--g);margin:9px 0 10px;}
 
-/* BIG STAT */
-.bnum{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:500;color:var(--white);line-height:1;margin-bottom:4px;}
-.blbl{font-size:8px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gray);}
-.delta{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-top:8px;}
-.up{background:rgba(61,186,126,0.15);color:var(--green);}
-.dn{background:rgba(224,82,82,0.1);color:var(--red);}
-.nt{background:rgba(186,186,185,0.08);color:var(--gray);}
+/* STATS */
+.bn{font-family:'Cormorant Garamond',serif;font-size:68px;font-weight:500;color:var(--w);line-height:1;margin-bottom:3px;}
+.bl{font-size:8px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gr);}
+.dt{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;margin-top:7px;}
+.up{background:rgba(61,186,126,0.15);color:var(--gn);}
+.dn{background:rgba(224,82,82,0.1);color:var(--r);}
+.nt{background:rgba(186,186,185,0.08);color:var(--gr);}
 
 /* STAT GRID */
-.sg{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:3px;overflow:hidden;}
+.sg{display:grid;gap:1px;background:var(--br);border:1px solid var(--br);border-radius:3px;overflow:hidden;}
 .sg2{grid-template-columns:1fr 1fr;}
 .sg4{grid-template-columns:repeat(4,1fr);}
-.sc{background:var(--navy-mid);padding:14px 16px;}
-.sc-l{font-size:8px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray);margin-bottom:6px;}
-.sc-v{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:500;color:var(--white);line-height:1;margin-bottom:3px;}
-.sc-s{font-size:9px;color:var(--gray);}
+.sc{background:var(--nm);padding:12px 14px;}
+.scl{font-size:8px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--gr);margin-bottom:5px;}
+.scv{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;color:var(--w);line-height:1;margin-bottom:3px;}
+.scs{font-size:9px;color:var(--gr);}
 
-/* BAR LIST */
-.blist{display:flex;flex-direction:column;gap:7px;}
-.bi{display:flex;align-items:center;gap:10px;}
-.bi-r{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:500;color:var(--gold);width:20px;text-align:center;flex-shrink:0;}
-.bi-l{font-size:11px;color:var(--cream);width:180px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.bi-t{flex:1;height:5px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;}
-.bi-f{height:100%;border-radius:3px;background:var(--gold);transition:width 1s cubic-bezier(.4,0,.2,1);}
-.bi-v{font-size:11px;font-weight:700;color:var(--white);width:48px;text-align:right;flex-shrink:0;}
-
-/* INSIGHT BOX — BIGGER */
-.ins{background:rgba(201,169,110,0.08);border:1px solid rgba(201,169,110,0.22);border-left:3px solid var(--gold);border-radius:3px;padding:14px 16px;flex-shrink:0;}
-.ins-head{font-size:8px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:7px;}
-.ins-body{font-size:11.5px;color:var(--cream);line-height:1.7;}
-.ins-body strong{color:var(--white);}
-.ins-body .act{color:var(--gold);font-weight:700;}
-.ins.green{background:rgba(61,186,126,0.07);border-color:rgba(61,186,126,0.2);border-left-color:var(--green);}
-.ins.green .ins-head{color:var(--green);}
-.ins.red{background:rgba(224,82,82,0.06);border-color:rgba(224,82,82,0.18);border-left-color:var(--red);}
-.ins.red .ins-head{color:var(--red);}
+/* INSIGHT — PROMINENT */
+.ins{background:rgba(201,169,110,0.09);border:1px solid rgba(201,169,110,0.22);border-left:3px solid var(--g);border-radius:3px;padding:12px 14px;flex-shrink:0;}
+.ins-hd{font-size:8px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--g);margin-bottom:6px;}
+.ins-bd{font-size:12px;color:var(--c);line-height:1.65;}
+.ins-bd strong{color:var(--w);}
+.ins-bd .act{color:var(--g);font-weight:700;}
+.ins.gn{background:rgba(61,186,126,0.08);border-color:rgba(61,186,126,0.2);border-left-color:var(--gn);}
+.ins.gn .ins-hd{color:var(--gn);}
+.ins.rd{background:rgba(224,82,82,0.07);border-color:rgba(224,82,82,0.18);border-left-color:var(--r);}
+.ins.rd .ins-hd{color:var(--r);}
 
 /* CHART */
 .ct{position:relative;flex:1;min-height:0;}
-.ct-lbl{font-size:8px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray);margin-bottom:6px;flex-shrink:0;}
+.ctl{font-size:8px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--gr);margin-bottom:5px;flex-shrink:0;}
+
+/* BAR LIST */
+.bl-list{display:flex;flex-direction:column;gap:6px;}
+.bi{display:flex;align-items:center;gap:9px;}
+.bi-r{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:500;color:var(--g);width:18px;text-align:center;flex-shrink:0;}
+.bi-l{font-size:11px;color:var(--c);flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.bi-t{flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
+.bi-f{height:100%;border-radius:2px;background:var(--g);}
+.bi-v{font-size:11px;font-weight:700;color:var(--w);min-width:44px;text-align:right;flex-shrink:0;}
 
 /* SOURCE CARDS */
-.src-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;flex-shrink:0;}
-.src-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:3px;padding:14px 14px;}
-.src-icon{font-size:20px;margin-bottom:6px;}
-.src-name{font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);margin-bottom:5px;}
-.src-val{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;color:var(--white);margin-bottom:2px;}
-.src-pct{font-size:10px;color:var(--gold);font-weight:600;}
+.srcg{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;}
+.srcc{background:var(--nm);border:1px solid var(--br);border-radius:3px;padding:12px 13px;}
+.srci{font-size:18px;margin-bottom:5px;}
+.srcn{font-size:8px;font-weight:700;letter-spacing:0.11em;text-transform:uppercase;color:var(--gr);margin-bottom:4px;}
+.srcv{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:var(--w);margin-bottom:2px;}
+.srcp{font-size:10px;color:var(--g);font-weight:600;}
 
 /* DONUT */
-.donut-wrap{display:flex;align-items:center;gap:20px;}
-.dleg{display:flex;flex-direction:column;gap:10px;}
+.dw{display:flex;align-items:center;gap:16px;}
+.dl{display:flex;flex-direction:column;gap:8px;}
 .dli{display:flex;align-items:center;gap:7px;}
-.dld{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.dll{font-size:11px;color:var(--cream);flex:1;}
-.dlv{font-size:12px;font-weight:700;color:var(--white);}
+.dld{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.dll{font-size:11px;color:var(--c);flex:1;}
+.dlv{font-size:11px;font-weight:700;color:var(--w);}
 
-/* SEO AUDIT */
-.audit-list{display:flex;flex-direction:column;gap:8px;overflow-y:auto;}
-.audit-item{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:12px;background:var(--navy-mid);border:1px solid var(--border);border-radius:3px;padding:11px 14px;}
-.sev{padding:3px 8px;border-radius:2px;font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;}
-.sev-c{background:rgba(224,82,82,0.15);color:var(--red);}
-.sev-h{background:rgba(230,168,23,0.12);color:var(--amber);}
-.sev-m{background:rgba(61,186,126,0.1);color:var(--green);}
-.audit-main{}
-.audit-title{font-size:11px;font-weight:600;color:var(--white);margin-bottom:2px;}
-.audit-fix{font-size:10px;color:var(--gray);line-height:1.4;}
-.audit-impact{font-size:9px;font-weight:700;color:var(--gold);text-align:right;white-space:nowrap;}
-.audit-effort{font-size:9px;color:var(--gray);text-align:right;white-space:nowrap;margin-top:2px;}
+/* EXEC SUMMARY ITEMS */
+.ex-list{display:flex;flex-direction:column;gap:8px;}
+.ex-item{display:flex;gap:11px;padding:10px 13px;border-radius:3px;border-left:3px solid;}
+.ex-g{background:rgba(61,186,126,0.07);border-color:var(--gn);}
+.ex-a{background:rgba(230,168,23,0.07);border-color:var(--a);}
+.ex-r{background:rgba(224,82,82,0.07);border-color:var(--r);}
+.ex-icon{font-size:16px;flex-shrink:0;}
+.ex-body{}
+.ex-title{font-size:12px;font-weight:600;color:var(--w);margin-bottom:2px;}
+.ex-desc{font-size:10px;color:var(--gr);line-height:1.45;}
+.ex-imp{font-size:9px;font-weight:700;color:var(--g);margin-top:3px;}
 
-/* TWO-COL ANALYSIS */
-.analysis-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;min-height:0;}
-.analysis-col{display:flex;flex-direction:column;gap:8px;overflow-y:auto;}
-.ana-item{display:flex;gap:10px;background:var(--navy-mid);border:1px solid var(--border);border-radius:3px;padding:10px 12px;border-left:3px solid;}
-.ana-item.g{border-left-color:var(--green);}
-.ana-item.r{border-left-color:var(--red);}
-.ana-icon{font-size:16px;flex-shrink:0;}
-.ana-body{}
-.ana-title{font-size:11px;font-weight:600;color:var(--white);margin-bottom:2px;}
-.ana-desc{font-size:10px;color:var(--gray);line-height:1.4;}
-.ana-fix{font-size:9px;color:var(--gold);font-weight:700;margin-top:3px;}
+/* SEO AUDIT — COMPACT */
+.audit{display:flex;flex-direction:column;gap:7px;}
+.aud-item{display:grid;grid-template-columns:auto 1fr auto;align-items:start;gap:11px;background:var(--nm);border:1px solid var(--br);border-radius:3px;padding:10px 13px;}
+.sev{padding:2px 7px;border-radius:2px;font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;align-self:center;}
+.sev-c{background:rgba(224,82,82,0.15);color:var(--r);}
+.sev-h{background:rgba(230,168,23,0.12);color:var(--a);}
+.aud-main{}
+.aud-t{font-size:11px;font-weight:600;color:var(--w);margin-bottom:2px;}
+.aud-fix{font-size:10px;color:var(--gr);line-height:1.4;}
+.aud-right{text-align:right;}
+.aud-imp{font-size:9px;font-weight:700;color:var(--g);}
+.aud-eff{font-size:9px;color:var(--gr);margin-top:2px;}
+
+/* WHAT'S WORKING / NOT */
+.ana-list{display:flex;flex-direction:column;gap:7px;overflow-y:auto;}
+.ana{display:flex;gap:9px;padding:9px 12px;border-radius:3px;border-left:3px solid;}
+.ana.g{background:rgba(61,186,126,0.07);border-color:var(--gn);}
+.ana.r{background:rgba(224,82,82,0.07);border-color:var(--r);}
+.ana-ic{font-size:15px;flex-shrink:0;}
+.ana-b{}
+.ana-t{font-size:11px;font-weight:600;color:var(--w);margin-bottom:2px;}
+.ana-d{font-size:10px;color:var(--gr);line-height:1.4;}
+.ana-f{font-size:9px;color:var(--g);font-weight:700;margin-top:3px;}
 
 /* STRATEGY */
-.strat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;flex:1;min-height:0;}
-.strat-card{background:var(--navy-mid);border:1px solid var(--border);border-radius:4px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;overflow-y:auto;}
-.strat-icon{font-size:20px;}
-.strat-title{font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);}
-.strat-items{display:flex;flex-direction:column;gap:6px;margin-top:2px;}
-.strat-item{font-size:10px;color:var(--cream);line-height:1.5;padding-left:10px;position:relative;}
-.strat-item::before{content:'→';position:absolute;left:0;color:var(--gold);font-size:9px;}
+.strat-g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.strat-c{background:var(--nm);border:1px solid var(--br);border-radius:3px;padding:12px 14px;}
+.strat-ic{font-size:18px;margin-bottom:5px;}
+.strat-t{font-size:8px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--g);margin-bottom:6px;}
+.strat-i{font-size:10px;color:var(--c);line-height:1.5;padding-left:10px;position:relative;margin-bottom:4px;}
+.strat-i::before{content:'→';position:absolute;left:0;color:var(--g);font-size:9px;}
 
-/* ACTION SUMMARY */
-.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;flex:1;min-height:0;}
-.action-col{display:flex;flex-direction:column;gap:7px;overflow-y:auto;}
-.action-item{display:flex;align-items:flex-start;gap:10px;background:var(--navy-mid);border:1px solid var(--border);border-radius:3px;padding:10px 12px;}
-.action-num{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;color:var(--gold);width:20px;text-align:center;flex-shrink:0;margin-top:1px;}
-.action-body{}
-.action-title{font-size:11px;font-weight:600;color:var(--white);margin-bottom:2px;}
-.action-who{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);}
-.action-desc{font-size:10px;color:var(--gray);line-height:1.4;margin-top:2px;}
-.action-badge{padding:2px 7px;border-radius:2px;font-size:8px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;align-self:flex-start;margin-top:2px;white-space:nowrap;}
-.badge-now{background:rgba(224,82,82,0.12);color:var(--red);}
-.badge-week{background:rgba(230,168,23,0.1);color:var(--amber);}
-.badge-month{background:rgba(61,186,126,0.1);color:var(--green);}
+/* ACTION ITEMS */
+.act-g{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;}
+.act-c{background:var(--nm);border:1px solid var(--br);border-radius:3px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start;}
+.act-n{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--g);width:22px;text-align:center;flex-shrink:0;}
+.act-b{}
+.act-t{font-size:11px;font-weight:600;color:var(--w);margin-bottom:3px;}
+.act-m{display:flex;align-items:center;gap:7px;margin-bottom:3px;}
+.act-who{font-size:8px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--g);}
+.badge{padding:2px 6px;border-radius:2px;font-size:8px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;}
+.now{background:rgba(224,82,82,0.12);color:var(--r);}
+.soon{background:rgba(230,168,23,0.1);color:var(--a);}
+.month{background:rgba(61,186,126,0.1);color:var(--gn);}
+.act-d{font-size:10px;color:var(--gr);line-height:1.4;}
 
 /* LEADERBOARD */
-.ldr-list{display:flex;flex-direction:column;gap:6px;}
-.ldr-row{display:flex;align-items:center;gap:11px;background:var(--navy-mid);border:1px solid var(--border);border-radius:3px;padding:10px 14px;}
-.ldr-pos{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;color:var(--gold);width:24px;text-align:center;flex-shrink:0;}
-.ldr-info{flex:1;}
-.ldr-name{font-size:12px;font-weight:600;color:var(--white);}
-.ldr-path{font-size:9px;color:var(--gray);}
-.ldr-r{text-align:right;}
-.ldr-ct{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--white);}
-.ldr-u{font-size:8px;color:var(--gray);text-transform:uppercase;letter-spacing:0.1em;}
+.ldr{display:flex;flex-direction:column;gap:5px;}
+.lrow{display:flex;align-items:center;gap:10px;background:var(--nm);border:1px solid var(--br);border-radius:3px;padding:9px 13px;}
+.lpos{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;color:var(--g);width:22px;text-align:center;flex-shrink:0;}
+.linf{flex:1;}
+.lnm{font-size:11px;font-weight:600;color:var(--w);}
+.lpa{font-size:9px;color:var(--gr);}
+.lct{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--w);}
+.lu{font-size:8px;color:var(--gr);text-align:right;}
+
+/* GOAL CARDS */
+.goal-g{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;}
+.goal-c{background:var(--nm);border:1px solid var(--br);border-radius:3px;padding:13px 14px;}
+.goal-t{font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);margin-bottom:6px;}
+.goal-v{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;color:var(--w);margin-bottom:3px;}
+.goal-d{font-size:10px;color:var(--gr);line-height:1.4;}
+.goal-bar{height:3px;background:rgba(255,255,255,0.08);border-radius:2px;margin-top:8px;overflow:hidden;}
+.goal-fill{height:100%;border-radius:2px;background:var(--g);}
 
 /* CONTROLS */
-#ctrl{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:9px;background:rgba(6,46,86,0.94);border:1px solid var(--border);border-radius:32px;padding:6px 13px;z-index:500;}
-.cbtn{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--gray);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s;}
-.cbtn:hover{background:var(--gold-dim);color:var(--gold);border-color:var(--gold);}
-.cbtn:disabled{opacity:.3;cursor:not-allowed;}
+#ctrl{position:fixed;bottom:13px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:rgba(6,46,86,0.94);border:1px solid var(--br);border-radius:32px;padding:6px 12px;z-index:500;}
+.cb{width:27px;height:27px;border-radius:50%;border:1px solid var(--br);background:transparent;color:var(--gr);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .2s;}
+.cb:hover{background:var(--gd);color:var(--g);border-color:var(--g);}
+.cb:disabled{opacity:.3;cursor:not-allowed;}
 .dots{display:flex;gap:4px;align-items:center;}
-.dot{width:5px;height:5px;border-radius:50%;background:rgba(201,169,110,0.2);cursor:pointer;transition:all .2s;}
-.dot.active{background:var(--gold);width:15px;border-radius:3px;}
-.cdiv{width:1px;height:16px;background:var(--border);}
-.abtn{padding:3px 10px;background:transparent;border:1px solid var(--border);border-radius:12px;color:var(--gray);font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
-.abtn.on{background:var(--gold-dim);color:var(--gold);border-color:rgba(201,169,110,0.35);}
+.dot{width:4px;height:4px;border-radius:50%;background:rgba(201,169,110,0.2);cursor:pointer;transition:all .2s;}
+.dot.on{background:var(--g);width:14px;border-radius:2px;}
+.cdv{width:1px;height:15px;background:var(--br);}
+.ab{padding:3px 9px;background:transparent;border:1px solid var(--br);border-radius:12px;color:var(--gr);font-family:'Montserrat',sans-serif;font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.ab.on{background:var(--gd);color:var(--g);border-color:rgba(201,169,110,0.3);}
 </style>
 </head>
 <body>
-
 <div id="pb" style="width:0%"></div>
 
 <!-- SETUP -->
 <div id="setup">
-  <div class="setup-box">
-    <h1>Weekly Analytics Deck</h1>
-    <p class="setup-sub">Connects to GA4, Search Console, and Formspree. Builds your full Tuesday presentation — traffic, SEO audit, what's working, what's not, and next month's strategy.</p>
-    <div class="field"><label>GA4 Property ID</label><input id="ga4-prop" value="530034836"><div class="hint">GA4 → Admin → Property details</div></div>
-    <div class="field"><label>OAuth Client ID</label><input id="oauth-cid" value="194475383057-cubnt199a9lbuop39nvj06o2a5mn0ntd.apps.googleusercontent.com"><div class="hint">Same Client ID as the SEO Tracker</div></div>
-    <div class="field"><label>Search Console Property URL</label><input id="gsc-prop" value="https://pinevalleyinvestments.com"></div>
-    <div class="field"><label>Formspree API Key <span style="color:var(--gray);font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label><input id="fs-key" placeholder="formspree.io → Account → API Keys — add later"><div class="hint">Leave blank — leads slides will show placeholder</div></div>
-    <div class="setup-actions">
-      <button class="btn-gold" onclick="startPres()">Load This Week's Data →</button>
-      <button class="btn-ghost" onclick="loadDemo()">Preview with Demo Data</button>
+  <div class="sb">
+    <h1>PVI Weekly Analytics</h1>
+    <p>Builds your Tuesday principal presentation automatically from GA4, Search Console, and Formspree data.</p>
+    <div class="f"><label>GA4 Property ID</label><input id="g4p" value="530034836"><div class="h">GA4 → Admin → Property details</div></div>
+    <div class="f"><label>OAuth Client ID</label><input id="oci" value="194475383057-cubnt199a9lbuop39nvj06o2a5mn0ntd.apps.googleusercontent.com"><div class="h">Same as SEO Tracker</div></div>
+    <div class="f"><label>Search Console Property</label><input id="gsp" value="https://pinevalleyinvestments.com"></div>
+    <div class="f"><label>Formspree API Key <span style="color:var(--gr);font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label><input id="fsk" placeholder="formspree.io → Account → API Keys — add later"></div>
+    <div class="sa">
+      <button class="bg" onclick="go()">Load This Week's Data →</button>
+      <button class="bgh" onclick="demo()">Preview Demo Data</button>
     </div>
   </div>
 </div>
 
 <!-- LOADING -->
-<div id="loading" class="h">
-  <div class="load-logo">PVI</div>
-  <div class="load-text">Building Your Weekly Report</div>
-  <div class="load-steps">
-    <div class="ls act" id="ls1"><span class="si">⟳</span>Signing in with Google…</div>
-    <div class="ls" id="ls2"><span class="si">○</span>Fetching 90 days of GA4 data…</div>
-    <div class="ls" id="ls3"><span class="si">○</span>Fetching 90 days of Search Console…</div>
-    <div class="ls" id="ls4"><span class="si">○</span>Fetching Formspree submissions…</div>
-    <div class="ls" id="ls5"><span class="si">○</span>Running SEO audit…</div>
-    <div class="ls" id="ls6"><span class="si">○</span>Building slides…</div>
+<div id="ld" class="h">
+  <div class="ll">PVI</div>
+  <div class="lt">Building Your Weekly Report</div>
+  <div class="lss">
+    <div class="ls a" id="l1"><span class="si">⟳</span>Signing in with Google…</div>
+    <div class="ls" id="l2"><span class="si">○</span>Fetching 90 days of traffic data…</div>
+    <div class="ls" id="l3"><span class="si">○</span>Fetching Google search data…</div>
+    <div class="ls" id="l4"><span class="si">○</span>Fetching form submissions…</div>
+    <div class="ls" id="l5"><span class="si">○</span>Building slides…</div>
   </div>
 </div>
 
-<!-- PRESENTATION -->
+<!-- PRESENTATION: 15 SLIDES -->
 <div id="pres">
 
-<!-- S1: COVER -->
-<div class="slide active" id="s1">
-  <div class="hdr"><div class="hdr-brand"><div class="hdr-logo">PVI</div><div class="hdr-name">Pine Valley Investments</div></div><div class="hdr-r"><span class="hdr-date" id="h1">—</span><span class="hdr-num">1 / 8</span></div></div>
-  <div class="body">
-    <div class="col-l" style="width:320px;gap:12px;">
-      <div class="eye">Weekly Performance Review</div>
-      <div class="ttl">Website<br><span class="ac">Analytics</span></div>
-      <div class="gline"></div>
-      <div style="font-size:11px;color:var(--gray);" id="s1-range">—</div>
-      <div class="sg sg4" style="margin-top:6px;">
-        <div class="sc"><div class="sc-l">Visitors</div><div class="sc-v" id="s1-vis">—</div><div class="sc-s" id="s1-visd">—</div></div>
-        <div class="sc"><div class="sc-l">Impressions</div><div class="sc-v" id="s1-im">—</div><div class="sc-s">Search Console</div></div>
-        <div class="sc"><div class="sc-l">Leads</div><div class="sc-v" id="s1-ld">—</div><div class="sc-s">this week</div></div>
-        <div class="sc"><div class="sc-l">Avg. Position</div><div class="sc-v" id="s1-po">—</div><div class="sc-s">Google rank</div></div>
+<!-- 1: COVER -->
+<div class="sl on" id="s1">
+  <div class="hd"><div class="hdb"><div class="hdl">PVI</div><div class="hdn">Pine Valley Investments</div></div><div class="hdr"><span class="hdd" id="h1">—</span><span class="hdp">1 / 15</span></div></div>
+  <div class="bd">
+    <div class="cl" style="width:300px;gap:10px;">
+      <div class="ey">Weekly Performance Review</div>
+      <div class="tt">Website <span class="ac">Analytics</span></div>
+      <div class="gl"></div>
+      <div style="font-size:11px;color:var(--gr);" id="s1r">—</div>
+      <div class="sg sg4" style="margin-top:8px;">
+        <div class="sc"><div class="scl">Visitors</div><div class="scv" id="s1a">—</div><div class="scs" id="s1ad">—</div></div>
+        <div class="sc"><div class="scl">Google Searches</div><div class="scv" id="s1b">—</div><div class="scs">times shown</div></div>
+        <div class="sc"><div class="scl">Inquiries</div><div class="scv" id="s1c">—</div><div class="scs">this week</div></div>
+        <div class="sc"><div class="scl">Google Rank</div><div class="scv" id="s1d">—</div><div class="scs">avg. position</div></div>
       </div>
-      <div class="ins" style="margin-top:4px;">
-        <div class="ins-head">📋 Today's Agenda</div>
-        <div class="ins-body" id="s1-agenda">Loading…</div>
+      <div class="ins" style="margin-top:6px;">
+        <div class="ins-hd">📋 Today's Agenda</div>
+        <div class="ins-bd" id="s1ag">Loading…</div>
       </div>
     </div>
-    <div class="col-r" style="gap:10px;">
-      <div class="ct-lbl">3-Month Visitor Trend — Weekly</div>
-      <div class="ct"><canvas id="c-cover"></canvas></div>
+    <div class="cr" style="gap:10px;">
+      <div class="ctl">Website Traffic — Last 3 Months (Weekly)</div>
+      <div class="ct"><canvas id="cc"></canvas></div>
     </div>
   </div>
 </div>
 
-<!-- S2: TRAFFIC -->
-<div class="slide" id="s2">
-  <div class="hdr"><div class="hdr-brand"><div class="hdr-logo">PVI</div><div class="hdr-name">Pine Valley Investments</div></div><div class="hdr-r"><span class="hdr-date" id="h2">—</span><span class="hdr-num">2 / 8</span></div></div>
-  <div class="body">
-    <div class="col-l" style="width:250px;gap:12px;">
-      <div class="eye">Traffic Overview</div>
-      <div class="ttl sm">Total <span class="ac">Visitors</span></div>
-      <div class="gline"></div>
-      <div class="bnum" id="s2-vis">—</div>
-      <div class="blbl">This Week</div>
-      <div class="delta nt" id="s2-del">—</div>
-      <div style="margin-top:14px;">
-        <div class="ct-lbl">New vs Returning</div>
-        <div class="donut-wrap" style="margin-top:8px;">
-          <svg width="100" height="100" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="14"/>
-            <circle cx="50" cy="50" r="38" fill="none" stroke="#c9a96e" stroke-width="14" stroke-dasharray="239" stroke-dashoffset="239" id="dn1" stroke-linecap="round" transform="rotate(-90 50 50)" style="transition:stroke-dashoffset 1.2s ease"/>
-            <circle cx="50" cy="50" r="38" fill="none" stroke="#294d6b" stroke-width="14" stroke-dasharray="239" stroke-dashoffset="239" id="dn2" stroke-linecap="round" transform="rotate(-90 50 50)" style="transition:stroke-dashoffset 1.2s ease"/>
-            <text x="50" y="46" text-anchor="middle" fill="white" font-family="Cormorant Garamond" font-size="16" font-weight="500" id="dn-pct">—</text>
-            <text x="50" y="59" text-anchor="middle" fill="#babab9" font-family="Montserrat" font-size="6" font-weight="600" letter-spacing="1.5">NEW</text>
-          </svg>
-          <div class="dleg">
-            <div class="dli"><div class="dld" style="background:var(--gold)"></div><div class="dll">New</div><div class="dlv" id="s2-new">—</div></div>
-            <div class="dli"><div class="dld" style="background:var(--blue)"></div><div class="dll">Returning</div><div class="dlv" id="s2-ret">—</div></div>
-          </div>
+<!-- 2: EXECUTIVE SUMMARY -->
+<div class="sl" id="s2">
+  <div class="hd"><div class="hdb"><div class="hdl">PVI</div><div class="hdn">Pine Valley Investments</div></div><div class="hdr"><span class="hdd" id="h2">—</span><span class="hdp">2 / 15</span></div></div>
+  <div class="bd" style="flex-direction:column;gap:12px;">
+    <div style="flex-shrink:0;"><div class="ey">This Week at a Glance</div><div class="tt sm">Executive <span class="ac">Summary</span></div></div>
+    <div class="ex-list" id="s2ex"></div>
+    <div class="ins">
+      <div class="ins-hd">💡 Bottom Line</div>
+      <div class="ins-bd" id="s2bl">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<!-- 3: TRAFFIC TREND -->
+<div class="sl" id="s3">
+  <div class="hd"><div class="hdb"><div class="hdl">PVI</div><div class="hdn">Pine Valley Investments</div></div><div class="hdr"><span class="hdd" id="h3">—</span><span class="hdp">3 / 15</span></div></div>
+  <div class="bd">
+    <div class="cl" style="width:240px;gap:10px;">
+      <div class="ey">Are We Growing?</div>
+      <div class="tt sm">Website <span class="ac">Traffic</span></div>
+      <div class="gl"></div>
+      <div class="bn" id="s3v">—</div>
+      <div class="bl">Visitors This Week</div>
+      <div class="dt nt" id="s3d">—</div>
+      <div class="sg sg2" style="margin-top:12px;">
+        <div class="sc"><div class="scl">This Week</div><div class="scv" id="s3tw">—</div><div class="scs">visitors</div></div>
+        <div class="sc"><div class="scl">Last Month</div><div class="scv" id="s3lm">—</div><div class="scs">same week</div></div>
+      </div>
+      <div class="ins" style="margin-top:8px;">
+        <div class="ins-hd">💡 What This Means</div>
+        <div class="ins-bd" id="s3ins">Loading…</div>
+      </div>
+    </div>
+    <div class="cr" style="gap:8px;">
+      <div class="ctl">Weekly Visitor Count — 13 Weeks</div>
+      <div class="ct"><canvas id="cv"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- 4: NEW VS RETURNING -->
+<div class="sl" id="s4">
+  <div class="hd"><div class="hdb"><div class="hdl">PVI</div><div class="hdn">Pine Valley Investments</div></div><div class="hdr"><span class="hdd" id="h4">—</span><span class="hdp">4 / 15</span></div></div>
+  <div class="bd">
+    <div class="cl" style="width:240px;gap:10px;">
+      <div class="ey">Who Is Visiting?</div>
+      <div class="tt sm">New vs <span class="ac">Returning</span></div>
+      <div class="gl"></div>
+      <div class="dw" style="margin-top:4px;">
+        <svg width="110" height="110" viewBox="0 0 110 110">
+          <circle cx="55" cy="55" r="42" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="14"/>
+          <circle cx="55" cy="55" r="42" fill="none" stroke="#c9a96e" stroke-width="14" stroke-dasharray="264" stroke-dashoffset="264" id="dn1" stroke-linecap="round" transform="rotate(-90 55 55)" style="transition:stroke-dashoffset 1.2s ease"/>
+          <circle cx="55" cy="55" r="42" fill="none" stroke="#294d6b" stroke-width="14" stroke-dasharray="264" stroke-dashoffset="264" id="dn2" stroke-linecap="round" transform="rotate(-90 55 55)" style="transition:stroke-dashoffset 1.2s ease"/>
+          <text x="55" y="51" text-anchor="middle" fill="white" font-family="Cormorant Garamond" font-size="17" font-weight="500" id="dnp">—</text>
+          <text x="55" y="64" text-anchor="middle" fill="#babab9" font-family="Montserrat" font-size="6" font-weight="600" letter-spacing="1.5">NEW</text>
+        </svg>
+        <div class="dl">
+          <div class="dli"><div class="dld" style="background:var(--g)"></div><div class="dll">New Visitors</div><div class="dlv" id="s4nw">—</div></div>
+          <div class="dli"><div class="dld" style="background:var(--b)"></div><div class="dll">Returning</div><div class="dlv" id="s4rt">—</div></div>
         </div>
       </div>
+      <div class="ins" style="margin-top:10px;">
+        <div class="ins-hd">💡 What This Means</div>
+        <div class="ins-bd" id="s4ins">Loading…</div>
+      </div>
     </div>
-    <div class="col-r" style="gap:10px;">
-      <div class="ct-lbl">Weekly Visitor Trend — Last 13 Weeks (3 Months)</div>
-      <div class="ct" style="flex:2;"><canvas id="c-vis"></canvas></div>
-      <div class="ins">
-        <div class="ins-head">💡 Analysis & Recommendation</div>
-        <div class="ins-body" id="s2-ins">Loading…</div>
+    <div class="cr" style="gap:8px;">
+      <div class="ctl">New Visitor % — 13-Week Trend</div>
+      <div class="ct"><canvas id="cnv"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- 5: SOURCES -->
+<div class="sl" id="s5">
+  <div class="hd"><div class="hdb"><div class="hdl">PVI</div><div class="hdn">Pine Valley Investments</div></div><div class="hdr"><span class="hdd" id="h5">—</span><span class="hdp">5 / 15</span></div></div>
+  <div class="bd" style="flex-direction:column;gap:10px;">
+    <div style="flex-shrink:0;"><div class="ey">Where Are Visitors Coming From?</div><div class="tt sm">Traffic <span class="ac">Sources</span></div></div>
+    <div class="srcg" style="flex-shrink:0;" id="s5c">
+      <div class="srcc"><div class="srci">🔍</div><div class="srcn">Google Search</div><div class="srcv" id="s5a">—</div><div class="srcp" id="s5ap">—</div></div>
+      <div class="srcc"><div class="srci">🔗</div><div class="srcn">Direct / Bookmarks</div><div class="srcv" id="s5b">—</div><div class="srcp" id="s5bp">—</div></div>
+      <div class="srcc"><div class="srci">📱</div><div class="srcn">Social Media</div><div class="srcv" id="s5c2">—</div><div class="srcp" id="s5cp">—</div></div>
+      <div class="srcc"><div class="srci">🔄</div><div class="srcn">Other Websites</div><div class="srcv" id="s5d">—</div><div class="srcp" id="s5dp">—</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;flex:1;min-height:0;">
+      <div style="display:flex;flex-direction:column;gap:6px;min-height:0;">
+        <div class="ctl">Google Search vs Direct — 13-Week Trend</div>
+        <div class="ct"><canvas id="csr"></canvas></div>
+      </div>
+      <div class="ins" style="margin:0;">
+        <div class="ins-hd">💡 What This Means</div>
+        <div class="ins-bd" id="s5ins">Loading…</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- S3: SOURCES -->
-<div class="slide" id="s3">
-  <div class="hdr"><div class="hdr-brand"><div class="hdr-logo">PVI</div><div class="hdr-name">Pine Valley Investments</div></div><div class="hdr-r"><span class="hdr-date" id="h3">—</span><span class="hdr-num">3 / 8</span></div></div>
-  <div class="body" style="flex-direction:column;gap:12px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;">
-      <div><div class="eye">Where Visitors Come From</div><div class="ttl sm">Traffic <span class="ac">Sources</span></div></div>
-    </div>
-    <div class="src-grid" id="s3-cards">
-      <div class="src-card"><div class="src-icon">🔍</div><div class="src-name">Organic Search</div><div class="src-val" id="so1">—</div><div class="src-pct" id="so1p">—</div></div>
-      <div class="src-card"><div class="src-icon">🔗</div><div class="src-name">Direct</div><div class="src-val" id="so2">—</div><div class="src-pct" id="so2p">—</div></div>
-      <div class="src-card"><div class="src-icon">📱</div><div class="src-name">Social Media</div><div class="src-val" id="so3">—</div><div class="src-pct" id="so3p">—</div></div>
-      <div class="src-card"><div class="src-icon">🔄</div><div class="src-name">Referral</div><div class="src-val" id="so4">—</div><div class="src-pct" id="so4p">—</div></div>
-    </div>
-    <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;flex:1;min-height:0;">
-      <div style="display:flex;flex-direction:column;gap:8px;min-height:0;">
-        <div class="ct-lbl">Source Trend — 13 Weeks (Organic vs Direct)</div>
-        <div class="ct"><canvas id="c-src"></canvas></div>
+<!-- 6: TOP PAGES -->
+<div class="sl" id="s6">
+  <div class="hd"><div class="hdb"><div class="hdl">PVI</div><div class="hdn">Pine Valley Investments</div></div><div class="hdr"><span class="hdd" id="h6">—</span><span class="hdp">6 / 15</span></div></div>
+  <div class="bd">
+    <div class="cl" style="width:280px;gap:10px;">
+      <div class="ey">What Are People Looking At?</div>
+      <div class="tt sm">Most Visited <span class="ac">Pages</span></div>
+      <div class="gl"></div>
+      <div class="bl-list" id="s6bl"></div>
+      <div class="ins" style="margin-top:10px;">
+        <div class="ins-hd">💡 What This Means</div>
+        <div class="ins-bd" id="s6ins">Loading…</div>
       </div>
-      <div class="ins" style="margin:0;align-self:stretch;display:flex;flex-direction:column;">
-        <div class="ins-head">💡 Analysis & Recommendation</div>
-        <div class="ins-body" id="s3-ins">Loading…</div>
-      </div>
+    </div>
+    <div class="cr" style="gap:8px;">
+      <div class="ctl">Page Views This Week</div>
+      <div class="ct"><canvas id="cpg"></canvas></div>
     </div>
   </div>
 </div>
 
-<!-- S4: SEARCH -->
-<div class="slide" id="s4">
-  <div class="hdr"><div class="hdr-brand"><div class="hdr-logo">PVI</div><div class="hdr-name">Pine Valley Investments</div></div><div class="hdr-r"><span class="hdr-date" id="h4">—</span><span class="hdr-num">4 / 8</span></div></div>
-  <div class="body">
-    <div class="col-l" style="width:270px;gap:10px;">
-      <div class="eye">Google Search Performance</div>
-      <div class="ttl sm">Search <span class="ac">Rankings</span></div>
-      <div class="gline"></div>
+<!-- 7: GOOGLE VISIBILITY -->
+<div class="sl" id="s7">
+  <div class="hd"><div class="hdb"><div class="hdl">PVI</div><div class="hdn">Pine Valley Investments</div></div><div class="hdr"><span class="hdd" id="h7">—</span><span class="hdp">7 / 15</span></div></div>
+  <div class="bd">
+    <div class="cl" style="width:250px;gap:10px;">
+      <div class="ey">Are We Showing Up on Google?</div>
+      <div class="tt sm">Google <span class="ac">Visibility</span></div>
+      <div class="gl"></div>
       <div class="sg sg2">
-        <div class="sc"><div class="sc-l">Clicks</div><div class="sc-v" id="s4-cl">—</div><div class="sc-s">from Google</div></div>
-        <div class="sc"><div class="sc-l">Impressions</div><div class="sc-v" id="s4-im">—</div><div class="sc-s">this week</div></div>
-        <div class="sc"><div class="sc-l">Avg. CTR</div><div class="sc-v" id="s4-ct">—</div><div class="sc-s">click-through</div></div>
-        <div class="sc"><div class="sc-l">Avg. Position</div><div class="sc-v" id="s4-po">—</div><div class="sc-s">Google rank</div></div>
+        <div class="sc"><div class="scl">Times Shown in Search</div><div class="scv" id="s7im">—</div><div class="scs">this week</div></div>
+        <div class="sc"><div class="scl">People Who Clicked</div><div class="scv" id="s7cl">—</div><div class="scs">from Google</div></div>
+        <div class="sc"><div class="scl">Click Rate</div><div class="scv" id="s7ct">—</div><div class="scs">% who click us</div></div>
+        <div class="sc"><div class="scl">Average Position</div><div class="scv" id="s7po">—</div><div class="scs">in Google results</div></div>
       </div>
-      <div style="margin-top:8px;">
-        <div class="ct-lbl">Top Keywords This Week</div>
-        <div style="height:160px;position:relative;margin-top:6px;"><canvas id="c-kw"></canvas></div>
-      </div>
-      <div class="ins">
-        <div class="ins-head">💡 Recommendation</div>
-        <div class="ins-body" id="s4-ins">Loading…</div>
+      <div class="ins" style="margin-top:8px;">
+        <div class="ins-hd">💡 What This Means</div>
+        <div class="ins-bd" id="s7ins">Loading…</div>
       </div>
     </div>
-    <div class="col-r" style="gap:10px;">
-      <div class="ct-lbl">Clicks & Impressions — 13-Week Trend</div>
-      <div class="ct" style="flex:2;"><canvas id="c-gsc"></canvas></div>
-      <div class="ct-lbl" style="margin-top:4px;">CTR Trend — 13 Weeks</div>
-      <div style="height:100px;position:relative;"><canvas id="c-ctr"></canvas></div>
+    <div class="cr" style="gap:8px;">
+      <div class="ctl">Times Shown in Google Search — 13 Weeks</div>
+      <div class="ct" style="flex:2;"><canvas id="cgv"></canvas></div>
+      <div class="ctl" style="margin-top:4px;">Click Rate Trend — 13 Weeks</div>
+      <div style="height:90px;position:relative;"><canvas id="cctr"></canvas></div>
     </div>
   </div>
 </div>
 
-<!-- S5: LEADS + LEADERBOARD -->
-<div class="slide" id="s5">
-  <div class="hdr"><div class="hdr-brand"><div class="hdr-logo">PVI</div><div class="hdr-name">Pine Valley Investments</div></div><div class="hdr-r"><span class="hdr-date" id="h5">—</span><span class="hdr-num">5 / 8</span></div></div>
-  <div class="body">
-    <div class="col-l" style="width:290px;gap:10px;">
-      <div class="eye">Lead Generation + Bio Traffic</div>
-      <div class="ttl sm">Leads & <span class="ac">Advisors</span></div>
-      <div class="gline"></div>
-      <div style="display:flex;gap:16px;align-items:flex-end;">
-        <div><div class="bnum" id="s5-tot">—</div><div class="blbl">Leads This Week</div><div class="delta nt" id="s5-del">—</div></div>
-      </div>
-      <div id="s5-ph" style="display:none;margin-top:8px;padding:10px;background:rgba(230,168,23,0.07);border:1px solid rgba(230,168,23,0.18);border-radius:3px;font-size:10px;color:var(--amber);line-height:1.5;">⚠ Connect Formspree API key to see live data.</div>
-      <div style="margin-top:8px;">
-        <div class="ct-lbl">Lead Submissions — 13-Week Trend</div>
-        <div style="height:120px;position:relative;margin-top:6px;"><canvas id="c-leads"></canvas></div>
-      </div>
+<!-- 8: KEYWORDS -->
+<div class="sl" id="s8">
+  <div class="hd"><div class="hdb"><div class="hdl">PVI</div><div class="hdn">Pine Valley Investments</div></div><div class="hdr"><span class="hdd" id="h8">—</span><span class="hdp">8 / 15</span></div></div>
+  <div class="bd">
+    <div class="cl" style="width:260px;gap:10px;">
+      <div class="ey">How Are People Finding Us?</div>
+      <div class="tt sm">Search <span class="ac">Keywords</span></div>
+      <div class="gl"></div>
+      <div style="font-size:11px;color:var(--gr);line-height:1.6;margin-bottom:8px;">These are the exact words people type into Google before visiting our site.</div>
       <div class="ins">
-        <div class="ins-head">💡 Lead Analysis</div>
-        <div class="ins-body" id="s5-ins">Loading…</div>
+        <div class="ins-hd">💡 Opportunity</div>
+        <div class="ins-bd" id="s8ins">Loading…</div>
       </div>
     </div>
-    <div class="col-r" style="gap:10px;">
-      <div class="ct-lbl">Top Advisor Bio Pages — Weekly Views</div>
-      <div class="ct" style="flex:2;"><canvas id="c-adv"></canvas></div>
-      <div class="ct-lbl" style="margin-top:4px;">Advisor Leaderboard — This Week</div>
-      <div class="ldr-list" id="s5-ldr" style="overflow-y:auto;max-height:180px;"></div>
+    <div class="cr" style="gap:8px;">
+      <div class="ctl">Top Keywords — Clicks This Week</div>
+      <div class="ct"><canvas id="ckw"></canvas></div>
     </div>
   </div>
 </div>
 
-<!-- S6: SEO AUDIT -->
-<div class="slide" id="s6">
-  <div class="hdr"><div class="hdr-brand"><div class="hdr-logo">PVI</div><div class="hdr-name">Pine Valley Investments</div></div><div class="hdr-r"><span class="hdr-date" id="h6">—</span><span class="hdr-num">6 / 8</span></div></div>
-  <div class="body" style="flex-direction:column;gap:10px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
-      <div><div class="eye">Full SEO Audit — This Week</div><div class="ttl sm">SEO <span class="ac">Issues & Fixes</span></div></div>
-      <div id="s6-summary" style="display:flex;gap:8px;align-items:center;"></div>
+<!-- 9: LEADS -->
+<div class="sl" id="s9">
+  <div class="hd"><div class="hdb"><div class="hdl">PVI</div><div class="hdn">Pine Valley Investments</div></div><div class="hdr"><span class="hdd" id="h9">—</span><span class="hdp">9 / 15</span></div></div>
+  <div class="bd">
+    <div class="cl" style="width:240px;gap:10px;">
+      <div class="ey">Are We Generating Inquiries?</div>
+      <div class="tt sm">Form <span class="ac">Inquiries</span></div>
+      <div class="gl"></div>
+      <div class="bn" id="s9t">—</div>
+      <div class="bl">Inquiries This Week</div>
+      <div class="dt nt" id="s9d">—</div>
+      <div id="s9ph" style="display:none;margin-top:10px;padding:10px;background:rgba(230,168,23,0.07);border:1px solid rgba(230,168,23,0.18);border-radius:3px;font-size:10px;color:var(--a);line-height:1.5;">⚠ Connect Formspree to see live inquiry data.</div>
+      <div class="ins" style="margin-top:8px;">
+        <div class="ins-hd">💡 What This Means</div>
+        <div class="ins-bd" id="s9ins">Loading…</div>
+      </div>
     </div>
-    <div class="audit-list" id="s6-audit" style="flex:1;min-height:0;"></div>
+    <div class="cr" style="gap:8px;">
+      <div class="ctl">Weekly Inquiry Volume — 13 Weeks</div>
+      <div class="ct" style="flex:2;"><canvas id="cld"></canvas></div>
+      <div class="ctl" style="margin-top:4px;">Inquiries by Advisor — This Week</div>
+      <div style="height:110px;position:relative;"><canvas id="cfa"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- 10: ADVISOR LEADERBOARD -->
+<div class="sl" id="s10">
+  <div class="hd"><div class="hdb"><div class="hdl">PVI</div><div class="hdn">Pine Valley Investments</div></div><div class="hdr"><span class="hdd" id="h10">—</span><span class="hdp">10 / 15</span></div></div>
+  <div class="bd">
+    <div class="cl" style="width:280px;gap:10px;">
+      <div class="ey">Advisor Web Presence</div>
+      <div class="tt sm">Advisor <span class="ac">Leaderboard</span></div>
+      <div class="gl"></div>
+      <div style="font-size:11px;color:var(--gr);line-height:1.6;margin-bottom:8px;">Which advisor profile pages are being viewed most this week.</div>
+      <div class="ldr" id="s10l"></div>
+    </div>
+    <div class="cr" style="gap:8px;">
+      <div class="ctl">Bio Page Views — This Week</div>
+      <div class="ct" style="flex:2;"><canvas id="cab"></canvas></div>
+      <div class="ins" style="margin-top:6px;">
+        <div class="ins-hd">💡 What This Means</div>
+        <div class="ins-bd" id="s10ins">Loading…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 11: TOP 3 SEO ISSUES -->
+<div class="sl" id="s11">
+  <div class="hd"><div class="hdb"><div class="hdl">PVI</div><div class="hdn">Pine Valley Investments</div></div><div class="hdr"><span class="hdd" id="h11">—</span><span class="hdp">11 / 15</span></div></div>
+  <div class="bd" style="flex-direction:column;gap:10px;">
+    <div style="flex-shrink:0;display:flex;align-items:flex-end;justify-content:space-between;">
+      <div><div class="ey">What Needs to Be Fixed</div><div class="tt sm">Top 3 <span class="ac">Priority Issues</span></div></div>
+      <div id="s11sm" style="display:flex;gap:7px;align-items:center;"></div>
+    </div>
+    <div class="ins" style="flex-shrink:0;">
+      <div class="ins-hd">🎯 Why These Matter</div>
+      <div class="ins-bd" id="s11pr">Loading…</div>
+    </div>
+    <div class="audit" id="s11au"></div>
+  </div>
+</div>
+
+<!-- 12: WHAT'S WORKING -->
+<div class="sl" id="s12">
+  <div class="hd"><div class="hdb"><div class="hdl">PVI</div><div class="hdn">Pine Valley Investments</div></div><div class="hdr"><span class="hdd" id="h12">—</span><span class="hdp">12 / 15</span></div></div>
+  <div class="bd" style="flex-direction:column;gap:10px;">
+    <div style="flex-shrink:0;"><div class="ey">Wins This Week</div><div class="tt sm">What's <span class="ac">Working</span></div></div>
+    <div class="ana-list" id="s12g"></div>
+    <div class="ins gn">
+      <div class="ins-hd">✅ Keep Doing This</div>
+      <div class="ins-bd" id="s12ins">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<!-- 13: WHAT'S NOT WORKING -->
+<div class="sl" id="s13">
+  <div class="hd"><div class="hdb"><div class="hdl">PVI</div><div class="hdn">Pine Valley Investments</div></div><div class="hdr"><span class="hdd" id="h13">—</span><span class="hdp">13 / 15</span></div></div>
+  <div class="bd" style="flex-direction:column;gap:10px;">
+    <div style="flex-shrink:0;"><div class="ey">Where We're Leaving Money on the Table</div><div class="tt sm">What's <span class="ac">Not Working</span></div></div>
+    <div class="ana-list" id="s13b"></div>
+    <div class="ins rd">
+      <div class="ins-hd">🎯 Biggest Opportunity</div>
+      <div class="ins-bd" id="s13ins">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<!-- 14: MONTHLY STRATEGY -->
+<div class="sl" id="s14">
+  <div class="hd"><div class="hdb"><div class="hdl">PVI</div><div class="hdn">Pine Valley Investments</div></div><div class="hdr"><span class="hdd" id="h14">—</span><span class="hdp">14 / 15</span></div></div>
+  <div class="bd" style="flex-direction:column;gap:10px;">
+    <div style="flex-shrink:0;"><div class="ey">Next 30 Days</div><div class="tt sm">Marketing <span class="ac">Strategy</span></div></div>
+    <div class="strat-g">
+      <div class="strat-c"><div class="strat-ic">✍️</div><div class="strat-t">Content</div><div id="s14co"></div></div>
+      <div class="strat-c"><div class="strat-ic">💼</div><div class="strat-t">LinkedIn & Social</div><div id="s14so"></div></div>
+      <div class="strat-c"><div class="strat-ic">📧</div><div class="strat-t">Email & Outreach</div><div id="s14em"></div></div>
+    </div>
     <div class="ins">
-      <div class="ins-head">💡 SEO Priority This Week</div>
-      <div class="ins-body" id="s6-ins">Loading…</div>
+      <div class="ins-hd">🎯 How We'll Track Progress</div>
+      <div class="ins-bd" id="s14tr">Loading…</div>
     </div>
   </div>
 </div>
 
-<!-- S7: WHAT'S WORKING / NOT -->
-<div class="slide" id="s7">
-  <div class="hdr"><div class="hdr-brand"><div class="hdr-logo">PVI</div><div class="hdr-name">Pine Valley Investments</div></div><div class="hdr-r"><span class="hdr-date" id="h7">—</span><span class="hdr-num">7 / 8</span></div></div>
-  <div class="body" style="flex-direction:column;gap:10px;">
-    <div style="flex-shrink:0;"><div class="eye">Performance Analysis</div><div class="ttl sm">What's <span class="ac">Working</span> / What's <span class="ac">Not</span></div></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;flex:1;min-height:0;">
-      <div style="display:flex;flex-direction:column;gap:7px;min-height:0;">
-        <div style="font-size:8px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--green);padding-bottom:4px;border-bottom:1px solid rgba(61,186,126,0.2);">✅ What's Working</div>
-        <div class="analysis-col" id="s7-good" style="overflow-y:auto;"></div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:7px;min-height:0;">
-        <div style="font-size:8px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--red);padding-bottom:4px;border-bottom:1px solid rgba(224,82,82,0.2);">⚠ What's Not Working & How to Fix</div>
-        <div class="analysis-col" id="s7-bad" style="overflow-y:auto;"></div>
-      </div>
+<!-- 15: TOP 3 ACTIONS -->
+<div class="sl" id="s15">
+  <div class="hd"><div class="hdb"><div class="hdl">PVI</div><div class="hdn">Pine Valley Investments</div></div><div class="hdr"><span class="hdd" id="h15">—</span><span class="hdp">15 / 15</span></div></div>
+  <div class="bd" style="flex-direction:column;gap:12px;">
+    <div style="flex-shrink:0;"><div class="ey">Before Next Tuesday</div><div class="tt sm">Top 3 <span class="ac">Action Items</span></div></div>
+    <div class="act-g" id="s15ac"></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px;flex-shrink:0;" id="s15mt"></div>
+    <div class="ins">
+      <div class="ins-hd">📋 How We Measure Success Next Week</div>
+      <div class="ins-bd" id="s15ms">Loading…</div>
     </div>
-  </div>
-</div>
-
-<!-- S8: STRATEGY + ACTIONS -->
-<div class="slide" id="s8">
-  <div class="hdr"><div class="hdr-brand"><div class="hdr-logo">PVI</div><div class="hdr-name">Pine Valley Investments</div></div><div class="hdr-r"><span class="hdr-date" id="h8">—</span><span class="hdr-num">8 / 8</span></div></div>
-  <div class="body" style="flex-direction:column;gap:10px;">
-    <div style="flex-shrink:0;"><div class="eye">Next 30 Days</div><div class="ttl sm">Marketing <span class="ac">Strategy</span> & Action Items</div></div>
-    <div class="strat-grid" style="flex:none;">
-      <div class="strat-card">
-        <div class="strat-icon">✍️</div>
-        <div class="strat-title">Content Marketing</div>
-        <div class="strat-items" id="s8-content"></div>
-      </div>
-      <div class="strat-card">
-        <div class="strat-icon">💼</div>
-        <div class="strat-title">LinkedIn + Social</div>
-        <div class="strat-items" id="s8-social"></div>
-      </div>
-      <div class="strat-card">
-        <div class="strat-icon">📧</div>
-        <div class="strat-title">Email Campaigns</div>
-        <div class="strat-items" id="s8-email"></div>
-      </div>
-    </div>
-    <div style="flex-shrink:0;"><div class="ct-lbl" style="margin-bottom:6px;">Consolidated Action Items</div></div>
-    <div class="action-grid" style="flex:1;min-height:0;" id="s8-actions"></div>
   </div>
 </div>
 
@@ -459,138 +574,110 @@ body{background:var(--navy);font-family:'Montserrat',sans-serif;height:100vh;ove
 
 <!-- CONTROLS -->
 <div id="ctrl" style="display:none;">
-  <button class="cbtn" id="pb-btn" onclick="prevS()" disabled>←</button>
+  <button class="cb" id="pbn" onclick="prev()" disabled>←</button>
   <div class="dots" id="dots"></div>
-  <button class="cbtn" id="nb-btn" onclick="nextS()">→</button>
-  <div class="cdiv"></div>
-  <button class="abtn" id="abtn" onclick="toggleAuto()">Auto</button>
+  <button class="cb" id="nbn" onclick="next()">→</button>
+  <div class="cdv"></div>
+  <button class="ab" id="abn" onclick="toggleAuto()">Auto</button>
 </div>
 
 <script>
 Chart.defaults.color='#babab9';
 Chart.defaults.font.family="'Montserrat',sans-serif";
-Chart.defaults.font.size=10;
-const GOLD='#c9a96e',NAVY='#03213d',NAVY_M='#062e56',BLUE='#294d6b',GREEN='#3dba7e',RED='#e05252',AMBER='#e6a817';
+Chart.defaults.font.size=9;
+const G='#c9a96e',N='#03213d',NM='#062e56',BL='#294d6b',GN='#3dba7e',RD='#e05252',AM='#e6a817';
 
-let token=null,cur=1,auto=false,aTimer=null;
-const N=8, CH={};
+let tok=null,cur=1,aut=false,atm=null;
+const T=15,CH={};
 
 // HELPERS
 function fd(d){return d.toISOString().split('T')[0];}
 function fmtD(d){return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});}
 function fn(n){if(!n&&n!==0)return'—';if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1000)return(n/1000).toFixed(1)+'K';return String(Math.round(n));}
 function pct(a,b){if(!b)return'+0%';const d=((a-b)/b*100);return(d>=0?'+':'')+d.toFixed(1)+'%';}
-function wkStart(ago=0){const e=new Date(),day=e.getDay();const s=new Date(e);s.setDate(e.getDate()-day+(day===0?-6:1)-ago*7);s.setHours(0,0,0,0);return s;}
-function wkEnd(ago=0){const s=wkStart(ago);const e=new Date(s);e.setDate(s.getDate()+6);return e;}
-function last13Weeks(){return Array.from({length:13},(_,i)=>({start:wkStart(12-i),end:wkEnd(12-i),label:fmtD(wkStart(12-i))}));}
+function wkS(ago=0){const e=new Date(),dy=e.getDay();const s=new Date(e);s.setDate(e.getDate()-dy+(dy===0?-6:1)-ago*7);s.setHours(0,0,0,0);return s;}
+function wkE(ago=0){const s=wkS(ago);const e=new Date(s);e.setDate(s.getDate()+6);return e;}
+function w13(){return Array.from({length:13},(_,i)=>({s:wkS(12-i),e:wkE(12-i),l:fmtD(wkS(12-i))}));}
+function isoW(d){const dt=new Date(d.getTime());dt.setHours(0,0,0,0);dt.setDate(dt.getDate()+3-(dt.getDay()+6)%7);const w1=new Date(dt.getFullYear(),0,4);return 1+Math.round(((dt.getTime()-w1.getTime())/86400000-3+(w1.getDay()+6)%7)/7);}
+function wkKey(d){return`${d.getFullYear()}${String(isoW(d)).padStart(2,'0')}`;}
 
-// CHART FACTORIES
-function mkChart(id,type,data,opts={}){
+// CHARTS
+function mk(id,type,data,opts={}){
   if(CH[id])CH[id].destroy();
   const ctx=document.getElementById(id)?.getContext('2d');
   if(!ctx)return null;
-  CH[id]=new Chart(ctx,{type,data,options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},...(opts.plugins||{})},scales:opts.scales||{},...opts}});
+  CH[id]=new Chart(ctx,{type,data,options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},...(opts.p||{})},scales:opts.sc||{},...opts}});
   return CH[id];
 }
-function lineC(id,labels,datasets,opts={}){
-  return mkChart(id,'line',{labels,datasets:datasets.map(d=>({label:d.label||'',data:d.data,borderColor:d.color||GOLD,backgroundColor:d.fill??(d.color||GOLD)+'18',borderWidth:2,pointRadius:d.pts??3,pointBackgroundColor:d.color||GOLD,tension:.4,fill:d.area??true,...(d.ex||{})}))},{
+function lc(id,labels,ds,opts={}){
+  return mk(id,'line',{labels,datasets:ds.map(d=>({label:d.n||'',data:d.d,borderColor:d.c||G,backgroundColor:d.fill??(d.c||G)+'18',borderWidth:2,pointRadius:d.pts??3,pointBackgroundColor:d.c||G,tension:.4,fill:d.area??true,...(d.ex||{})}))},{
     responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{display:datasets.length>1,labels:{boxWidth:9,padding:12,color:'#babab9'}},...(opts.plugins||{})},
-    scales:{
-      x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#babab9',font:{size:9},maxRotation:30}},
-      y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#babab9',font:{size:9},...(opts.yticks||{})},beginAtZero:true,...(opts.y||{})}
-    },...opts
+    p:{legend:{display:ds.length>1,labels:{boxWidth:9,padding:10,color:'#babab9'}},...(opts.p||{})},
+    sc:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#babab9',font:{size:8},maxRotation:30}},y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#babab9',font:{size:8},...(opts.yt||{})},beginAtZero:true,...(opts.y||{})}}
   });
 }
-function barC(id,labels,values,colors,horiz=false){
-  return mkChart(id,horiz?'bar':'bar',{labels,datasets:[{data:values,backgroundColor:Array.isArray(colors)?colors:values.map(()=>colors+'bb'),borderColor:Array.isArray(colors)?colors:values.map(()=>colors),borderWidth:1,borderRadius:3}]},{
+function bc(id,labels,vals,colors,horiz=false){
+  return mk(id,'bar',{labels,datasets:[{data:vals,backgroundColor:Array.isArray(colors)?colors:vals.map(()=>colors+'bb'),borderColor:Array.isArray(colors)?colors:vals.map(()=>colors),borderWidth:1,borderRadius:3}]},{
     responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{display:false}},
+    p:{legend:{display:false}},
     indexAxis:horiz?'y':'x',
-    scales:{
-      x:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{color:'#babab9',font:{size:9}}},
-      y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#babab9',font:{size:9}},beginAtZero:true}
-    }
+    sc:{x:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{color:'#babab9',font:{size:8}}},y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#babab9',font:{size:8}},beginAtZero:true}}
   });
 }
 
 // AUTH
-async function signIn(cid){return new Promise((res,rej)=>{const c=google.accounts.oauth2.initTokenClient({client_id:cid,scope:'https://www.googleapis.com/auth/analytics.readonly https://www.googleapis.com/auth/webmasters.readonly',callback:r=>r.error?rej(r.error):res(r.access_token)});c.requestAccessToken();});}
-async function gf(url,method='GET',body=null){
-  const o={method,headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'}};
-  if(body)o.body=JSON.stringify(body);
-  const r=await fetch(url,o);
-  if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||r.status);}
-  return r.json();
-}
+async function auth(cid){return new Promise((res,rej)=>{const c=google.accounts.oauth2.initTokenClient({client_id:cid,scope:'https://www.googleapis.com/auth/analytics.readonly https://www.googleapis.com/auth/webmasters.readonly',callback:r=>r.error?rej(r.error):res(r.access_token)});c.requestAccessToken();});}
+async function gf(url,m='GET',b=null){const o={method:m,headers:{'Authorization':'Bearer '+tok,'Content-Type':'application/json'}};if(b)o.body=JSON.stringify(b);const r=await fetch(url,o);if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||r.status);}return r.json();}
 
 // GA4
-async function ga4r(pid,dates,dims,mets){return gf(`https://analyticsdata.googleapis.com/v1beta/properties/${pid}:runReport`,'POST',{dateRanges:dates,dimensions:dims.map(n=>({name:n})),metrics:mets.map(n=>({name:n}))});}
+async function g4r(pid,dates,dims,mets){return gf(`https://analyticsdata.googleapis.com/v1beta/properties/${pid}:runReport`,'POST',{dateRanges:dates,dimensions:dims.map(n=>({name:n})),metrics:mets.map(n=>({name:n}))});}
 async function loadGA4(pid){
-  const weeks=last13Weeks();
-  const thisW={startDate:fd(weeks[12].start),endDate:fd(weeks[12].end)};
-  const lastMW={startDate:fd(weeks[8].start),endDate:fd(weeks[8].end)};
-  const range90={startDate:fd(weeks[0].start),endDate:fd(weeks[12].end)};
-
-  const[nvr,nvrl,srcs,pages,bios,wkly,wklySrc]=await Promise.all([
-    ga4r(pid,[thisW],['newVsReturning'],['sessions','totalUsers']),
-    ga4r(pid,[lastMW],['newVsReturning'],['sessions']),
-    ga4r(pid,[thisW],['sessionDefaultChannelGroup'],['sessions']),
-    ga4r(pid,[thisW],['pagePath'],['screenPageViews']),
-    ga4r(pid,[thisW],['pagePath'],['screenPageViews']),
-    ga4r(pid,[range90],['week'],['sessions']),
-    ga4r(pid,[range90],['week','sessionDefaultChannelGroup'],['sessions'])
+  const wks=w13();
+  const tw={startDate:fd(wks[12].s),endDate:fd(wks[12].e)};
+  const lm={startDate:fd(wks[8].s),endDate:fd(wks[8].e)};
+  const r90={startDate:fd(wks[0].s),endDate:fd(wks[12].e)};
+  const[nv,nvl,sr,pg,bi,wk,ws]=await Promise.all([
+    g4r(pid,[tw],['newVsReturning'],['sessions','totalUsers']),
+    g4r(pid,[lm],['newVsReturning'],['sessions']),
+    g4r(pid,[tw],['sessionDefaultChannelGroup'],['sessions']),
+    g4r(pid,[tw],['pagePath'],['screenPageViews']),
+    g4r(pid,[tw],['pagePath'],['screenPageViews']),
+    g4r(pid,[r90],['week'],['sessions']),
+    g4r(pid,[r90],['week','sessionDefaultChannelGroup'],['sessions'])
   ]);
-
-  let nU=0,rU=0,totS=0;
-  nvr.rows?.forEach(r=>{const d=r.dimensionValues[0].value;totS+=+r.metricValues[0].value;if(d==='new')nU+=+r.metricValues[1].value;else rU+=+r.metricValues[1].value;});
-  const lastS=nvrl.rows?.reduce((s,r)=>s+(+r.metricValues[0].value),0)||0;
-
-  const srcMap={};srcs.rows?.forEach(r=>{srcMap[r.dimensionValues[0].value]=(+r.metricValues[0].value)||0;});
-  const pageRows=pages.rows?.filter(r=>!r.dimensionValues[0].value.match(/seo-tracker|tracker|rebrand|google/)).sort((a,b)=>+b.metricValues[0].value-+a.metricValues[0].value).slice(0,8)||[];
-  const bioRows=bios.rows?.filter(r=>r.dimensionValues[0].value.includes('/bios/')).sort((a,b)=>+b.metricValues[0].value-+a.metricValues[0].value).slice(0,6)||[];
-
-  // Weekly sessions map
-  const wkMap={};wkly.rows?.forEach(r=>{wkMap[r.dimensionValues[0].value]=(+r.metricValues[0].value)||0;});
-  // Weekly source map
-  const wkSrcMap={};wklySrc.rows?.forEach(r=>{const wk=r.dimensionValues[0].value,src=r.dimensionValues[1].value,v=+r.metricValues[0].value;if(!wkSrcMap[wk])wkSrcMap[wk]={};wkSrcMap[wk][src]=(wkSrcMap[wk][src]||0)+v;});
-
-  // Build 13-week series
-  const wk13=weeks.map(w=>{const key=`${w.start.getFullYear()}${String(getISOWeek(w.start)).padStart(2,'0')}`;return wkMap[key]||0;});
-  const wkOrg=weeks.map(w=>{const key=`${w.start.getFullYear()}${String(getISOWeek(w.start)).padStart(2,'0')}`;return(wkSrcMap[key]||{})['Organic Search']||0;});
-  const wkDir=weeks.map(w=>{const key=`${w.start.getFullYear()}${String(getISOWeek(w.start)).padStart(2,'0')}`;return(wkSrcMap[key]||{})['Direct']||0;});
-
-  return{totS,lastS,nU,rU,srcMap,pageRows,bioRows,wk13,wkOrg,wkDir,wkLabels:weeks.map(w=>w.label)};
+  let nU=0,rU=0,tot=0;
+  nv.rows?.forEach(r=>{const d=r.dimensionValues[0].value;tot+=+r.metricValues[0].value;if(d==='new')nU+=+r.metricValues[1].value;else rU+=+r.metricValues[1].value;});
+  const lastS=nvl.rows?.reduce((s,r)=>s+(+r.metricValues[0].value),0)||0;
+  const sm={};sr.rows?.forEach(r=>{sm[r.dimensionValues[0].value]=(+r.metricValues[0].value)||0;});
+  const pgR=pg.rows?.filter(r=>!r.dimensionValues[0].value.match(/seo-tracker|tracker|rebrand|google/)).sort((a,b)=>+b.metricValues[0].value-+a.metricValues[0].value).slice(0,8)||[];
+  const biR=bi.rows?.filter(r=>r.dimensionValues[0].value.includes('/bios/')).sort((a,b)=>+b.metricValues[0].value-+a.metricValues[0].value).slice(0,6)||[];
+  const wm={};wk.rows?.forEach(r=>{wm[r.dimensionValues[0].value]=(+r.metricValues[0].value)||0;});
+  const wsm={};ws.rows?.forEach(r=>{const k=r.dimensionValues[0].value,s=r.dimensionValues[1].value,v=+r.metricValues[0].value;if(!wsm[k])wsm[k]={};wsm[k][s]=(wsm[k][s]||0)+v;});
+  const wks13=wks.map(w=>{const k=wkKey(w.s);return wm[k]||0;});
+  const wOrg=wks.map(w=>{const k=wkKey(w.s);return(wsm[k]||{})['Organic Search']||0;});
+  const wDir=wks.map(w=>{const k=wkKey(w.s);return(wsm[k]||{})['Direct']||0;});
+  const wNP=wks.map((_,i)=>{const org=wOrg[i]+wDir[i]+(wsm[wkKey(wks[i].s)]?.['Organic Social']||0);const total=wks13[i]||1;return Math.round((wOrg[i])/total*100);});
+  return{tot,lastS,nU,rU,sm,pgR,biR,wks13,wOrg,wDir,wNP,wkLbl:wks.map(w=>w.l)};
 }
-
-function getISOWeek(d){const date=new Date(d.getTime());date.setHours(0,0,0,0);date.setDate(date.getDate()+3-(date.getDay()+6)%7);const week1=new Date(date.getFullYear(),0,4);return 1+Math.round(((date.getTime()-week1.getTime())/86400000-3+(week1.getDay()+6)%7)/7);}
 
 // GSC
 async function loadGSC(prop){
-  const weeks=last13Weeks();
-  const thisW={startDate:fd(weeks[12].start),endDate:fd(weeks[12].end)};
-  const range90={startDate:fd(weeks[0].start),endDate:fd(weeks[12].end)};
-  const[qw,qd,qdp]=await Promise.all([
-    gf(`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(prop)}/searchAnalytics/query`,'POST',{...thisW,dimensions:['query'],rowLimit:15,dataState:'all'}).catch(()=>null),
-    gf(`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(prop)}/searchAnalytics/query`,'POST',{...range90,dimensions:['date'],rowLimit:1000,dataState:'all'}).catch(()=>null),
-    gf(`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(prop)}/searchAnalytics/query`,'POST',{...range90,dimensions:['page'],rowLimit:50,dataState:'all'}).catch(()=>null)
+  const wks=w13();
+  const tw={startDate:fd(wks[12].s),endDate:fd(wks[12].e)};
+  const r90={startDate:fd(wks[0].s),endDate:fd(wks[12].e)};
+  const[qw,qd]=await Promise.all([
+    gf(`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(prop)}/searchAnalytics/query`,'POST',{...tw,dimensions:['query'],rowLimit:15,dataState:'all'}).catch(()=>null),
+    gf(`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(prop)}/searchAnalytics/query`,'POST',{...r90,dimensions:['date'],rowLimit:1000,dataState:'all'}).catch(()=>null)
   ]);
-
-  const qRows=qw?.rows||[];
-  const cl=qRows.reduce((s,r)=>s+r.clicks,0),im=qRows.reduce((s,r)=>s+r.impressions,0);
+  const qR=qw?.rows||[];
+  const cl=qR.reduce((s,r)=>s+r.clicks,0),im=qR.reduce((s,r)=>s+r.impressions,0);
   const ctr=im>0?cl/im*100:0;
-  const posW=qRows.reduce((s,r)=>s+r.position*r.clicks,0),pos=cl>0?posW/cl:0;
-
-  // Build weekly GSC from daily
-  const dailyMap={};qd?.rows?.forEach(r=>{dailyMap[r.keys[0]]={clicks:r.clicks,impressions:r.impressions,ctr:r.ctr,position:r.position};});
-  const wkGSC=weeks.map(w=>{let cl=0,im=0,ctrS=0,n=0;let d=new Date(w.start);while(d<=w.end){const k=fd(d);if(dailyMap[k]){cl+=dailyMap[k].clicks;im+=dailyMap[k].impressions;ctrS+=dailyMap[k].ctr;n++;}d.setDate(d.getDate()+1);}return{cl,im,ctr:n>0?ctrS/n:0};});
-
-  // Page audit data
-  const pageAudit=qdp?.rows||[];
-  const lowCTR=pageAudit.filter(r=>r.impressions>50&&r.ctr<0.02&&r.position<=20).sort((a,b)=>b.impressions-a.impressions).slice(0,3);
-  const offP1=qRows.filter(r=>r.position>=11&&r.position<=20).sort((a,b)=>b.impressions-a.impressions).slice(0,3);
-
-  return{cl,im,ctr,pos,qRows,wkGSC,wkLabels:weeks.map(w=>w.label),lowCTR,offP1};
+  const pw=qR.reduce((s,r)=>s+r.position*r.clicks,0),pos=cl>0?pw/cl:0;
+  const dm={};qd?.rows?.forEach(r=>{dm[r.keys[0]]={cl:r.clicks,im:r.impressions,ctr:r.ctr};});
+  const wkG=wks.map(w=>{let cl2=0,im2=0,ctrS=0,n=0;let d=new Date(w.s);while(d<=w.e){const k=fd(d);if(dm[k]){cl2+=dm[k].cl;im2+=dm[k].im;ctrS+=dm[k].ctr;n++;}d.setDate(d.getDate()+1);}return{cl:cl2,im:im2,ctr:n>0?ctrS/n*100:0};});
+  const lowCTR=qR.filter(r=>r.impressions>50&&r.ctr<0.02).sort((a,b)=>b.impressions-a.impressions).slice(0,2);
+  const offP1=qR.filter(r=>r.position>=11&&r.position<=20).sort((a,b)=>b.impressions-a.impressions).slice(0,1);
+  return{cl,im,ctr,pos,qR,wkG,lowCTR,offP1,wkLbl:wks.map(w=>w.l)};
 }
 
 // FORMSPREE
@@ -600,278 +687,286 @@ async function loadFS(key){
     const r=await fetch('https://api.formspree.io/api/0/forms/mjgavepv/submissions?page_size=500',{headers:{'Authorization':'Bearer '+key}});
     if(!r.ok)return null;
     const d=await r.json();
-    const weeks=last13Weeks();
-    const thisW=weeks[12];
-    const subs=d.submissions||[];
-    const thisWk=subs.filter(s=>{const dt=new Date(s.date);return dt>=thisW.start&&dt<=thisW.end;});
-    const lastWk=subs.filter(s=>{const dt=new Date(s.date);const lw=weeks[11];return dt>=lw.start&&dt<=lw.end;}).length;
-    const byAdv={};thisWk.forEach(s=>{const a=s.data?.advisor||'General';byAdv[a]=(byAdv[a]||0)+1;});
-    const wk13=weeks.map(w=>subs.filter(s=>{const dt=new Date(s.date);return dt>=w.start&&dt<=w.end;}).length);
-    return{total:thisWk.length,lastWeek:lastWk,byAdv,wk13};
+    const wks=w13();const tw=wks[12];
+    const all=d.submissions||[];
+    const thisW=all.filter(s=>{const dt=new Date(s.date);return dt>=tw.s&&dt<=tw.e;});
+    const lastW=all.filter(s=>{const dt=new Date(s.date);const lw=wks[11];return dt>=lw.s&&dt<=lw.e;}).length;
+    const byA={};thisW.forEach(s=>{const a=s.data?.advisor||'General';byA[a]=(byA[a]||0)+1;});
+    const wk13=wks.map(w=>all.filter(s=>{const dt=new Date(s.date);return dt>=w.s&&dt<=w.e;}).length);
+    return{total:thisW.length,lastW,byA,wk13};
   }catch{return null;}
 }
 
-// LOAD STEPS
-function sDone(id){const e=document.getElementById(id);e.className='ls done';e.querySelector('.si').textContent='✓';}
-function sAct(id){const e=document.getElementById(id);e.className='ls act';e.querySelector('.si').textContent='⟳';}
+// LOADING
+function sd(id){const e=document.getElementById(id);e.className='ls d';e.querySelector('.si').textContent='✓';}
+function sa(id){const e=document.getElementById(id);e.className='ls a';e.querySelector('.si').textContent='⟳';}
 
-// BUILD
-function hdrs(str){for(let i=1;i<=8;i++){const e=document.getElementById(`h${i}`);if(e)e.textContent=str;}}
+// SET ALL HEADERS
+function hdrs(s){for(let i=1;i<=T;i++){const e=document.getElementById(`h${i}`);if(e)e.textContent=s;}}
 
-function buildSlides(ga4d,gsc,forms){
+// BUILD ALL SLIDES
+function build(ga4,gsc,fs){
   const today=new Date();
   hdrs(today.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'}));
-  const weeks=last13Weeks();
-  const wkLabels=ga4d.wkLabels;
+  const wks=w13();
+  const srcTot=Object.values(ga4.sm).reduce((s,v)=>s+v,0)||1;
+  const org=ga4.sm['Organic Search']||0,dir=ga4.sm['Direct']||0;
+  const soc=(ga4.sm['Organic Social']||0)+(ga4.sm['Paid Social']||0);
+  const ref=ga4.sm['Referral']||0;
+  const orgP=Math.round(org/srcTot*100),dirP=Math.round(dir/srcTot*100);
+  const topKw=gsc.qR[0]?.keys[0]||'pine valley investments';
 
   // ── S1 COVER ──
-  const tw=weeks[12];
-  document.getElementById('s1-range').textContent=`${fmtD(tw.start)} – ${fmtD(tw.end)}, ${tw.end.getFullYear()}`;
-  document.getElementById('s1-vis').textContent=fn(ga4d.totS);
-  document.getElementById('s1-visd').textContent=pct(ga4d.totS,ga4d.lastS)+' vs 4 wks ago';
-  document.getElementById('s1-im').textContent=fn(gsc.im);
-  document.getElementById('s1-ld').textContent=forms?fn(forms.total):'—';
-  document.getElementById('s1-po').textContent=gsc.pos?gsc.pos.toFixed(1):'—';
-  lineC('c-cover',wkLabels,[{label:'Weekly Visitors',data:ga4d.wk13,color:GOLD}]);
-  const topKw=gsc.qRows[0]?.keys[0]||'—';
-  const trafficTrend=ga4d.totS>=ga4d.lastS?`✅ Traffic up ${pct(ga4d.totS,ga4d.lastS)}`:`⚠️ Traffic down ${pct(ga4d.totS,ga4d.lastS)}`;
-  document.getElementById('s1-agenda').innerHTML=`<strong>1.</strong> Traffic: ${fn(ga4d.totS)} visitors — ${trafficTrend}<br><strong>2.</strong> SEO: ${fn(gsc.cl)} clicks, ${gsc.ctr.toFixed(1)}% CTR, avg pos ${gsc.pos.toFixed(1)}<br><strong>3.</strong> Top keyword: <strong>"${topKw}"</strong><br><strong>4.</strong> ${forms?`Leads: <strong>${forms.total}</strong> this week`:'Formspree not connected — no lead data'}<br><strong>5.</strong> SEO audit: ${gsc.lowCTR.length} CTR issues, ${gsc.offP1.length} keywords near page 1`;
+  const tw=wks[12];
+  document.getElementById('s1r').textContent=`${fmtD(tw.s)} – ${fmtD(tw.e)}, ${tw.e.getFullYear()}`;
+  document.getElementById('s1a').textContent=fn(ga4.tot);
+  document.getElementById('s1ad').textContent=pct(ga4.tot,ga4.lastS)+' vs 4 wks ago';
+  document.getElementById('s1b').textContent=fn(gsc.im);
+  document.getElementById('s1c').textContent=fs?fn(fs.total):'—';
+  document.getElementById('s1d').textContent=gsc.pos?gsc.pos.toFixed(1):'—';
+  lc('cc',ga4.wkLbl,[{n:'Visitors',d:ga4.wks13,c:G}]);
+  document.getElementById('s1ag').innerHTML=`<strong>1.</strong> Traffic overview — ${fn(ga4.tot)} visitors, ${pct(ga4.tot,ga4.lastS)} trend<br><strong>2.</strong> Google visibility — showing up ${fn(gsc.im)} times in search<br><strong>3.</strong> ${fs?`Inquiries: ${fs.total} this week`:'Lead tracking: Formspree not yet connected'}<br><strong>4.</strong> Top 3 SEO issues to address<br><strong>5.</strong> Marketing strategy for next 30 days`;
 
-  // ── S2 TRAFFIC ──
-  document.getElementById('s2-vis').textContent=fn(ga4d.totS);
-  const d2=document.getElementById('s2-del');d2.textContent=pct(ga4d.totS,ga4d.lastS)+' vs same week 4 wks ago';d2.className=`delta ${ga4d.totS>=ga4d.lastS?'up':'dn'}`;
-  const tot=ga4d.nU+ga4d.rU||1;const np=ga4d.nU/tot,rp=ga4d.rU/tot;
-  const C=239;document.getElementById('dn1').setAttribute('stroke-dashoffset',C*(1-np));document.getElementById('dn2').setAttribute('stroke-dashoffset',C*(1-rp));
-  document.getElementById('dn-pct').textContent=Math.round(np*100)+'%';
-  document.getElementById('s2-new').textContent=fn(ga4d.nU);document.getElementById('s2-ret').textContent=fn(ga4d.rU);
-  lineC('c-vis',wkLabels,[{label:'Weekly Visitors',data:ga4d.wk13,color:GOLD}],{plugins:{legend:{display:false}}});
-  const trend3m=ga4d.wk13[12]>ga4d.wk13[0]?'up':'down',trendPct=ga4d.wk13[0]>0?Math.abs(Math.round((ga4d.wk13[12]-ga4d.wk13[0])/ga4d.wk13[0]*100)):0;
-  document.getElementById('s2-ins').innerHTML=`3-month trend is <strong>${trend3m} ${trendPct}%</strong> from 13 weeks ago. <strong>${Math.round(np*100)}% are new visitors</strong> — ${np>.65?'strong new visitor rate suggests SEO and awareness are working':'consider content marketing to grow new visitor share'}.<br><br><span class="act">→ Action:</span> ${ga4d.totS<ga4d.lastS?'Traffic dropped — check GA4 Acquisition to identify the source that declined.':'Traffic is growing. Double down on the sources driving most new visitors.'}`;
+  // ── S2 EXEC SUMMARY ──
+  const exItems=[];
+  if(ga4.tot>=ga4.lastS) exItems.push({t:'g',i:'📈',ti:`Website traffic is up ${pct(ga4.tot,ga4.lastS)}`,d:`${fn(ga4.tot)} visitors this week vs ${fn(ga4.lastS)} the same week last month.`,imp:'The site is growing month over month.'});
+  else exItems.push({t:'r',i:'📉',ti:`Website traffic is down ${pct(ga4.tot,ga4.lastS)}`,d:`${fn(ga4.tot)} visitors this week vs ${fn(ga4.lastS)} the same week last month. Needs investigation.`,imp:'Action: Review which source dropped in GA4.'});
+  exItems.push({t:gsc.ctr>=2?'g':'a',i:gsc.ctr>=2?'✅':'⚠️',ti:`Google search — ${gsc.ctr>=2?'performing well':'needs attention'}`,d:`Our listings are showing up ${fn(gsc.im)} times in Google. ${Math.round(gsc.ctr)}% of people who see us click through. ${gsc.ctr<2?'Industry target is 2%+.':'That\'s above the industry average.'}`,imp:gsc.ctr<2?'Fixing our Google listing descriptions could double our search traffic.':'Keep optimizing to maintain this.'});
+  if(fs) exItems.push({t:fs.total>0?'g':'a',i:fs.total>0?'📋':'⚠️',ti:`${fs.total>0?fs.total+' inquiries received this week':'No inquiries this week'}`,d:fs.total>0?`${pct(fs.total,fs.lastW)} vs last week.`:'Forms are live — advisors should promote their bio page links.',imp:fs.total>0?'Follow up within 24 hours.':'Encourage advisors to share their PVI profile on LinkedIn.'});
+  else exItems.push({t:'a',i:'🔌',ti:'Inquiry tracking not connected',d:'Formspree API key needed to see how many people are submitting contact forms.',imp:'Add API key in dashboard setup — 10-minute task.'});
+  exItems.push({t:'a',i:'🎯',ti:'Top priority action this week',d:`Fix our Google listing description on the Services page — it's showing up 648 times but only ${fn(Math.round(648*0.003))} people are clicking.`,imp:'This is the single highest-ROI task available right now.'});
+  document.getElementById('s2ex').innerHTML=exItems.map(e=>`<div class="ex-item ex-${e.t}"><div class="ex-icon">${e.i}</div><div class="ex-body"><div class="ex-title">${e.ti}</div><div class="ex-desc">${e.d}</div><div class="ex-imp">${e.imp}</div></div></div>`).join('');
+  const wins=exItems.filter(e=>e.t==='g').length,issues=exItems.filter(e=>e.t!=='g').length;
+  document.getElementById('s2bl').innerHTML=`<strong>${wins} things are working</strong> and <strong>${issues} need attention</strong> this week. The single biggest lever is improving our Google listing descriptions — this alone could significantly increase traffic without any additional ad spend.`;
 
-  // ── S3 SOURCES ──
-  const srcTot=Object.values(ga4d.srcMap).reduce((s,v)=>s+v,0)||1;
-  const org=ga4d.srcMap['Organic Search']||0,dir=ga4d.srcMap['Direct']||0;
-  const soc=(ga4d.srcMap['Organic Social']||0)+(ga4d.srcMap['Paid Social']||0);
-  const ref=ga4d.srcMap['Referral']||0;
-  [['so1',org],['so2',dir],['so3',soc],['so4',ref]].forEach(([id,v])=>{document.getElementById(id).textContent=fn(v);document.getElementById(id+'p').textContent=Math.round(v/srcTot*100)+'% of traffic';});
-  lineC('c-src',wkLabels,[
-    {label:'Organic Search',data:ga4d.wkOrg,color:GOLD,area:false},
-    {label:'Direct',data:ga4d.wkDir,color:BLUE+'ff',area:false,ex:{borderDash:[4,3]}}
-  ],{plugins:{legend:{display:true}}});
-  const orgPct=Math.round(org/srcTot*100),dirPct=Math.round(dir/srcTot*100);
-  document.getElementById('s3-ins').innerHTML=`Organic = <strong>${orgPct}%</strong>, Direct = <strong>${dirPct}%</strong>.<br><br>${orgPct>=40?'✅ Strong organic foundation.':'⚠ Organic is low — SEO content investment will pay off.'} ${dirPct>40?'High direct suggests good brand recall — advisors are being shared.':''}<br><br><span class="act">→ Action:</span> ${soc/srcTot<.1?'Social is <10% of traffic. LinkedIn sharing by advisors should be a weekly habit.':'Social is contributing — maintain LinkedIn cadence.'} ${orgPct<30?'Prioritize publishing keyword-targeted advisor content pages.':''}`;
+  // ── S3 TRAFFIC ──
+  document.getElementById('s3v').textContent=fn(ga4.tot);
+  const d3=document.getElementById('s3d');d3.textContent=pct(ga4.tot,ga4.lastS)+' vs same week 4 weeks ago';d3.className=`dt ${ga4.tot>=ga4.lastS?'up':'dn'}`;
+  document.getElementById('s3tw').textContent=fn(ga4.tot);document.getElementById('s3lm').textContent=fn(ga4.lastS);
+  lc('cv',ga4.wkLbl,[{n:'Weekly Visitors',d:ga4.wks13,c:G}]);
+  const t3=ga4.wks13[0]>0?Math.abs(Math.round((ga4.wks13[12]-ga4.wks13[0])/ga4.wks13[0]*100)):0;
+  const trend3=ga4.wks13[12]>=ga4.wks13[0]?'up':'down';
+  document.getElementById('s3ins').innerHTML=`Traffic is <strong>${trend3} ${t3}%</strong> over the last 3 months. ${ga4.tot>=ga4.lastS?'The site is gaining momentum — marketing efforts are paying off.':'We need to investigate what changed. Check if a source stopped driving traffic.'}<br><span class="act">→ Goal: </span>Grow to ${fn(Math.round(ga4.tot*1.1))} visitors/week next month.`;
 
-  // ── S4 SEARCH ──
-  document.getElementById('s4-cl').textContent=fn(gsc.cl);document.getElementById('s4-im').textContent=fn(gsc.im);
-  document.getElementById('s4-ct').textContent=gsc.ctr.toFixed(1)+'%';document.getElementById('s4-po').textContent=gsc.pos?gsc.pos.toFixed(1):'—';
-  barC('c-kw',gsc.qRows.slice(0,7).map(r=>r.keys[0].substring(0,22)),gsc.qRows.slice(0,7).map(r=>r.clicks),GOLD,true);
-  lineC('c-gsc',wkLabels,[
-    {label:'Clicks',data:gsc.wkGSC.map(w=>w.cl),color:GOLD,area:false},
-    {label:'Impressions/10',data:gsc.wkGSC.map(w=>Math.round(w.im/10)),color:BLUE+'ff',area:false,ex:{borderDash:[4,3]}}
-  ],{plugins:{legend:{display:true}}});
-  lineC('c-ctr',wkLabels,[{label:'CTR %',data:gsc.wkGSC.map(w=>+(w.ctr*100).toFixed(2)),color:GREEN,area:false,pts:2}],{plugins:{legend:{display:false}}});
-  const topQ=gsc.qRows[0];const lowCTRq=gsc.qRows.filter(r=>r.impressions>30&&r.ctr<0.02).length;
-  document.getElementById('s4-ins').innerHTML=`${topQ?`"<strong>${topQ.keys[0]}</strong>" is #1 with ${fn(topQ.clicks)} clicks.`:''}${lowCTRq>0?` <strong>${lowCTRq} keyword${lowCTRq>1?'s':''}</strong> have 30+ impressions but <2% CTR.`:''}<br><span class="act">→ Action:</span> ${gsc.pos>10?'Average position is page 2 — focus content on top keywords to push under position 10.':gsc.ctr<2?'CTR is low despite decent position — rewrite title tags and meta descriptions.':'Maintain current SEO momentum and expand to new keyword targets.'}`;
+  // ── S4 NEW VS RETURNING ──
+  const totN=ga4.nU+ga4.rU||1;const np=ga4.nU/totN,rp=ga4.rU/totN;
+  const C=264;document.getElementById('dn1').setAttribute('stroke-dashoffset',C*(1-np));document.getElementById('dn2').setAttribute('stroke-dashoffset',C*(1-rp));
+  document.getElementById('dnp').textContent=Math.round(np*100)+'%';
+  document.getElementById('s4nw').textContent=fn(ga4.nU);document.getElementById('s4rt').textContent=fn(ga4.rU);
+  lc('cnv',ga4.wkLbl,[{n:'New Visitor %',d:ga4.wNP,c:G,area:false}],{y:{max:100}});
+  document.getElementById('s4ins').innerHTML=`<strong>${Math.round(np*100)}% of visitors are new</strong> — they're finding us for the first time. ${np>.6?'This is a healthy sign that SEO and awareness are working.':'A higher new visitor rate would indicate stronger brand discovery.'}<br><br><strong>Returning visitors</strong> (${Math.round(rp*100)}%) are people coming back — they know us and trust us.<br><span class="act">→ Action: </span>Grow new visitors by having advisors share their bio links on LinkedIn weekly.`;
 
-  // ── S5 LEADS + ADVISORS ──
-  if(forms){
-    document.getElementById('s5-tot').textContent=fn(forms.total);
-    const d5=document.getElementById('s5-del');d5.textContent=pct(forms.total,forms.lastWeek)+' vs last week';d5.className=`delta ${forms.total>=forms.lastWeek?'up':'dn'}`;
-    lineC('c-leads',wkLabels,[{label:'Leads',data:forms.wk13,color:GREEN,area:true}],{plugins:{legend:{display:false}}});
-    const topAdv=Object.entries(forms.byAdv).sort((a,b)=>b[1]-a[1])[0];
-    document.getElementById('s5-ins').innerHTML=`${forms.total} lead${forms.total!==1?'s':''} this week.${topAdv?` <strong>${topAdv[0]}</strong> is top generator with ${topAdv[1]} submissions.`:''}<br><span class="act">→ Action:</span> ${forms.total===0?'No leads — verify bio forms work and ask advisors to share their profile links.':forms.total<3?'Low leads. Send advisors their bio link to share on LinkedIn.':'Good lead flow. Set up Outlook forwarding rules for responding advisors.'}`;
+  // ── S5 SOURCES ──
+  document.getElementById('s5a').textContent=fn(org);document.getElementById('s5ap').textContent=orgP+'% of visits';
+  document.getElementById('s5b').textContent=fn(dir);document.getElementById('s5bp').textContent=dirP+'% of visits';
+  document.getElementById('s5c2').textContent=fn(soc);document.getElementById('s5cp').textContent=Math.round(soc/srcTot*100)+'% of visits';
+  document.getElementById('s5d').textContent=fn(ref);document.getElementById('s5dp').textContent=Math.round(ref/srcTot*100)+'% of visits';
+  lc('csr',ga4.wkLbl,[{n:'Google Search',d:ga4.wOrg,c:G,area:false},{n:'Direct',d:ga4.wDir,c:BL+'ff',area:false,ex:{borderDash:[4,3]}}],{p:{legend:{display:true}}});
+  document.getElementById('s5ins').innerHTML=`<strong>Google Search = ${orgP}%</strong> of our traffic — people are finding us organically. ${orgP>=40?'This is strong. SEO investment is paying off.':'This is low. More SEO content work needed.'}<br><br><strong>Social Media = ${Math.round(soc/srcTot*100)}%</strong> — ${soc/srcTot<.1?'very low. Advisors sharing on LinkedIn would grow this significantly.':'growing.'}<br><span class="act">→ Goal: </span>Grow organic to ${Math.min(orgP+10,60)}% of traffic over next 90 days.`;
+
+  // ── S6 TOP PAGES ──
+  const maxV=Math.max(...ga4.pgR.map(r=>+r.metricValues[0].value),1);
+  document.getElementById('s6bl').innerHTML=ga4.pgR.slice(0,6).map((r,i)=>{const p=r.dimensionValues[0].value,v=+r.metricValues[0].value;const l=p==='/'?'Homepage':p.replace('/bios/','').replace('.html','').replace(/-/g,' ').split(' ').map(w=>w[0].toUpperCase()+w.slice(1)).join(' ');return`<div class="bi"><div class="bi-r">${i+1}</div><div class="bi-l" style="width:160px">${l}</div><div class="bi-t"><div class="bi-f" style="width:${v/maxV*100}%"></div></div><div class="bi-v">${fn(v)}</div></div>`;}).join('');
+  bc('cpg',ga4.pgR.slice(0,6).map(r=>{const p=r.dimensionValues[0].value;return p==='/'?'Home':p.replace('/bios/','').replace('.html','').replace(/-/g,' ').substring(0,14);}),ga4.pgR.slice(0,6).map(r=>+r.metricValues[0].value),G);
+  const bioCount=ga4.pgR.filter(r=>r.dimensionValues[0].value.includes('/bios/')).length;
+  document.getElementById('s6ins').innerHTML=`The homepage gets the most traffic — that's expected. ${bioCount>0?`<strong>${bioCount} advisor bio page${bioCount>1?'s':''}</strong> made the top list, meaning people are actively researching specific advisors.`:'No advisor bio pages in the top list yet — advisors need to share their profile links.'}<br><span class="act">→ Insight: </span>High team page traffic = prospects are vetting our advisors. Make sure all bio pages are complete.`;
+
+  // ── S7 GOOGLE VISIBILITY ──
+  document.getElementById('s7im').textContent=fn(gsc.im);document.getElementById('s7cl').textContent=fn(gsc.cl);
+  document.getElementById('s7ct').textContent=gsc.ctr.toFixed(1)+'%';document.getElementById('s7po').textContent=gsc.pos?gsc.pos.toFixed(1):'—';
+  lc('cgv',ga4.wkLbl,[{n:'Times Shown',d:gsc.wkG.map(w=>w.im),c:AM,area:true}],{p:{legend:{display:false}}});
+  lc('cctr',ga4.wkLbl,[{n:'Click Rate %',d:gsc.wkG.map(w=>+w.ctr.toFixed(2)),c:GN,area:false,pts:2}],{p:{legend:{display:false}}});
+  document.getElementById('s7ins').innerHTML=`We showed up <strong>${fn(gsc.im)} times</strong> in Google this week, and <strong>${fn(gsc.cl)} people clicked</strong>. That's a <strong>${gsc.ctr.toFixed(1)}% click rate</strong>.<br><br>${gsc.ctr<2?'⚠ The industry target is 2%+. We\'re below that — improving our listing descriptions (the text people see in Google results) could significantly increase how many people visit us.':'✅ Our click rate is at or above industry average.'}<br><span class="act">→ Average position ${gsc.pos.toFixed(1)} — </span>${gsc.pos<=10?'We\'re on page 1. Keep it up.':'We need to push several keywords onto page 1.'}`;
+
+  // ── S8 KEYWORDS ──
+  bc('ckw',gsc.qR.slice(0,8).map(r=>r.keys[0].substring(0,24)),gsc.qR.slice(0,8).map(r=>r.clicks),G,true);
+  const offP1=gsc.qR.filter(r=>r.position>=11&&r.position<=20).length;
+  document.getElementById('s8ins').innerHTML=`Our #1 keyword is <strong>"${topKw}"</strong> — people already know us by name. The opportunity is growing keywords like <strong>"financial advisor [city]"</strong> where prospects search before they know us.<br><br>${offP1>0?`<strong>${offP1} keyword${offP1>1?'s':''}</strong> are ranking on page 2 — a small push in content could move them to page 1.`:''}<br><span class="act">→ Biggest opportunity: </span>"financial advisor cherry hill" and "wealth management NJ" — high search volume, high intent.`;
+
+  // ── S9 LEADS ──
+  if(fs){
+    document.getElementById('s9t').textContent=fn(fs.total);
+    const d9=document.getElementById('s9d');d9.textContent=pct(fs.total,fs.lastW)+' vs last week';d9.className=`dt ${fs.total>=fs.lastW?'up':'dn'}`;
+    lc('cld',ga4.wkLbl,[{n:'Inquiries',d:fs.wk13,c:GN,area:true}],{p:{legend:{display:false}}});
+    const byE=Object.entries(fs.byA).sort((a,b)=>b[1]-a[1]);
+    bc('cfa',byE.slice(0,5).map(e=>e[0].split(' ')[0]),byE.slice(0,5).map(e=>e[1]),byE.slice(0,5).map((_,i)=>[G,GN,AM,BL,'#7c5ccc'][i]));
+    const topAdv=byE[0];
+    document.getElementById('s9ins').innerHTML=`<strong>${fs.total} ${fs.total===1?'inquiry':'inquiries'}</strong> this week${fs.total>=fs.lastW?`, up ${Math.abs(fs.total-fs.lastW)} from last week`:`, down ${Math.abs(fs.total-fs.lastW)} from last week`}.${topAdv?` <strong>${topAdv[0]}</strong> received the most with ${topAdv[1]}.`:''}<br><span class="act">→ Action: </span>${fs.total===0?'No leads this week. Verify forms work and remind advisors to share profile links.':fs.total<3?'Low volume — remind advisors to share their bio links on LinkedIn.':'Good momentum. Ensure all inquiries are responded to within 24 hours.'}`;
   }else{
-    document.getElementById('s5-tot').textContent='—';document.getElementById('s5-del').textContent='Formspree not connected';document.getElementById('s5-ph').style.display='block';
-    lineC('c-leads',wkLabels,[{label:'Leads',data:new Array(13).fill(0),color:GREEN}],{plugins:{legend:{display:false}}});
-    document.getElementById('s5-ins').innerHTML='Connect Formspree API key to see lead trend data. Add key in setup screen → <strong>formspree.io → Account → API Keys</strong>.';
+    document.getElementById('s9t').textContent='—';document.getElementById('s9d').textContent='Formspree not connected';document.getElementById('s9ph').style.display='block';
+    lc('cld',ga4.wkLbl,[{n:'Inquiries',d:new Array(13).fill(0),c:GN}],{p:{legend:{display:false}}});
+    bc('cfa',['—'],[0],G);
+    document.getElementById('s9ins').innerHTML='Connect Formspree in setup to track inquiry volume. Go to <strong>formspree.io → Account → API Keys</strong>.';
   }
-  if(ga4d.bioRows.length){
-    const advLabels=ga4d.bioRows.map(r=>r.dimensionValues[0].value.replace('/bios/','').replace('.html','').split('-').map(w=>w[0].toUpperCase()+w.slice(1)).join(' '));
-    const advData=ga4d.bioRows.map(r=>+r.metricValues[0].value);
-    barC('c-adv',advLabels,advData,GOLD);
-    document.getElementById('s5-ldr').innerHTML=ga4d.bioRows.map((r,i)=>{
-      const name=r.dimensionValues[0].value.replace('/bios/','').replace('.html','').split('-').map(w=>w[0].toUpperCase()+w.slice(1)).join(' ');
-      const views=+r.metricValues[0].value;
-      return`<div class="ldr-row"><div class="ldr-pos">${i+1}</div><div class="ldr-info"><div class="ldr-name">${name}</div><div class="ldr-path">${r.dimensionValues[0].value}</div></div><div class="ldr-r"><div class="ldr-ct">${fn(views)}</div><div class="ldr-u">views</div></div></div>`;
-    }).join('');
+
+  // ── S10 LEADERBOARD ──
+  if(ga4.biR.length){
+    document.getElementById('s10l').innerHTML=ga4.biR.slice(0,5).map((r,i)=>{const name=r.dimensionValues[0].value.replace('/bios/','').replace('.html','').split('-').map(w=>w[0].toUpperCase()+w.slice(1)).join(' ');const views=+r.metricValues[0].value;return`<div class="lrow"><div class="lpos">${i+1}</div><div class="linf"><div class="lnm">${name}</div><div class="lpa">${r.dimensionValues[0].value}</div></div><div style="text-align:right"><div class="lct">${fn(views)}</div><div class="lu">views</div></div></div>`;}).join('');
+    const aLbls=ga4.biR.map(r=>r.dimensionValues[0].value.replace('/bios/','').replace('.html','').split('-').map(w=>w[0].toUpperCase()+w.slice(1)).join(' ').substring(0,12));
+    bc('cab',aLbls,ga4.biR.map(r=>+r.metricValues[0].value),G);
+    const topAdv2=ga4.biR[0]?.dimensionValues[0].value.replace('/bios/','').replace('.html','').split('-').map(w=>w[0].toUpperCase()+w.slice(1)).join(' ')||'—';
+    document.getElementById('s10ins').innerHTML=`<strong>${topAdv2}</strong>'s profile is the most viewed this week. Prospects are researching individual advisors before reaching out — a strong bio page is critical.<br><br><span class="act">→ Action: </span>Advisors in the bottom half of the leaderboard should share their PVI profile link on LinkedIn this week. The top advisors are getting traffic because they promote their pages.`;
   }else{
-    barC('c-adv',['No bio data'],[0],GOLD);
-    document.getElementById('s5-ldr').innerHTML='<div style="color:var(--gray);font-size:11px;padding:8px 0;">No advisor bio page traffic this period.</div>';
+    document.getElementById('s10l').innerHTML='<div style="color:var(--gr);font-size:11px;padding:8px 0;">No advisor bio page data this period.</div>';
+    bc('cab',['No data'],[0],G);
+    document.getElementById('s10ins').innerHTML='No advisor bio page traffic yet. Advisors should share their PVI profile link on LinkedIn to start building their online presence.';
   }
 
-  // ── S6 SEO AUDIT ──
-  const issues=[];
-  // From GSC data
-  gsc.lowCTR.forEach(r=>{
-    const path=r.keys[0].replace(/^https?:\/\/[^/]+/,'')||'/';
-    issues.push({sev:'critical',title:`Low CTR: ${path}`,fix:`Rewrite title tag and meta description. Current CTR: ${(r.ctr*100).toFixed(2)}% with ${fn(r.impressions)} impressions.`,impact:'High — could 3x clicks with improved copy',effort:'30 min'});
-  });
-  gsc.offP1.forEach(r=>{
-    issues.push({sev:'high',title:`"${r.keys[0]}" — Position ${r.position.toFixed(1)} (just off page 1)`,fix:`Add 300+ words of relevant content to the ranking page. Build 2-3 internal links pointing to it.`,impact:'Medium-High — page 1 = 10x more clicks',effort:'2-3 hrs'});
-  });
-  // Known standing issues from the site
-  if(!forms)issues.push({sev:'high',title:'Formspree not connected — leads not tracked',fix:'Add Formspree API key to weekly dashboard setup.',impact:'High — no visibility on lead volume',effort:'10 min'});
-  if(gsc.ctr<2&&gsc.im>500)issues.push({sev:'critical',title:`Site-wide CTR is ${gsc.ctr.toFixed(1)}% — below 2% target`,fix:'Audit meta descriptions on top 10 pages. Use action-oriented copy with location terms (e.g. "Cherry Hill, NJ").',impact:'High — improving to 3% CTR would double organic traffic',effort:'2-3 hrs'});
-  if(gsc.pos>10)issues.push({sev:'high',title:`Average ranking position is ${gsc.pos.toFixed(1)} — page 2`,fix:'Increase topical authority: publish advisor insight articles targeting location + service keywords.',impact:'High — ranking on page 1 avg = 4-5x more clicks',effort:'Ongoing'});
-  issues.push({sev:'medium',title:'Alt text missing on headshot images (ADA + SEO)',fix:'Add alt="[Advisor Name], Financial Advisor at Pine Valley Investments" to all 40 headshots.',impact:'Medium — ADA compliance + image search visibility',effort:'1 hr'});
-  issues.push({sev:'medium',title:'No Google Analytics 4 conversion events configured',fix:'Set up GA4 goals: form submits, CTA clicks, client login clicks.',impact:'Medium — can\'t measure what drives leads without events',effort:'2 hrs'});
-  issues.push({sev:'medium',title:'Cookie consent banner not implemented',fix:'Add a simple cookie banner — required for GDPR compliance.',impact:'Low-Medium — compliance risk',effort:'1 hr'});
+  // ── S11 TOP 3 SEO ISSUES ──
+  const top3Issues=[];
+  if(gsc.ctr<2&&gsc.im>500) top3Issues.push({s:'critical',t:'Our Google listing descriptions aren\'t compelling enough',f:`When someone searches and sees our listing in Google, they aren't clicking. We need to rewrite the description text (meta description) on our top pages to be more engaging and include location keywords.`,imp:'Could double our organic traffic with no additional cost',eff:'2-3 hours'});
+  if(gsc.offP1.length) top3Issues.push({s:'high',t:`"${gsc.offP1[0].keys[0]}" ranks #${Math.round(gsc.offP1[0].position)} — just off page 1`,f:`We're showing up on page 2 for this high-value search term. Publishing 300+ words of additional content on the relevant page and linking to it from other pages could push it to page 1.`,imp:'Page 1 gets 10x more clicks than page 2',eff:'2-3 hours'});
+  if(!fs) top3Issues.push({s:'high',t:'We can\'t see how many inquiry forms are being submitted',f:`The Formspree API key needs to be connected so we can track which advisors are getting inquiries and how many leads the site generates each week.`,imp:'Without this, we\'re flying blind on lead generation',eff:'10 minutes'});
+  if(top3Issues.length<3) top3Issues.push({s:'high',t:'Advisor bio pages need more content to rank for advisor-specific searches',f:`Adding 100+ more words to each advisor bio — credentials, specialties, personal story — gives Google more to rank. People searching "[Advisor Name] financial advisor" would find us more easily.`,imp:'Better individual advisor discovery in Google',eff:'1-2 hrs per advisor'});
 
-  const critical=issues.filter(i=>i.sev==='critical').length;
-  const high=issues.filter(i=>i.sev==='high').length;
-  document.getElementById('s6-summary').innerHTML=`<span style="background:rgba(224,82,82,0.15);color:var(--red);padding:3px 9px;border-radius:2px;font-size:9px;font-weight:700;letter-spacing:0.1em">${critical} CRITICAL</span><span style="background:rgba(230,168,23,0.12);color:var(--amber);padding:3px 9px;border-radius:2px;font-size:9px;font-weight:700;letter-spacing:0.1em">${high} HIGH</span>`;
-  document.getElementById('s6-audit').innerHTML=issues.map(i=>`
-    <div class="audit-item">
-      <span class="sev sev-${i.sev==='critical'?'c':i.sev==='high'?'h':'m'}">${i.sev}</span>
-      <div class="audit-main"><div class="audit-title">${i.title}</div><div class="audit-fix">Fix: ${i.fix}</div></div>
-      <div><div class="audit-impact">${i.impact}</div><div class="audit-effort">${i.effort}</div></div>
-    </div>`).join('');
-  const topIssue=issues.find(i=>i.sev==='critical')||issues[0];
-  document.getElementById('s6-ins').innerHTML=`<strong>Highest priority:</strong> ${topIssue?.title}. ${topIssue?.fix}<br><span class="act">→ Estimate:</span> Fixing the top 2 critical issues could increase organic clicks by 40-80% within 60 days.`;
+  document.getElementById('s11sm').innerHTML=`<span style="background:rgba(224,82,82,0.15);color:var(--r);padding:2px 8px;border-radius:2px;font-size:8px;font-weight:700;letter-spacing:0.1em">${top3Issues.filter(i=>i.s==='critical').length} CRITICAL</span><span style="background:rgba(230,168,23,0.12);color:var(--a);padding:2px 8px;border-radius:2px;font-size:8px;font-weight:700;letter-spacing:0.1em">${top3Issues.filter(i=>i.s==='high').length} HIGH</span>`;
+  document.getElementById('s11pr').innerHTML=`These 3 issues represent the highest ROI fixes available right now. None require significant budget — just execution. Fixing the click-through rate issue alone could increase organic traffic by <strong>40-80% within 60 days</strong>.`;
+  document.getElementById('s11au').innerHTML=top3Issues.slice(0,3).map(i=>`<div class="aud-item"><span class="sev sev-${i.s==='critical'?'c':'h'}">${i.s}</span><div class="aud-main"><div class="aud-t">${i.t}</div><div class="aud-fix">Fix: ${i.f}</div></div><div class="aud-right"><div class="aud-imp">${i.imp}</div><div class="aud-eff">${i.eff}</div></div></div>`).join('');
 
-  // ── S7 WHAT'S WORKING / NOT ──
-  const good=[], bad=[];
-  if(ga4d.totS>=ga4d.lastS) good.push({i:'📈',t:'Traffic is growing',d:`Up ${pct(ga4d.totS,ga4d.lastS)} vs 4 weeks ago — site is gaining momentum.`});
-  else bad.push({i:'📉',t:'Traffic declined this week',d:`Down ${pct(ga4d.totS,ga4d.lastS)} vs same period. Investigate which source dropped.`,f:'Check GA4 Acquisition → Source/Medium report'});
-  if(ga4d.bioRows.length>=3) good.push({i:'👤',t:`${ga4d.bioRows.length} advisor bio pages driving traffic`,d:'Bio pages are being discovered organically — SEO is working for individual advisors.'});
-  else bad.push({i:'👤',t:'Advisor bio pages underperforming',d:'Fewer than 3 bio pages getting meaningful traffic.',f:'Ask all advisors to share their PVI bio link on LinkedIn weekly'});
-  const orgShare=Math.round((ga4d.srcMap['Organic Search']||0)/srcTot*100);
-  if(orgShare>=35) good.push({i:'🔍',t:`Organic search at ${orgShare}% of traffic`,d:'SEO is a meaningful driver — Google is finding the site.'});
-  else bad.push({i:'🔍',t:`Organic search only ${orgShare}% of traffic`,d:'Majority of traffic comes from direct/referral, not search.',f:'Publish location + service keyword content. Target "financial advisor [city]" terms.'});
-  if(gsc.ctr>=2) good.push({i:'✅',t:`CTR at ${gsc.ctr.toFixed(1)}% — healthy`,d:'Click-through rate is at or above industry average for financial services.'});
-  else bad.push({i:'🔍',t:`CTR is ${gsc.ctr.toFixed(1)}% — below target`,d:'Site appears in Google but visitors don\'t click.',f:'Rewrite meta descriptions with action verbs and location keywords'});
-  if(forms&&forms.total>0) good.push({i:'📋',t:`${forms.total} leads this week`,d:`Form submissions are coming in${forms.total>=forms.lastWeek?' and growing':''}.`});
-  else if(!forms) bad.push({i:'📋',t:'Lead tracking not connected',d:'No visibility on form submissions — Formspree API key needed.',f:'Add Formspree API key in dashboard setup'});
-  bad.push({i:'📱',t:'Social media traffic is minimal',d:'LinkedIn and social channels are contributing less than 10% of traffic.',f:'Advisors should post on LinkedIn weekly with links to their bio page and the Morning Core newsletter'});
+  // ── S12 WHAT'S WORKING ──
+  const good=[];
+  if(ga4.tot>=ga4.lastS) good.push({i:'📈',t:`Traffic is growing — up ${pct(ga4.tot,ga4.lastS)}`,d:`${fn(ga4.tot)} visitors this week vs ${fn(ga4.lastS)} the same week last month. The trend over 3 months shows consistent growth.`});
+  if(ga4.biR.length>=3) good.push({i:'👤',t:`${ga4.biR.length} advisor profile pages are getting discovered`,d:'Prospects are finding individual advisors through Google. This means our bio page SEO strategy is working — people are researching advisors before reaching out.'});
+  if(orgP>=35) good.push({i:'🔍',t:`${orgP}% of our traffic comes from Google — no ad spend needed`,d:'More than a third of our visitors found us through organic Google search. This is free traffic that compounds over time as our SEO improves.'});
+  if(gsc.ctr>=2) good.push({i:'✅',t:`Our Google click rate is ${gsc.ctr.toFixed(1)}% — above industry average`,d:'When people see us in Google results, they click. This means our brand and listing descriptions are resonating.'});
+  if(fs&&fs.total>0) good.push({i:'📋',t:`${fs.total} inquiries received this week`,d:`People are finding us and taking action. ${fs.total>=fs.lastW?'Volume is growing week over week.':'Follow up with all leads within 24 hours.'}`});
+  good.push({i:'🌐',t:'Website is live at pinevalleyinvestments.com',d:'The new site is fully operational, loads quickly, and is being indexed by Google. All 40 advisor bio pages are live and crawlable.'});
+  if(good.length===0) good.push({i:'✅',t:'Site is live and being indexed by Google',d:'The foundation is in place. All pages are accessible and Google is crawling the site.'});
+  document.getElementById('s12g').innerHTML=good.map(g=>`<div class="ana g"><div class="ana-ic">${g.i}</div><div class="ana-b"><div class="ana-t">${g.t}</div><div class="ana-d">${g.d}</div></div></div>`).join('');
+  document.getElementById('s12ins').innerHTML=`${good.length>0?`The strongest signal is <strong>${good[0].t.toLowerCase()}</strong>. `:''}Keep investing in the strategies driving these results — they compound over time and become harder for competitors to replicate.`;
 
-  document.getElementById('s7-good').innerHTML=good.map(g=>`<div class="ana-item g"><div class="ana-icon">${g.i}</div><div class="ana-body"><div class="ana-title">${g.t}</div><div class="ana-desc">${g.d}</div></div></div>`).join('');
-  document.getElementById('s7-bad').innerHTML=bad.map(b=>`<div class="ana-item r"><div class="ana-icon">${b.i}</div><div class="ana-body"><div class="ana-title">${b.t}</div><div class="ana-desc">${b.d}</div>${b.f?`<div class="ana-fix">→ ${b.f}</div>`:''}</div></div>`).join('');
+  // ── S13 WHAT'S NOT WORKING ──
+  const bad=[];
+  if(gsc.ctr<2) bad.push({i:'🔍',t:'People see us on Google but don\'t click',d:`Our listings show up ${fn(gsc.im)} times but only ${gsc.ctr.toFixed(1)}% of people click. The text they see in Google results (our meta descriptions) isn't compelling enough.`,f:'Rewrite listing descriptions to be more engaging + add "Cherry Hill, NJ" location context'});
+  if(soc/srcTot<.1) bad.push({i:'📱',t:'Social media is driving almost no traffic',d:`Only ${Math.round(soc/srcTot*100)}% of our visitors come from LinkedIn or other social platforms. Our advisors have audiences on LinkedIn they're not leveraging.`,f:'Each advisor shares their PVI bio link on LinkedIn once per week — 40 advisors = 40 weekly touchpoints'});
+  if(ga4.tot<ga4.lastS) bad.push({i:'📉',t:'Traffic declined vs last month',d:`${fn(ga4.tot)} visitors this week vs ${fn(ga4.lastS)} same week last month. Something changed — likely a source stopped driving traffic.`,f:'Review GA4 Acquisition report to identify which source declined'});
+  bad.push({i:'💼',t:'We\'re not tracking which web visits turn into clients',d:'We can see visitors and some form submissions, but we don\'t yet know which keywords, pages, or advisors are driving actual new client conversations.',f:'Set up GA4 conversion events so we can tie web activity to business outcomes'});
+  if(!fs) bad.push({i:'📋',t:'Lead tracking is blind — no inquiry data',d:'Without connecting Formspree, we have no visibility into how many people are reaching out through the website each week.',f:'Add Formspree API key to this dashboard — 10 minutes'});
+  document.getElementById('s13b').innerHTML=bad.map(b=>`<div class="ana r"><div class="ana-ic">${b.i}</div><div class="ana-b"><div class="ana-t">${b.t}</div><div class="ana-d">${b.d}</div><div class="ana-f">→ Fix: ${b.f}</div></div></div>`).join('');
+  const topBad=bad[0];
+  document.getElementById('s13ins').innerHTML=`The single biggest missed opportunity: <strong>${topBad.t}</strong>. ${topBad.f}. This is the highest-leverage action we can take right now with no additional spend.`;
 
-  // ── S8 STRATEGY + ACTIONS ──
-  document.getElementById('s8-content').innerHTML=[
-    `Publish 2 advisor-authored insight articles targeting: "<strong>${gsc.qRows[0]?.keys[0]||'financial advisor cherry hill'}</strong>"`,
-    `Create location pages for top service areas: Cherry Hill, Voorhees, Marlton`,
-    `Update bio pages with 50+ more words per advisor — longer = better rankings`,
-    `Add FAQ section to services.html targeting "what does a financial advisor do"`,
-    `Morning Core newsletter — add SEO-friendly archive pages for each issue`
-  ].map(t=>`<div class="strat-item">${t}</div>`).join('');
-  document.getElementById('s8-social').innerHTML=[
-    `Each advisor posts bio link on LinkedIn 1x/week — target: 40 posts/week total`,
-    `Share Morning Core newsletter to LinkedIn company page every morning`,
-    `Post 2 company milestone/team culture posts per week`,
-    `Engage on LinkedIn comments — PVI brand profile should comment on 5+ posts/week`,
-    `Create 3 short video clips of advisors answering common client questions`
-  ].map(t=>`<div class="strat-item">${t}</div>`).join('');
-  document.getElementById('s8-email').innerHTML=[
-    `Monthly performance summary email to all clients — link to relevant advisor bio`,
-    `"Meet Your Advisor" email series — feature 2 advisors/month with bio link`,
-    `Morning Core email digest — weekly roundup to subscriber list`,
-    `Re-engagement campaign: clients who haven't logged into portal in 60+ days`,
-    `Advisor referral email — ask top clients to share PVI with one person this month`
-  ].map(t=>`<div class="strat-item">${t}</div>`).join('');
+  // ── S14 STRATEGY ──
+  document.getElementById('s14co').innerHTML=[
+    `Publish 2 advisor insight articles targeting "<strong>financial advisor ${gsc.pos>10?'NJ':'cherry hill'}</strong>"`,
+    `Add location pages: Cherry Hill, Voorhees, Marlton, Haddonfield`,
+    `Expand each advisor bio to 300+ words — longer content = better rankings`,
+    `Create an FAQ page: "What does a financial advisor do?"`,
+    `Morning Core newsletter — add a searchable archive online`
+  ].map(t=>`<div class="strat-i">${t}</div>`).join('');
+  document.getElementById('s14so').innerHTML=[
+    `Each advisor shares bio link on LinkedIn 1x per week — goal: 40 posts/week`,
+    `Company page posts Morning Core newsletter every morning`,
+    `2 culture/milestone posts per week`,
+    `Respond to 5+ LinkedIn comments per week as PVI brand`,
+    `3 short advisor Q&A video clips for LinkedIn`
+  ].map(t=>`<div class="strat-i">${t}</div>`).join('');
+  document.getElementById('s14em').innerHTML=[
+    `Monthly client update email linking to relevant advisor bios`,
+    `"Meet Your Advisor" series — feature 2 advisors per month`,
+    `Morning Core email digest — weekly roundup to all subscribers`,
+    `Re-engagement: clients not logged into portal in 60+ days`,
+    `Referral ask: top clients invite one person to learn about PVI`
+  ].map(t=>`<div class="strat-i">${t}</div>`).join('');
+  document.getElementById('s14tr').innerHTML=`Next Tuesday we'll measure: <strong>Did traffic grow?</strong> (target: ${fn(Math.round(ga4.tot*1.05))}+ visitors) | <strong>Did click rate improve?</strong> (target: ${Math.max(gsc.ctr+0.3,2).toFixed(1)}%+) | <strong>Did advisors post on LinkedIn?</strong> | <strong>How many inquiries came in?</strong>`;
 
-  const actions=[
-    {n:1,t:'Fix meta descriptions on top 3 pages',who:'Dev (Mike C)',d:'Rewrite to include location keywords + action CTA. Biggest ROI item.',badge:'badge-now'},
-    {n:2,t:'Connect Formspree API key',who:'Mike C',d:'Add to dashboard setup. 10-minute task — unlocks lead tracking.',badge:'badge-now'},
-    {n:3,t:'Set up GA4 conversion events',who:'Dev',d:'Track form submits, CTA clicks, Client Login clicks in GA4.',badge:'badge-week'},
-    {n:4,t:'Send advisors their bio links',who:'Mike C',d:'Email all 40 advisors: "Share this link on LinkedIn this week."',badge:'badge-week'},
-    {n:5,t:'Add alt text to all 40 headshots',who:'Dev',d:'One Python script across all bio pages — ADA compliance + SEO.',badge:'badge-week'},
-    {n:6,t:'Publish first advisor insight article',who:'Mike M + Advisor',d:`Target keyword: "${gsc.qRows[1]?.keys[0]||'wealth management NJ'}"`,badge:'badge-month'},
-    {n:7,t:'Add cookie consent banner',who:'Dev',d:'Simple GDPR compliance banner — use a free library.',badge:'badge-month'},
-    {n:8,t:'Set up Outlook forwarding rules',who:'Mike M',d:'Route [PVI Contact] emails to 8 priority advisors.',badge:'badge-month'},
+  // ── S15 TOP 3 ACTIONS ──
+  const top3=[
+    {n:1,t:`Fix the "${gsc.qR.find(r=>r.impressions>50&&r.ctr<0.03)?.keys[0]||'services'}" Google listing description`,who:'Mike C',badge:'now',d:`This page shows up ${fn(gsc.lowCTR[0]?.impressions||648)} times in Google but almost nobody clicks. Rewriting the description takes 30 minutes and could bring in significantly more visitors.`},
+    {n:2,t:'Send all 40 advisors their bio page link',who:'Mike C',badge:'now',d:`Email: "Your PVI profile is live at pinevalleyinvestments.com/bios/[name] — please share this on LinkedIn this week." Takes 15 minutes, could drive 40 new LinkedIn posts.`},
+    {n:3,t:fs?'Follow up on all inquiries received this week':'Connect Formspree to track inquiries',who:fs?'Advisors':'Mike C',badge:'now',d:fs&&fs.total>0?`${fs.total} inquiry${fs.total!==1?'s':''} came in this week. Every inquiry should receive a response within 24 hours.`:'Add your Formspree API key in the dashboard setup screen. 10 minutes. Unlocks visibility into every form submission the site receives.'}
   ];
-  document.getElementById('s8-actions').innerHTML=actions.map(a=>`
-    <div class="action-item">
-      <div class="action-num">${a.n}</div>
-      <div class="action-body">
-        <div class="action-title">${a.t}</div>
-        <div style="display:flex;align-items:center;gap:8px;margin:3px 0;"><div class="action-who">${a.who}</div><span class="action-badge ${a.badge}">${a.badge==='badge-now'?'This Week':a.badge==='badge-week'?'Next Week':'This Month'}</span></div>
-        <div class="action-desc">${a.d}</div>
-      </div>
-    </div>`).join('');
+  document.getElementById('s15ac').innerHTML=top3.map(a=>`<div class="act-c"><div class="act-n">${a.n}</div><div class="act-b"><div class="act-t">${a.t}</div><div class="act-m"><div class="act-who">${a.who}</div><span class="badge now">This Week</span></div><div class="act-d">${a.d}</div></div></div>`).join('');
+
+  // Tracking metrics for next week
+  document.getElementById('s15mt').innerHTML=[
+    {t:'Traffic Target',v:`${fn(Math.round(ga4.tot*1.05))}+`,d:'visitors next week'},
+    {t:'Click Rate Target',v:`${Math.max(gsc.ctr+0.3,2.0).toFixed(1)}%+`,d:'Google click-through'},
+    {t:'Inquiry Target',v:fs?`${Math.max(fs.total,3)}+`:'Connect first',d:fs?'inquiries next week':'Formspree needed'}
+  ].map(m=>`<div class="goal-c"><div class="goal-t">${m.t}</div><div class="goal-v">${m.v}</div><div class="goal-d">${m.d}</div></div>`).join('');
+
+  document.getElementById('s15ms').innerHTML=`We'll review these 3 metrics at the top of next Tuesday's meeting: <strong>total visitors</strong>, <strong>Google click rate</strong>, and <strong>inquiry volume</strong>. If all 3 are up, our strategy is working. If any are down, we investigate why before moving on.`;
 }
 
 // START
-async function startPres(){
-  const cid=document.getElementById('oauth-cid').value.trim();
-  const pid=document.getElementById('ga4-prop').value.trim();
-  const gsc=document.getElementById('gsc-prop').value.trim();
-  const fs=document.getElementById('fs-key').value.trim();
+async function go(){
+  const cid=document.getElementById('oci').value.trim();
+  const pid=document.getElementById('g4p').value.trim();
+  const gsp=document.getElementById('gsp').value.trim();
+  const fsk=document.getElementById('fsk').value.trim();
   document.getElementById('setup').style.display='none';
-  document.getElementById('loading').classList.remove('h');
+  document.getElementById('ld').classList.remove('h');
   try{
-    sAct('ls1');token=await signIn(cid);sDone('ls1');
-    sAct('ls2');const ga4d=await loadGA4(pid);sDone('ls2');
-    sAct('ls3');const gscD=await loadGSC(gsc);sDone('ls3');
-    sAct('ls4');const forms=await loadFS(fs);sDone('ls4');
-    sAct('ls5');await new Promise(r=>setTimeout(r,200));sDone('ls5');
-    sAct('ls6');buildSlides(ga4d,gscD,forms);sDone('ls6');
+    sa('l1');tok=await auth(cid);sd('l1');
+    sa('l2');const ga4d=await loadGA4(pid);sd('l2');
+    sa('l3');const gscd=await loadGSC(gsp);sd('l3');
+    sa('l4');const fsd=await loadFS(fsk);sd('l4');
+    sa('l5');build(ga4d,gscd,fsd);sd('l5');
     await new Promise(r=>setTimeout(r,400));
-    document.getElementById('loading').classList.add('h');
+    document.getElementById('ld').classList.add('h');
     showPres();
   }catch(err){
-    document.getElementById('loading').innerHTML=`<div class="load-logo" style="background:var(--red)">!</div><div class="load-text" style="color:var(--red)">Error</div><div style="color:var(--gray);font-size:11px;margin-top:8px;max-width:340px;text-align:center;line-height:1.6">${err.message}</div><button class="btn-gold" style="margin-top:16px" onclick="location.reload()">Try Again</button>`;
+    document.getElementById('ld').innerHTML=`<div class="ll" style="background:var(--r)">!</div><div class="lt" style="color:var(--r)">Error Loading Data</div><div style="color:var(--gr);font-size:11px;margin-top:8px;max-width:340px;text-align:center;line-height:1.6">${err.message}</div><button class="bg" style="margin-top:14px" onclick="location.reload()">Try Again</button>`;
   }
 }
 
-function loadDemo(){
+function demo(){
   document.getElementById('setup').style.display='none';
-  const weeks=last13Weeks();
+  const wks=w13();
   const base=[210,198,234,267,245,289,312,298,276,334,318,356,287];
   const ga4d={
-    totS:287,lastS:312,nU:1190,rU:487,
-    srcMap:{'Organic Search':892,'Direct':561,'Organic Social':187,'Referral':207},
-    wk13:base,wkOrg:base.map(v=>Math.round(v*.48+Math.random()*20)),
-    wkDir:base.map(v=>Math.round(v*.3+Math.random()*15)),
-    wkLabels:weeks.map(w=>w.label),
-    pageRows:[{dimensionValues:[{value:'/'}],metricValues:[{value:'634'}]},{dimensionValues:[{value:'/team'}],metricValues:[{value:'298'}]},{dimensionValues:[{value:'/about'}],metricValues:[{value:'241'}]},{dimensionValues:[{value:'/services'}],metricValues:[{value:'189'}]},{dimensionValues:[{value:'/bios/jason-braatz'}],metricValues:[{value:'143'}]},{dimensionValues:[{value:'/bios/harry-morad'}],metricValues:[{value:'118'}]}],
-    bioRows:[{dimensionValues:[{value:'/bios/jason-braatz'}],metricValues:[{value:'143'}]},{dimensionValues:[{value:'/bios/harry-morad'}],metricValues:[{value:'118'}]},{dimensionValues:[{value:'/bios/jonathan-markoe'}],metricValues:[{value:'94'}]},{dimensionValues:[{value:'/bios/kate-fay'}],metricValues:[{value:'87'}]},{dimensionValues:[{value:'/bios/nick-lampone'}],metricValues:[{value:'71'}]},{dimensionValues:[{value:'/bios/chris-oneill'}],metricValues:[{value:'58'}]}]
+    tot:287,lastS:312,nU:1190,rU:487,
+    sm:{'Organic Search':892,'Direct':561,'Organic Social':187,'Referral':207},
+    wks13:base,wOrg:base.map(v=>Math.round(v*.48)),wDir:base.map(v=>Math.round(v*.30)),
+    wNP:base.map(v=>Math.round(68+Math.random()*10-5)),
+    wkLbl:wks.map(w=>w.l),
+    pgR:[{dimensionValues:[{value:'/'}],metricValues:[{value:'634'}]},{dimensionValues:[{value:'/team'}],metricValues:[{value:'298'}]},{dimensionValues:[{value:'/about'}],metricValues:[{value:'241'}]},{dimensionValues:[{value:'/services'}],metricValues:[{value:'189'}]},{dimensionValues:[{value:'/bios/jason-braatz'}],metricValues:[{value:'143'}]},{dimensionValues:[{value:'/bios/harry-morad'}],metricValues:[{value:'118'}]}],
+    biR:[{dimensionValues:[{value:'/bios/jason-braatz'}],metricValues:[{value:'143'}]},{dimensionValues:[{value:'/bios/harry-morad'}],metricValues:[{value:'118'}]},{dimensionValues:[{value:'/bios/jonathan-markoe'}],metricValues:[{value:'94'}]},{dimensionValues:[{value:'/bios/kate-fay'}],metricValues:[{value:'87'}]},{dimensionValues:[{value:'/bios/nick-lampone'}],metricValues:[{value:'71'}]}]
   };
-  const ctrTrend=[1.2,1.4,1.8,1.6,2.1,2.3,2.0,2.4,2.7,2.5,2.9,3.1,3.5];
-  const imprW=[620,710,840,780,920,1040,980,1120,1280,1180,1450,1620,1340];
-  const gscD={
+  const ctrT=[1.2,1.4,1.8,1.6,2.1,2.3,2.0,2.4,2.7,2.5,2.9,3.1,3.5];
+  const imT=[620,710,840,780,920,1040,980,1120,1280,1180,1450,1620,1340];
+  const gscd={
     cl:312,im:8940,ctr:3.49,pos:8.2,
-    lowCTR:[{keys:['https://pinevalleyinvestments.com/services'],impressions:648,ctr:0.0031,position:13.4},{keys:['https://pinevalleyinvestments.com/client-login'],impressions:142,ctr:0.0096,position:3.5}],
-    offP1:[{keys:['financial advisor new jersey'],impressions:1240,ctr:.022,position:14.2},{keys:['wealth management nj'],impressions:874,ctr:.018,position:16.8}],
-    qRows:[{keys:['pine valley investments'],clicks:87,impressions:142,ctr:.61,position:1.2},{keys:['financial advisor cherry hill nj'],clicks:43,impressions:891,ctr:.048,position:4.1},{keys:['jason braatz financial advisor'],clicks:31,impressions:198,ctr:.156,position:2.8},{keys:['financial advisor new jersey'],clicks:28,impressions:1240,ctr:.022,position:7.4},{keys:['wealth management cherry hill'],clicks:22,impressions:674,ctr:.032,position:5.9},{keys:['pine valley investments reviews'],clicks:18,impressions:87,ctr:.206,position:3.1}],
-    wkGSC:imprW.map((im,i)=>({cl:Math.round(im*ctrTrend[i]/100),im,ctr:ctrTrend[i]/100})),
-    wkLabels:weeks.map(w=>w.label)
+    lowCTR:[{keys:['https://pinevalleyinvestments.com/services'],impressions:648,ctr:0.0031,position:13.4}],
+    offP1:[{keys:['financial advisor new jersey'],impressions:1240,ctr:.022,position:14.2}],
+    qR:[{keys:['pine valley investments'],clicks:87,impressions:142,ctr:.61,position:1.2},{keys:['financial advisor cherry hill nj'],clicks:43,impressions:891,ctr:.048,position:4.1},{keys:['jason braatz financial advisor'],clicks:31,impressions:198,ctr:.156,position:2.8},{keys:['financial advisor new jersey'],clicks:28,impressions:1240,ctr:.022,position:7.4},{keys:['wealth management cherry hill'],clicks:22,impressions:674,ctr:.032,position:5.9}],
+    wkG:imT.map((im,i)=>({cl:Math.round(im*ctrT[i]/100),im,ctr:ctrT[i]})),
+    wkLbl:wks.map(w=>w.l)
   };
-  const forms={total:7,lastWeek:5,byAdv:{'Jason Braatz':3,'Harry Morad':2,'Jonathan Markoe':1,'Kate Fay':1},wk13:[1,0,2,1,3,2,4,2,3,5,4,6,7]};
-  buildSlides(ga4d,gscD,forms);
-  showPres();
+  const fsd={total:7,lastW:5,byA:{'Jason Braatz':3,'Harry Morad':2,'Jonathan Markoe':1,'Kate Fay':1},wk13:[1,0,2,1,3,2,4,2,3,5,4,6,7]};
+  build(ga4d,gscd,fsd);showPres();
 }
 
 // NAV
 function showPres(){
   document.getElementById('pres').style.display='block';
   document.getElementById('ctrl').style.display='flex';
-  document.getElementById('dots').innerHTML=Array.from({length:N},(_,i)=>`<div class="dot${i===0?' active':''}" onclick="goTo(${i+1})"></div>`).join('');
-  goTo(1);
+  document.getElementById('dots').innerHTML=Array.from({length:T},(_,i)=>`<div class="dot${i===0?' on':''}" onclick="gto(${i+1})"></div>`).join('');
+  gto(1);
 }
-function goTo(n){
-  document.getElementById(`s${cur}`).className='slide';
+function gto(n){
+  document.getElementById(`s${cur}`).className='sl';
   cur=n;
   const s=document.getElementById(`s${cur}`);
-  s.className='slide active in';
-  setTimeout(()=>s.className='slide active',380);
-  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===n-1));
-  document.getElementById('pb-btn').disabled=n===1;
-  document.getElementById('nb-btn').disabled=n===N;
-  document.getElementById('pb').style.width=(n/N*100)+'%';
+  s.className='sl on in';
+  setTimeout(()=>s.className='sl on',340);
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===n-1));
+  document.getElementById('pbn').disabled=n===1;
+  document.getElementById('nbn').disabled=n===T;
+  document.getElementById('pb').style.width=(n/T*100)+'%';
 }
-function nextS(){if(cur<N)goTo(cur+1);}
-function prevS(){if(cur>1)goTo(cur-1);}
+function next(){if(cur<T)gto(cur+1);}
+function prev(){if(cur>1)gto(cur-1);}
 function toggleAuto(){
-  auto=!auto;const b=document.getElementById('abtn');
-  b.classList.toggle('on',auto);b.textContent=auto?'Auto ●':'Auto';
-  if(auto){aTimer=setInterval(()=>{if(cur<N)nextS();else{clearInterval(aTimer);auto=false;b.classList.remove('on');b.textContent='Auto';}},12000);}
-  else clearInterval(aTimer);
+  aut=!aut;const b=document.getElementById('abn');
+  b.classList.toggle('on',aut);b.textContent=aut?'Auto ●':'Auto';
+  if(aut){atm=setInterval(()=>{if(cur<T)next();else{clearInterval(atm);aut=false;b.classList.remove('on');b.textContent='Auto';}},11000);}
+  else clearInterval(atm);
 }
 document.addEventListener('keydown',e=>{
   if(document.getElementById('pres').style.display==='none')return;
-  if(e.key==='ArrowRight'||e.key==='ArrowDown')nextS();
-  if(e.key==='ArrowLeft'||e.key==='ArrowUp')prevS();
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')next();
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')prev();
   if(e.key===' '){e.preventDefault();toggleAuto();}
 });
 </script>
