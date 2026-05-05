@@ -155,7 +155,9 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-QCY47K50CY');
+  gtag('config', 'G-QCY47K50CY', {
+    'send_page_view': true
+  });
 </script>
 </head>
 <body>
@@ -435,6 +437,22 @@
       link.classList.toggle('active', link.getAttribute('href') === '#' + current);
     });
   });
+</script>
+
+<script>
+// GA4 Conversion Event Tracking
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('a[href*="schedule.html"]').forEach(function(el) {
+    el.addEventListener('click', function() {
+      gtag('event', 'schedule_consultation_click', { event_category: 'CTA', event_label: 'Privacy Page' });
+    });
+  });
+  document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
+    el.addEventListener('click', function() {
+      gtag('event', 'phone_click', { event_category: 'Contact', event_label: el.getAttribute('href') });
+    });
+  });
+});
 </script>
 </body>
 </html>

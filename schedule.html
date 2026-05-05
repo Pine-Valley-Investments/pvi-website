@@ -25,7 +25,9 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-QCY47K50CY');
+  gtag('config', 'G-QCY47K50CY', {
+    'send_page_view': true
+  });
 </script>
 <script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -329,9 +331,19 @@ document.addEventListener('DOMContentLoaded', function() {
   // 3. Form submissions - Formspree forms
   document.querySelectorAll('form[action*="formspree"]').forEach(function(form) {
     form.addEventListener('submit', function() {
+      var formId = form.getAttribute('action') || 'unknown';
+      var formType = formId.indexOf('xpqyylag') > -1 ? 'schedule_consultation' :
+                     formId.indexOf('xbdpyzgz') > -1 ? 'contact_form' :
+                     formId.indexOf('mvzvrwkr') > -1 ? 'advisor_inquiry' : 'form_submit';
+      gtag('event', 'generate_lead', {
+        event_category: 'Lead',
+        event_label: formType,
+        form_type: formType,
+        page_title: document.title
+      });
       gtag('event', 'form_submit', {
         event_category: 'Lead',
-        event_label: document.title
+        event_label: formType
       });
     });
   });

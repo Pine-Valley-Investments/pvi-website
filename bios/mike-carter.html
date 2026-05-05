@@ -69,7 +69,9 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-QCY47K50CY');
+  gtag('config', 'G-QCY47K50CY', {
+    'send_page_view': true
+  });
 </script>
 
 <script type="application/ld+json">{
@@ -344,12 +346,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // 3. Form submissions - Formspree forms
+  // 3. Form submissions - Formspree forms (advisor-specific)
   document.querySelectorAll('form[action*="formspree"]').forEach(function(form) {
     form.addEventListener('submit', function() {
+      var advisorField = form.querySelector('input[name="advisor"]');
+      var advisorName = advisorField ? advisorField.value : document.title;
+      // Standard GA4 lead event
+      gtag('event', 'generate_lead', {
+        event_category: 'Lead',
+        event_label: advisorName,
+        advisor_name: advisorName,
+        form_type: 'advisor_contact'
+      });
+      // Also fire form_submit for backwards compatibility
       gtag('event', 'form_submit', {
         event_category: 'Lead',
-        event_label: document.title
+        event_label: advisorName,
+        advisor_name: advisorName
       });
     });
   });
