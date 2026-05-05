@@ -963,23 +963,7 @@ return`<tr><td class="bm-metric">${b.metric}</td><td class="r bm-pvi">${b.pvi}</
   const opps=gsc.ctrOpps||[];
   const posBadge=p=>p<=3?`<span style="background:rgba(61,186,126,0.15);color:${GN};padding:2px 7px;border-radius:2px;font-size:10px;font-weight:700;">#${p.toFixed(1)}</span>`:p<=10?`<span style="background:rgba(230,168,23,0.15);color:${AM};padding:2px 7px;border-radius:2px;font-size:10px;font-weight:700;">#${p.toFixed(1)}</span>`:`<span style="background:rgba(224,82,82,0.1);color:${RD};padding:2px 7px;border-radius:2px;font-size:10px;font-weight:700;">#${p.toFixed(1)}</span>`;
   const actionLabel=p=>p<=3?'Rewrite meta description':p<=10?'Improve title tag':'Improve content depth';
-  document.getElementById('s11ctr-body').innerHTML=opps.length?opps.map(r=>{
-    const path=r.keys[0].replace(/^https?:\/\/[^/]+/,'')||'/';
-    return`<tr style="border-bottom:1px solid rgba(255,255,255,0.03);">
-      <td style="padding:8px 12px;font-size:12px;color:var(--tx);font-weight:600;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${path}</td>
-      <td style="padding:8px 12px;text-align:center;">${posBadge(r.position)}</td>
-      <td style="padding:8px 12px;text-align:center;font-size:11px;font-weight:700;color:var(--w);">${fn(r.impressions)}</td>
-      <td style="padding:8px 12px;text-align:center;font-size:11px;font-weight:700;color:${AM};">${(r.ctr*100).toFixed(2)}%</td>
-      <td style="padding:8px 12px;font-size:10px;color:var(--gr);">${actionLabel(r.position)}</td>
-    </tr>`;
-  }).join(''):`<tr><td colspan="5" style="padding:20px;text-align:center;color:var(--gr);font-size:12px;">⏳ Search Console data is building — check back next week as the new domain gets indexed.</td></tr>`;
-  if(opps.length){
-    const oppLabels=opps.slice(0,5).map(r=>r.keys[0].replace(/^https?:\/\/[^/]+/,'')||'/');
-    mk('c-ctr-opp','bar',{labels:oppLabels,datasets:[
-      {label:'Impressions',data:opps.slice(0,5).map(r=>r.impressions),backgroundColor:G+'99',borderColor:G,borderWidth:1,borderRadius:2},
-      {label:'Clicks',data:opps.slice(0,5).map(r=>Math.round(r.impressions*r.ctr)),backgroundColor:GN+'99',borderColor:GN,borderWidth:1,borderRadius:2}
-    ]},{responsive:true,maintainAspectRatio:false,p:{legend:{display:true,labels:{boxWidth:9,padding:10,color:'#babab9'}}},sc:{x:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{color:'#babab9',font:{size:8}}},y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#babab9',font:{size:8}},beginAtZero:true}}});
-  }
+  // CTR table removed from S11 (combined slide) — chart no longer needed
 
   // ── S12 WORKING ──
   const good=[];
@@ -999,12 +983,12 @@ return`<tr><td class="bm-metric">${b.metric}</td><td class="r bm-pvi">${b.pvi}</
   if(ga4.tot<ga4.lastS) bad.push({i:'📉',t:'Traffic declined vs last month',d:`${fn(ga4.tot)} this week vs ${fn(ga4.lastS)} same week last month. One source likely dropped — needs investigation in GA4.`,f:'Review GA4 Acquisition report to identify which source declined'});
   // GA4 conversion events now live — removed from not-working list
   if(!fs) bad.push({i:'📋',t:'No visibility on lead generation',d:'Without Formspree connected, we have zero data on how many people submit contact forms each week.',f:'Add Formspree API key in dashboard setup — 10 minutes'});
-  document.getElementById('s12b').innerHTML=bad.map(b=>`<div class="ana r"><div class="ana-ic">${b.i}</div><div class="ana-b"><div class="ana-t">${b.t}</div><div class="ana-d">${b.d}</div><div class="ana-f">→ Fix: ${b.f}</div></div></div>`).join('');
-  document.getElementById('s12ins').innerHTML=`The single biggest missed opportunity: <strong>social media</strong>. With 40 advisors, PVI has a combined LinkedIn network of thousands. One post per advisor per week = 40 weekly touchpoints to potential clients, all at zero cost. This is the highest-leverage channel we're not using.`;
+  document.getElementById('s13b').innerHTML=bad.map(b=>`<div class="ana r"><div class="ana-ic">${b.i}</div><div class="ana-b"><div class="ana-t">${b.t}</div><div class="ana-d">${b.d}</div><div class="ana-f">→ Fix: ${b.f}</div></div></div>`).join('');
+  document.getElementById('s13ins').innerHTML=`The single biggest missed opportunity: <strong>social media</strong>. With 40 advisors, PVI has a combined LinkedIn network of thousands. One post per advisor per week = 40 weekly touchpoints to potential clients, all at zero cost. This is the highest-leverage channel we're not using.`;
 
   // ── S14 STRATEGY + CONTENT CALENDAR ──
-  document.getElementById('s13so').innerHTML=['Each advisor posts bio link on LinkedIn <strong>every Monday</strong> — 40 advisors = 40 weekly touchpoints','Morning Core newsletter posted to company LinkedIn page daily','2 culture posts/week on company page (team, client wins, milestones)','Engage on 5+ LinkedIn comments/week as the PVI brand','1 short advisor Q&A video clip per week'].map(t=>`<div style="padding-left:10px;position:relative;margin-bottom:5px;font-size:10px;color:var(--c);line-height:1.5;"><span style="position:absolute;left:0;color:var(--g);">→</span>${t}</div>`).join('');
-  document.getElementById('s13em').innerHTML=['Monthly client update email linking to relevant advisor bios','"Meet Your Advisor" feature — 2 advisors per month with bio link','Morning Core weekly digest to all email subscribers','Re-engagement: clients not in portal in 60+ days','Referral ask: top clients invite one person to PVI conversation'].map(t=>`<div style="padding-left:10px;position:relative;margin-bottom:5px;font-size:10px;color:var(--c);line-height:1.5;"><span style="position:absolute;left:0;color:var(--g);">→</span>${t}</div>`).join('');
+  document.getElementById('s14so').innerHTML=['Each advisor posts bio link on LinkedIn <strong>every Monday</strong> — 40 advisors = 40 weekly touchpoints','Morning Core newsletter posted to company LinkedIn page daily','2 culture posts/week on company page (team, client wins, milestones)','Engage on 5+ LinkedIn comments/week as the PVI brand','1 short advisor Q&A video clip per week'].map(t=>`<div style="padding-left:10px;position:relative;margin-bottom:5px;font-size:10px;color:var(--c);line-height:1.5;"><span style="position:absolute;left:0;color:var(--g);">→</span>${t}</div>`).join('');
+  document.getElementById('s14em').innerHTML=['Monthly client update email linking to relevant advisor bios','"Meet Your Advisor" feature — 2 advisors per month with bio link','Morning Core weekly digest to all email subscribers','Re-engagement: clients not in portal in 60+ days','Referral ask: top clients invite one person to PVI conversation'].map(t=>`<div style="padding-left:10px;position:relative;margin-bottom:5px;font-size:10px;color:var(--c);line-height:1.5;"><span style="position:absolute;left:0;color:var(--g);">→</span>${t}</div>`).join('');
 
   // CONTENT CALENDAR — always computed from current Monday
   const now=new Date();const day=now.getDay();const nextMon=new Date(now);
@@ -1018,8 +1002,8 @@ return`<tr><td class="bm-metric">${b.metric}</td><td class="r bm-pvi">${b.pvi}</
     {w:'Week 3',title:'Estate Planning & Trust Administration in South Jersey',kw:'estate planning advisor nj',date:addDays(nextMon,17)},
     {w:'Week 4',title:'Understanding Investment Management Fees: What\'s Normal?',kw:'investment management cherry hill',date:addDays(nextMon,21)},
   ];
-  document.getElementById('s13cal').innerHTML=posts.map(p=>`<div class="cal-card"><div class="cal-week">${p.w}</div><div class="cal-title">${p.title}</div><div class="cal-kw">Keyword: <span>${p.kw}</span></div><div class="cal-date">Publish: ${fmtFull(p.date)}</div></div>`).join('');
-  document.getElementById('s13tr').innerHTML=`Next Tuesday we check: <strong>Did traffic grow?</strong> (target: ${fn(Math.round(ga4.tot*1.05))}+) | <strong>Did click rate improve?</strong> (target: ${Math.max(gsc.ctr+0.3,2.0).toFixed(1)}%+) | <strong>Did advisors post on LinkedIn?</strong> | <strong>First blog post published?</strong>`;
+  document.getElementById('s14cal').innerHTML=posts.map(p=>`<div class="cal-card"><div class="cal-week">${p.w}</div><div class="cal-title">${p.title}</div><div class="cal-kw">Keyword: <span>${p.kw}</span></div><div class="cal-date">Publish: ${fmtFull(p.date)}</div></div>`).join('');
+  document.getElementById('s14tr').innerHTML=`Next Tuesday we check: <strong>Did traffic grow?</strong> (target: ${fn(Math.round(ga4.tot*1.05))}+) | <strong>Did click rate improve?</strong> (target: ${Math.max(gsc.ctr+0.3,2.0).toFixed(1)}%+) | <strong>Did advisors post on LinkedIn?</strong> | <strong>First blog post published?</strong>`;
 
   // ── S15 ACTIONS ──
   const a3=[
@@ -1027,11 +1011,11 @@ return`<tr><td class="bm-metric">${b.metric}</td><td class="r bm-pvi">${b.pvi}</
     {n:2,t:'Send all 40 advisors their bio link + LinkedIn ask',who:'Mike C',badge:'bnow',d:`Email: "Your PVI profile is live at pinevalleyinvestments.com/bios/[name]. Please share it on LinkedIn this week." Takes 15 minutes, generates 40 organic posts.`},
     {n:3,t:fs?'Follow up on all inquiries within 24 hours':'Connect Formspree to track inquiries',who:fs?'Advisors':'Mike C',badge:'bnow',d:fs&&fs.total>0?`${fs.total} inquiry${fs.total!==1?'s':''} came in. Advisors must respond within 24 hours — after that, response rates drop significantly.`:'Add Formspree API key in dashboard setup. 10 minutes. Unlocks full lead visibility.'}
   ];
-  document.getElementById('s14ac').innerHTML=a3.map(a=>`<div class="act-c"><div class="act-n">${a.n}</div><div><div class="act-t">${a.t}</div><div class="act-m"><div class="act-who">${a.who}</div><span class="badge bnow">This Week</span></div><div class="act-d">${a.d}</div></div></div>`).join('');
-  document.getElementById('s14t1').textContent=fn(Math.round(ga4.tot*1.05))+'+';
-  document.getElementById('s14t2').textContent=Math.max(gsc.ctr+0.3,2.0).toFixed(1)+'%+';
-  document.getElementById('s14t3').textContent=fs?`${Math.max(fs.total,3)}+`:'Connect first';
-  document.getElementById('s14ms').innerHTML=`We'll open next week's meeting with these 3 numbers: <strong>visitors</strong>, <strong>Google click rate</strong>, and <strong>inquiry volume</strong>. If all 3 are up, our strategy is working. If any dropped, we spend 5 minutes investigating before moving on.`;
+  document.getElementById('s15ac').innerHTML=a3.map(a=>`<div class="act-c"><div class="act-n">${a.n}</div><div><div class="act-t">${a.t}</div><div class="act-m"><div class="act-who">${a.who}</div><span class="badge bnow">This Week</span></div><div class="act-d">${a.d}</div></div></div>`).join('');
+  document.getElementById('s15t1').textContent=fn(Math.round(ga4.tot*1.05))+'+';
+  document.getElementById('s15t2').textContent=Math.max(gsc.ctr+0.3,2.0).toFixed(1)+'%+';
+  document.getElementById('s15t3').textContent=fs?`${Math.max(fs.total,3)}+`:'Connect first';
+  document.getElementById('s15ms').innerHTML=`We'll open next week's meeting with these 3 numbers: <strong>visitors</strong>, <strong>Google click rate</strong>, and <strong>inquiry volume</strong>. If all 3 are up, our strategy is working. If any dropped, we spend 5 minutes investigating before moving on.`;
   }catch(e){console.error('Build error at slide build:',e);throw e;}
 }
 
