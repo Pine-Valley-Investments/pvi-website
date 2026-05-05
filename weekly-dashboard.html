@@ -278,12 +278,12 @@ body{background:var(--bg);font-family:'Montserrat',sans-serif;height:100vh;overf
 <div class="sl on" id="s1">
   <div class="hd"><div class="hdb"><div class="hdl">PVI</div><div class="hdn">Pine Valley Investments</div></div><div class="hdr"><span class="hdd" id="h1">—</span><span class="hdp">1 / 15</span></div></div>
   <div class="bd">
-    <div class="cl" style="width:290px;gap:10px;">
+    <div class="cl" style="width:310px;gap:10px;">
       <div class="ey">Weekly Performance Review</div>
       <div class="tt">Website <span class="ac">Analytics</span></div>
       <div class="gl"></div>
       <div style="font-size:11px;color:var(--gr);margin-bottom:8px;" id="s1r">—</div>
-      <div class="sg sg4">
+      <div class="sg sg4" style="flex-shrink:0;">
         <div class="sc"><div class="scl">Visitors</div><div class="scv" id="s1a">—</div><div class="scs" id="s1ad">—</div></div>
         <div class="sc"><div class="scl">Searches</div><div class="scv" id="s1b">—</div><div class="scs">times shown</div></div>
         <div class="sc"><div class="scl">Inquiries</div><div class="scv" id="s1c">—</div><div class="scs">this week</div></div>
@@ -357,8 +357,8 @@ body{background:var(--bg);font-family:'Montserrat',sans-serif;height:100vh;overf
         <div class="ins-hd">💡 What New Visitors Mean</div>
         <div class="ins-bd" id="s4n-ins">Loading…</div>
       </div>
-      <div class="ins" style="background:rgba(41,77,107,0.2);border-color:rgba(41,77,107,0.4);border-left-color:var(--b);">
-        <div class="ins-hd" style="color:var(--gr);">💡 What Returning Visitors Mean</div>
+      <div class="ins" style="background:#eff6ff;border-color:rgba(41,77,107,0.2);border-left-color:#3b82f6;">
+        <div class="ins-hd" style="color:#3b82f6;">💡 What Returning Visitors Mean</div>
         <div class="ins-bd" id="s4r-ins">Loading…</div>
       </div>
       <div class="ins">
@@ -751,7 +751,17 @@ function build(ga4,gsc,fs){
     {metric:'New Visitor Rate',pvi:Math.round(ga4.nU/(ga4.nU+ga4.rU||1)*100)+'%',ind:'55–70%',pviRaw:Math.round(ga4.nU/(ga4.nU+ga4.rU||1)*100),indLow:55,indHigh:70},
     {metric:'Bio Page Traffic (top advisor)',pvi:fn(ga4.biR[0]?+ga4.biR[0].metricValues[0].value:0),ind:'100–300/wk',pviRaw:ga4.biR[0]?+ga4.biR[0].metricValues[0].value:0,indLow:100,indHigh:300},
   ];
-  document.getElementById('s3tbl').innerHTML=`<thead><tr><th>Metric</th><th class="r">PVI This Week</th><th class="r">Industry Average</th><th class="r">Status</th><th>What It Means</th></tr></thead><tbody>${bmarks.map(b=>{const low=b.lower?b.pviRaw<=b.indHigh:b.pviRaw>=b.indLow,high=b.lower?b.pviRaw<=b.indLow*1.2:b.pviRaw>=b.indHigh;const cls=high?'bm-g':low?'bm-a':'bm-r';const status=high?'✅ Above avg':low?'〜 At avg':'⚠ Below avg';const meaning=high?'Performing well':'Opportunity to improve';return`<tr><td class="bm-metric">${b.metric}</td><td class="r bm-pvi">${b.pvi}</td><td class="r bm-ind">${b.ind}</td><td class="r"><span class="bm-badge ${cls}">${status}</span></td><td style="font-size:10px;color:var(--gr)">${meaning}</td></tr>`}).join('')}</tbody>`;
+  document.getElementById('s3tbl').innerHTML=`<thead><tr><th>Metric</th><th class="r">PVI This Week</th><th class="r">Industry Average</th><th class="r">Status</th><th>What It Means</th></tr></thead><tbody>${bmarks.map(b=>{const low=b.lower?b.pviRaw<=b.indHigh:b.pviRaw>=b.indLow,high=b.lower?b.pviRaw<=b.indLow*1.2:b.pviRaw>=b.indHigh;const cls=high?'bm-g':low?'bm-a':'bm-r';const status=high?'✅ Above avg':low?'〜 At avg':'⚠ Below avg';const meanings={
+  'Monthly Website Visitors':{g:'Maintain content cadence',a:'Publish 2 blog posts/month targeting local keywords',r:'Add location pages + advisor content urgently'},
+  'Google Click Rate (CTR)':{g:'Keep improving listing descriptions',a:'Rewrite meta descriptions on top 5 pages with location + CTA',r:'Rewrite all meta descriptions immediately — biggest ROI fix available'},
+  'Avg. Google Position':{g:'Build more backlinks to hold position',a:'Publish helpful content and get local citations',r:'Need more content + internal linking strategy'},
+  'Organic Traffic Share':{g:'Continue SEO content investment',a:'Publish 1–2 articles/month targeting "financial advisor [city]" terms',r:'Launch content calendar immediately — organic is too low'},
+  'New Visitor Rate':{g:'Advisors sharing bio links is working',a:'Each advisor posts bio link on LinkedIn weekly to grow new discovery',r:'Launch LinkedIn Monday — every advisor posts bio link weekly'},
+  'Bio Page Traffic (top advisor)':{g:'Advisors are actively sharing — keep it up',a:'Top advisors share profile on LinkedIn; others need to start',r:'All advisors must share their PVI bio link on LinkedIn this week'},
+};
+const actionMap=meanings[b.metric]||{g:'Performing well',a:'Monitor and maintain',r:'Needs immediate attention'};
+const meaning=high?actionMap.g:low?actionMap.a:actionMap.r;
+return`<tr><td class="bm-metric">${b.metric}</td><td class="r bm-pvi">${b.pvi}</td><td class="r bm-ind">${b.ind}</td><td class="r"><span class="bm-badge ${cls}">${status}</span></td><td style="font-size:11px;color:var(--tx2);font-weight:500">${meaning}</td></tr>`}).join('')}</tbody>`;
   const above=bmarks.filter(b=>b.lower?b.pviRaw<=b.indLow*1.2:b.pviRaw>=b.indHigh).length;
   document.getElementById('s3ins').innerHTML=`PVI is <strong>above industry average on ${above} of ${bmarks.length} metrics</strong>. The biggest gap vs peers is ${gsc.ctr<2?'click-through rate — our listing descriptions need work':orgP<30?'organic traffic share — more SEO content investment needed':'advisor bio page traffic — advisors need to promote their profiles'}. Closing that gap would bring us in line with the top-performing RIA websites.`;
 
@@ -770,7 +780,8 @@ function build(ga4,gsc,fs){
   document.getElementById('s5c').textContent=fn(soc);document.getElementById('s5cp').textContent=Math.round(soc/srcTot*100)+'% of traffic';
   document.getElementById('s5d').textContent=fn(ref);document.getElementById('s5dp').textContent=Math.round(ref/srcTot*100)+'% of traffic';
   lc('csr',ga4.wkLbl,[{n:'Google Search',d:ga4.wOrg,c:G,area:false},{n:'Direct',d:ga4.wDir,c:BL+'ff',area:false,ex:{borderDash:[4,3]}}],{p:{legend:{display:true}}});
-  document.getElementById('s5ins').innerHTML=`<strong>Google = ${orgP}%</strong> — ${orgP>=40?'strong SEO base.':'needs more SEO content work.'} <strong>Social = ${Math.round(soc/srcTot*100)}%</strong> — ${soc/srcTot<.1?'very low.':'growing.'}<br><br><span class="act">→ If advisors posted on LinkedIn weekly,</span> social could easily grow to 15–20% of traffic — that's hundreds of additional visitors per month at zero cost.`;
+  const socPct=Math.round(soc/srcTot*100);
+  document.getElementById('s5ins').innerHTML=`<strong>Google = ${orgP}%</strong> — ${orgP>=40?'strong SEO foundation.':'needs more content.'} <strong>Social = ${socPct}%</strong> — ${socPct<10?'untapped.':'growing.'}<br><br><strong>To grow Google traffic:</strong> Publish articles targeting "financial advisor cherry hill nj", "wealth management NJ", "retirement planning NJ" — one per month compounds over time.<br><br><strong>To grow Social:</strong> Each of 40 advisors posts their bio link on LinkedIn once a week = 40 weekly touchpoints to new potential clients at zero cost.<br><br><strong>Direct = ${dirP}%</strong> — people who know us and come directly. Morning Core newsletter is driving this.`;
 
   // ── S6 TOP PAGES ──
   const maxV=Math.max(...ga4.pgR.map(r=>+r.metricValues[0].value),1);
@@ -790,16 +801,15 @@ function build(ga4,gsc,fs){
   const rankRows=gsc.qR.slice(0,10).map(r=>{const posCls=r.position<=3?'pos-t':r.position<=10?'pos-m':'pos-b';return`<tr><td class="kw-name">${r.keys[0]}</td><td class="r"><span class="pos-badge ${posCls}">#${r.position.toFixed(0)}</span></td><td class="r">${fn(r.clicks)}</td><td class="r">${fn(r.impressions)}</td></tr>`;}).join('');
   document.getElementById('s8rank').innerHTML=`<thead><tr><th>Keyword</th><th class="r">Position</th><th class="r">Clicks</th><th class="r">Shown</th></tr></thead><tbody>${rankRows}</tbody>`;
   const opportunities=[
-    {kw:'financial advisor cherry hill nj',vol:'High',reason:'Local intent — high conversion'},
-    {kw:'wealth management cherry hill',vol:'High',reason:'Service keyword, local'},
-    {kw:'retirement planning new jersey',vol:'High',reason:'Life event keyword'},
-    {kw:'financial planner voorhees nj',vol:'Med',reason:'Nearby market'},
-    {kw:'estate planning advisor nj',vol:'Med',reason:'Trust & estate service'},
-    {kw:'morning core newsletter finance',vol:'Low',reason:'Brand awareness'},
-    {kw:'independent ria new jersey',vol:'Med',reason:'Advisor recruitment'},
-    {kw:'investment management cherry hill',vol:'High',reason:'Core service term'},
+    {kw:'financial advisor cherry hill nj',vol:'High',reason:'Local intent',how:'Write: "How to Find a Financial Advisor in Cherry Hill, NJ"'},
+    {kw:'wealth management cherry hill',vol:'High',reason:'Service + local',how:'Add "Cherry Hill wealth management" to Services page title + description'},
+    {kw:'retirement planning new jersey',vol:'High',reason:'Life event keyword',how:'Write: "Retirement Planning in NJ: What Families Need to Know"'},
+    {kw:'financial planner voorhees nj',vol:'Med',reason:'Nearby market',how:'Add Voorhees location page or mention in advisor bios'},
+    {kw:'estate planning advisor nj',vol:'Med',reason:'Trust & estate',how:'Write: "Estate Planning & Trust Administration in South Jersey"'},
+    {kw:'independent ria new jersey',vol:'Med',reason:'Advisor recruiting',how:'Add to for-advisors.html page title and meta description'},
+    {kw:'investment management cherry hill',vol:'High',reason:'Core service',how:'Update Services page to include "Cherry Hill" in title and first paragraph'},
   ].filter(o=>!gsc.qR.slice(0,5).some(r=>r.keys[0].includes(o.kw.split(' ')[0])&&r.position<=5));
-  document.getElementById('s8opp').innerHTML=`<thead><tr><th>Target Keyword</th><th class="r">Volume</th><th>Why It Matters</th></tr></thead><tbody>${opportunities.map(o=>`<tr><td class="kw-name">${o.kw}</td><td class="r"><span class="opp-badge">${o.vol}</span></td><td style="font-size:10px;color:var(--gr)">${o.reason}</td></tr>`).join('')}</tbody>`;
+  document.getElementById('s8opp').innerHTML=`<thead><tr><th>Target Keyword</th><th class="r">Vol</th><th>How to Target It</th></tr></thead><tbody>${opportunities.map(o=>`<tr><td class="kw-name">${o.kw}<div style="font-size:10px;font-weight:400;color:var(--gr);margin-top:2px">${o.reason}</div></td><td class="r" style="vertical-align:top;padding-top:10px"><span class="opp-badge">${o.vol}</span></td><td style="font-size:11px;color:var(--tx2);font-weight:500">${o.how}</td></tr>`).join('')}</tbody>`;
   const p1Count=gsc.qR.filter(r=>r.position<=10).length;const p2Count=gsc.qR.filter(r=>r.position>10&&r.position<=20).length;
   document.getElementById('s8ins').innerHTML=`We rank on <strong>page 1 for ${p1Count} keyword${p1Count!==1?'s':''}</strong> and on <strong>page 2 for ${p2Count}</strong>. The biggest opportunity: <strong>"financial advisor cherry hill nj"</strong> and related local terms — high search volume, high purchase intent, and directly in our market. Publishing one article per month targeting these terms would compound over time.`;
 
