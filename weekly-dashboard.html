@@ -328,17 +328,25 @@ body{background:var(--bg);font-family:'Montserrat',sans-serif;height:100vh;overf
     <div class="sb-item" onclick="gto(8)"><span class="sb-ic">🎯</span><span class="sb-lbl">Keywords</span></div>
     <div class="sb-item" onclick="gto(9)"><span class="sb-ic">📥</span><span class="sb-lbl">Inquiries</span></div>
     <div class="sb-item" onclick="gto(10)"><span class="sb-ic">🥇</span><span class="sb-lbl">Advisors</span></div>
-    <div class="sb-item" onclick="gto(11)"><span class="sb-ic">⚠️</span><span class="sb-lbl">Fixes</span></div>
-    <div class="sb-item" onclick="gto(12)"><span class="sb-ic">✅</span><span class="sb-lbl">Working</span></div>
-    <div class="sb-item" onclick="gto(13)"><span class="sb-ic">🔴</span><span class="sb-lbl">Not Working</span></div>
-    <div class="sb-item" onclick="gto(14)"><span class="sb-ic">📅</span><span class="sb-lbl">Strategy</span></div>
-    <div class="sb-item" onclick="gto(15)"><span class="sb-ic">⚡</span><span class="sb-lbl">Actions</span></div>
+    <div class="sb-item" onclick="gto(11)"><span class="sb-ic">⚠️</span><span class="sb-lbl">Fixes & Wins</span></div>
+    <div class="sb-item" onclick="gto(12)"><span class="sb-ic">🔴</span><span class="sb-lbl">Not Working</span></div>
+    <div class="sb-item" onclick="gto(13)"><span class="sb-ic">📅</span><span class="sb-lbl">Strategy</span></div>
+    <div class="sb-item" onclick="gto(14)"><span class="sb-ic">⚡</span><span class="sb-lbl">Actions</span></div>
   </div>
   <div class="sb-bottom">
     <div class="sb-time" id="sb-time">—</div>
     <div class="sb-actions">
       <button class="sb-btn" onclick="toggleFS()">⛶ Full</button>
       <button class="sb-btn pdf" onclick="dlPDF()">↓ PDF</button>
+    </div>
+    <div style="margin-top:8px;display:flex;flex-direction:column;gap:5px;padding:0 12px;">
+      <div style="font-size:8px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:2px;">Tools</div>
+      <a href="/seo-tracker.html" target="_blank" style="display:flex;align-items:center;gap:7px;padding:7px 10px;background:rgba(201,169,110,0.08);border:1px solid rgba(201,169,110,0.15);border-radius:4px;text-decoration:none;color:rgba(255,255,255,0.7);font-size:10px;font-weight:600;transition:all .2s;" onmouseover="this.style.background='rgba(201,169,110,0.18)';this.style.color='#c9a96e'" onmouseout="this.style.background='rgba(201,169,110,0.08)';this.style.color='rgba(255,255,255,0.7)'">
+        <span style="font-size:13px;">🔍</span> SEO Tracker
+      </a>
+      <a href="/pvi-hub.html" target="_blank" style="display:flex;align-items:center;gap:7px;padding:7px 10px;background:rgba(201,169,110,0.08);border:1px solid rgba(201,169,110,0.15);border-radius:4px;text-decoration:none;color:rgba(255,255,255,0.7);font-size:10px;font-weight:600;transition:all .2s;" onmouseover="this.style.background='rgba(201,169,110,0.18)';this.style.color='#c9a96e'" onmouseout="this.style.background='rgba(201,169,110,0.08)';this.style.color='rgba(255,255,255,0.7)'">
+        <span style="font-size:13px;">🛠</span> Site Manager
+      </a>
     </div>
   </div>
 </div>
@@ -354,7 +362,7 @@ body{background:var(--bg);font-family:'Montserrat',sans-serif;height:100vh;overf
       <div class="tt">Website <span class="ac">Analytics</span></div>
       <div class="gl"></div>
       <div style="font-size:11px;color:var(--gr);margin-bottom:8px;" id="s1r">—</div>
-      <div class="sg sg4" style="flex-shrink:0;">
+      <div class="sg sg2" style="flex-shrink:0;display:grid;grid-template-columns:1fr 1fr;">
         <div class="sc"><div class="scl">Visitors</div><div class="scv" id="s1a">—</div><div class="scs" id="s1ad">—</div></div>
         <div class="sc"><div class="scl">Searches</div><div class="scv" id="s1b">—</div><div class="scs">times shown</div></div>
         <div class="sc"><div class="scl">Inquiries</div><div class="scv" id="s1c">—</div><div class="scs">this week</div></div>
@@ -430,13 +438,13 @@ body{background:var(--bg);font-family:'Montserrat',sans-serif;height:100vh;overf
         <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="28"/>
         <circle cx="100" cy="100" r="80" fill="none" stroke="#c9a96e" stroke-width="28" stroke-dasharray="502" stroke-dashoffset="502" id="dn1" stroke-linecap="round" transform="rotate(-90 100 100)" style="transition:stroke-dashoffset 1.4s ease"/>
         <circle cx="100" cy="100" r="80" fill="none" stroke="#294d6b" stroke-width="28" stroke-dasharray="502" stroke-dashoffset="502" id="dn2" stroke-linecap="round" transform="rotate(-90 100 100)" style="transition:stroke-dashoffset 1.4s ease"/>
-        <text x="100" y="92" text-anchor="middle" fill="white" font-family="Cormorant Garamond" font-size="36" font-weight="500" id="dnp">—</text>
+        <text x="100" y="92" text-anchor="middle" fill="#0f1f35" font-family="Cormorant Garamond" font-size="36" font-weight="500" id="dnp">—</text>
         <text x="100" y="115" text-anchor="middle" fill="#babab9" font-family="Montserrat" font-size="10" font-weight="600" letter-spacing="3">NEW VISITORS</text>
       </svg>
       <div style="display:flex;gap:24px;">
-        <div style="text-align:center;"><div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:500;color:var(--w);" id="s4nw">—</div><div style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);">New</div></div>
-        <div style="width:1px;background:var(--br);"></div>
-        <div style="text-align:center;"><div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:500;color:var(--w);" id="s4rt">—</div><div style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gr);">Returning</div></div>
+        <div style="text-align:center;"><div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:500;color:var(--tx);" id="s4nw">—</div><div style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--g);">New</div></div>
+        <div style="width:1px;background:var(--bdr);"></div>
+        <div style="text-align:center;"><div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:500;color:var(--tx);" id="s4rt">—</div><div style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gr);">Returning</div></div>
       </div>
     </div>
     <div style="max-width:380px;display:flex;flex-direction:column;gap:12px;">
@@ -601,11 +609,11 @@ body{background:var(--bg);font-family:'Montserrat',sans-serif;height:100vh;overf
 
 <!-- S11: TOP 3 SEO ISSUES -->
 <div class="sl" id="s11">
-  <div class="hd"><div class="hdb"></div><div class="hdr"><span class="hdd" id="h11">—</span><span class="hdp">11 / 15</span></div></div>
+  <div class="hd"><div class="hdb"></div><div class="hdr"><span class="hdd" id="h11">—</span><span class="hdp">11 / 14</span></div></div>
   <div class="bd" style="gap:20px;">
     <div class="cl" style="width:50%;gap:10px;">
       <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-shrink:0;">
-        <div><div class="ey">What Needs to Be Fixed</div><div class="tt sm">Top 3 <span class="ac">Priority Fixes</span></div></div>
+        <div><div class="ey">What Needs to Be Fixed</div><div class="tt sm"><span class="ac">Priority Fixes</span></div></div>
         <div id="s11sm" style="display:flex;gap:7px;"></div>
       </div>
       <div class="ins" style="flex-shrink:0;">
@@ -614,44 +622,21 @@ body{background:var(--bg);font-family:'Montserrat',sans-serif;height:100vh;overf
       </div>
       <div class="audit" id="s11au"></div>
     </div>
-    <div class="cr" style="gap:8px;">
-      <div class="ctl">CTR Opportunities — High Impressions, Low Click-Through</div>
-      <div style="flex:1;min-height:0;overflow-y:auto;border:1px solid var(--bdr);border-radius:6px;background:var(--card);box-shadow:var(--sh);">
-        <table style="width:100%;border-collapse:collapse;" id="s11ctr">
-          <thead><tr>
-            <th style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gr);padding:9px 12px;text-align:left;border-bottom:2px solid var(--bdr);background:var(--bdr2);">Page</th>
-            <th style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gr);padding:9px 12px;text-align:center;border-bottom:2px solid var(--bdr);background:var(--bdr2);">Position</th>
-            <th style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gr);padding:9px 12px;text-align:center;border-bottom:2px solid var(--bdr);background:var(--bdr2);">Impressions</th>
-            <th style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gr);padding:9px 12px;text-align:center;border-bottom:2px solid var(--bdr);background:var(--bdr2);">CTR</th>
-            <th style="font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gr);padding:8px 12px;text-align:left;border-bottom:1px solid rgba(201,169,110,0.1);">Action</th>
-          </tr></thead>
-          <tbody id="s11ctr-body"></tbody>
-        </table>
+    <div style="width:1px;background:var(--bdr);flex-shrink:0;"></div>
+    <div class="cr" style="gap:9px;">
+      <div style="flex-shrink:0;"><div class="ey">Wins This Week</div><div class="tt sm">What's <span class="ac">Working</span></div></div>
+      <div class="ana-list" id="s12g" style="overflow-y:auto;flex:1;"></div>
+      <div class="ins gn" style="flex-shrink:0;">
+        <div class="ins-hd">✅ Keep Doing This</div>
+        <div class="ins-bd" id="s12ins">Loading…</div>
       </div>
-      <div style="height:130px;position:relative;flex-shrink:0;">
-        <div class="ctl" style="margin-bottom:4px;">Impressions vs Clicks — Top Opportunity Pages</div>
-        <canvas id="c-ctr-opp"></canvas>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- S12: WHAT'S WORKING -->
-<div class="sl" id="s12">
-  <div class="hd"><div class="hdb"></div><div class="hdr"><span class="hdd" id="h12">—</span><span class="hdp">12 / 15</span></div></div>
-  <div class="bd" style="flex-direction:column;gap:10px;">
-    <div style="flex-shrink:0;"><div class="ey">Wins This Week</div><div class="tt sm">What's <span class="ac">Working</span></div></div>
-    <div class="ana-list" id="s12g"></div>
-    <div class="ins gn">
-      <div class="ins-hd">✅ Keep Doing This</div>
-      <div class="ins-bd" id="s12ins">Loading…</div>
     </div>
   </div>
 </div>
 
 <!-- S13: WHAT'S NOT WORKING -->
-<div class="sl" id="s13">
-  <div class="hd"><div class="hdb"></div><div class="hdr"><span class="hdd" id="h13">—</span><span class="hdp">13 / 15</span></div></div>
+<div class="sl" id="s12">
+  <div class="hd"><div class="hdb"></div><div class="hdr"><span class="hdd" id="h12">—</span><span class="hdp">12 / 14</span></div></div>
   <div class="bd" style="flex-direction:column;gap:10px;">
     <div style="flex-shrink:0;"><div class="ey">Where We're Leaving Opportunity on the Table</div><div class="tt sm">What's <span class="ac">Not Working</span></div></div>
     <div class="ana-list" id="s13b"></div>
@@ -663,8 +648,8 @@ body{background:var(--bg);font-family:'Montserrat',sans-serif;height:100vh;overf
 </div>
 
 <!-- S14: STRATEGY + CONTENT CALENDAR -->
-<div class="sl" id="s14">
-  <div class="hd"><div class="hdb"></div><div class="hdr"><span class="hdd" id="h14">—</span><span class="hdp">14 / 15</span></div></div>
+<div class="sl" id="s13">
+  <div class="hd"><div class="hdb"></div><div class="hdr"><span class="hdd" id="h13">—</span><span class="hdp">13 / 14</span></div></div>
   <div class="bd" style="flex-direction:column;gap:10px;">
     <div style="flex-shrink:0;"><div class="ey">Next 30 Days</div><div class="tt sm">Marketing <span class="ac">Strategy</span> & Content Calendar</div></div>
     <div style="display:grid;grid-template-columns:1fr 2fr;gap:12px;flex:1;min-height:0;">
@@ -687,8 +672,8 @@ body{background:var(--bg);font-family:'Montserrat',sans-serif;height:100vh;overf
 </div>
 
 <!-- S15: TOP 3 ACTIONS -->
-<div class="sl" id="s15">
-  <div class="hd"><div class="hdb"></div><div class="hdr"><span class="hdd" id="h15">—</span><span class="hdp">15 / 15</span></div></div>
+<div class="sl" id="s14">
+  <div class="hd"><div class="hdb"></div><div class="hdr"><span class="hdd" id="h14">—</span><span class="hdp">14 / 14</span></div></div>
   <div class="bd" style="flex-direction:column;gap:12px;">
     <div style="flex-shrink:0;"><div class="ey">Before Next Tuesday</div><div class="tt sm">Top 3 <span class="ac">Action Items</span></div></div>
     <div class="act-g" id="s15ac"></div>
@@ -720,7 +705,7 @@ Chart.defaults.font.family="'Montserrat',sans-serif";
 Chart.defaults.font.size=10;
 const G='#c9a96e',N='#03213d',NM='#f0f2f5',BL='#294d6b',GN='#059669',RD='#dc2626',AM='#d97706';
 let tok=null,cur=1,aut=false,atm=null;
-const T=15,CH={};
+const T=14,CH={};
 
 // HELPERS
 function fd(d){return d.toISOString().split('T')[0];}
@@ -1012,12 +997,12 @@ return`<tr><td class="bm-metric">${b.metric}</td><td class="r bm-pvi">${b.pvi}</
   if(ga4.tot<ga4.lastS) bad.push({i:'📉',t:'Traffic declined vs last month',d:`${fn(ga4.tot)} this week vs ${fn(ga4.lastS)} same week last month. One source likely dropped — needs investigation in GA4.`,f:'Review GA4 Acquisition report to identify which source declined'});
   // GA4 conversion events now live — removed from not-working list
   if(!fs) bad.push({i:'📋',t:'No visibility on lead generation',d:'Without Formspree connected, we have zero data on how many people submit contact forms each week.',f:'Add Formspree API key in dashboard setup — 10 minutes'});
-  document.getElementById('s13b').innerHTML=bad.map(b=>`<div class="ana r"><div class="ana-ic">${b.i}</div><div class="ana-b"><div class="ana-t">${b.t}</div><div class="ana-d">${b.d}</div><div class="ana-f">→ Fix: ${b.f}</div></div></div>`).join('');
-  document.getElementById('s13ins').innerHTML=`The single biggest missed opportunity: <strong>social media</strong>. With 40 advisors, PVI has a combined LinkedIn network of thousands. One post per advisor per week = 40 weekly touchpoints to potential clients, all at zero cost. This is the highest-leverage channel we're not using.`;
+  document.getElementById('s12b').innerHTML=bad.map(b=>`<div class="ana r"><div class="ana-ic">${b.i}</div><div class="ana-b"><div class="ana-t">${b.t}</div><div class="ana-d">${b.d}</div><div class="ana-f">→ Fix: ${b.f}</div></div></div>`).join('');
+  document.getElementById('s12ins').innerHTML=`The single biggest missed opportunity: <strong>social media</strong>. With 40 advisors, PVI has a combined LinkedIn network of thousands. One post per advisor per week = 40 weekly touchpoints to potential clients, all at zero cost. This is the highest-leverage channel we're not using.`;
 
   // ── S14 STRATEGY + CONTENT CALENDAR ──
-  document.getElementById('s14so').innerHTML=['Each advisor posts bio link on LinkedIn <strong>every Monday</strong> — 40 advisors = 40 weekly touchpoints','Morning Core newsletter posted to company LinkedIn page daily','2 culture posts/week on company page (team, client wins, milestones)','Engage on 5+ LinkedIn comments/week as the PVI brand','1 short advisor Q&A video clip per week'].map(t=>`<div style="padding-left:10px;position:relative;margin-bottom:5px;font-size:10px;color:var(--c);line-height:1.5;"><span style="position:absolute;left:0;color:var(--g);">→</span>${t}</div>`).join('');
-  document.getElementById('s14em').innerHTML=['Monthly client update email linking to relevant advisor bios','"Meet Your Advisor" feature — 2 advisors per month with bio link','Morning Core weekly digest to all email subscribers','Re-engagement: clients not in portal in 60+ days','Referral ask: top clients invite one person to PVI conversation'].map(t=>`<div style="padding-left:10px;position:relative;margin-bottom:5px;font-size:10px;color:var(--c);line-height:1.5;"><span style="position:absolute;left:0;color:var(--g);">→</span>${t}</div>`).join('');
+  document.getElementById('s13so').innerHTML=['Each advisor posts bio link on LinkedIn <strong>every Monday</strong> — 40 advisors = 40 weekly touchpoints','Morning Core newsletter posted to company LinkedIn page daily','2 culture posts/week on company page (team, client wins, milestones)','Engage on 5+ LinkedIn comments/week as the PVI brand','1 short advisor Q&A video clip per week'].map(t=>`<div style="padding-left:10px;position:relative;margin-bottom:5px;font-size:10px;color:var(--c);line-height:1.5;"><span style="position:absolute;left:0;color:var(--g);">→</span>${t}</div>`).join('');
+  document.getElementById('s13em').innerHTML=['Monthly client update email linking to relevant advisor bios','"Meet Your Advisor" feature — 2 advisors per month with bio link','Morning Core weekly digest to all email subscribers','Re-engagement: clients not in portal in 60+ days','Referral ask: top clients invite one person to PVI conversation'].map(t=>`<div style="padding-left:10px;position:relative;margin-bottom:5px;font-size:10px;color:var(--c);line-height:1.5;"><span style="position:absolute;left:0;color:var(--g);">→</span>${t}</div>`).join('');
 
   // CONTENT CALENDAR — always computed from current Monday
   const now=new Date();const day=now.getDay();const nextMon=new Date(now);
@@ -1031,8 +1016,8 @@ return`<tr><td class="bm-metric">${b.metric}</td><td class="r bm-pvi">${b.pvi}</
     {w:'Week 3',title:'Estate Planning & Trust Administration in South Jersey',kw:'estate planning advisor nj',date:addDays(nextMon,17)},
     {w:'Week 4',title:'Understanding Investment Management Fees: What\'s Normal?',kw:'investment management cherry hill',date:addDays(nextMon,21)},
   ];
-  document.getElementById('s14cal').innerHTML=posts.map(p=>`<div class="cal-card"><div class="cal-week">${p.w}</div><div class="cal-title">${p.title}</div><div class="cal-kw">Keyword: <span>${p.kw}</span></div><div class="cal-date">Publish: ${fmtFull(p.date)}</div></div>`).join('');
-  document.getElementById('s14tr').innerHTML=`Next Tuesday we check: <strong>Did traffic grow?</strong> (target: ${fn(Math.round(ga4.tot*1.05))}+) | <strong>Did click rate improve?</strong> (target: ${Math.max(gsc.ctr+0.3,2.0).toFixed(1)}%+) | <strong>Did advisors post on LinkedIn?</strong> | <strong>First blog post published?</strong>`;
+  document.getElementById('s13cal').innerHTML=posts.map(p=>`<div class="cal-card"><div class="cal-week">${p.w}</div><div class="cal-title">${p.title}</div><div class="cal-kw">Keyword: <span>${p.kw}</span></div><div class="cal-date">Publish: ${fmtFull(p.date)}</div></div>`).join('');
+  document.getElementById('s13tr').innerHTML=`Next Tuesday we check: <strong>Did traffic grow?</strong> (target: ${fn(Math.round(ga4.tot*1.05))}+) | <strong>Did click rate improve?</strong> (target: ${Math.max(gsc.ctr+0.3,2.0).toFixed(1)}%+) | <strong>Did advisors post on LinkedIn?</strong> | <strong>First blog post published?</strong>`;
 
   // ── S15 ACTIONS ──
   const a3=[
@@ -1040,11 +1025,11 @@ return`<tr><td class="bm-metric">${b.metric}</td><td class="r bm-pvi">${b.pvi}</
     {n:2,t:'Send all 40 advisors their bio link + LinkedIn ask',who:'Mike C',badge:'bnow',d:`Email: "Your PVI profile is live at pinevalleyinvestments.com/bios/[name]. Please share it on LinkedIn this week." Takes 15 minutes, generates 40 organic posts.`},
     {n:3,t:fs?'Follow up on all inquiries within 24 hours':'Connect Formspree to track inquiries',who:fs?'Advisors':'Mike C',badge:'bnow',d:fs&&fs.total>0?`${fs.total} inquiry${fs.total!==1?'s':''} came in. Advisors must respond within 24 hours — after that, response rates drop significantly.`:'Add Formspree API key in dashboard setup. 10 minutes. Unlocks full lead visibility.'}
   ];
-  document.getElementById('s15ac').innerHTML=a3.map(a=>`<div class="act-c"><div class="act-n">${a.n}</div><div><div class="act-t">${a.t}</div><div class="act-m"><div class="act-who">${a.who}</div><span class="badge bnow">This Week</span></div><div class="act-d">${a.d}</div></div></div>`).join('');
-  document.getElementById('s15t1').textContent=fn(Math.round(ga4.tot*1.05))+'+';
-  document.getElementById('s15t2').textContent=Math.max(gsc.ctr+0.3,2.0).toFixed(1)+'%+';
-  document.getElementById('s15t3').textContent=fs?`${Math.max(fs.total,3)}+`:'Connect first';
-  document.getElementById('s15ms').innerHTML=`We'll open next week's meeting with these 3 numbers: <strong>visitors</strong>, <strong>Google click rate</strong>, and <strong>inquiry volume</strong>. If all 3 are up, our strategy is working. If any dropped, we spend 5 minutes investigating before moving on.`;
+  document.getElementById('s14ac').innerHTML=a3.map(a=>`<div class="act-c"><div class="act-n">${a.n}</div><div><div class="act-t">${a.t}</div><div class="act-m"><div class="act-who">${a.who}</div><span class="badge bnow">This Week</span></div><div class="act-d">${a.d}</div></div></div>`).join('');
+  document.getElementById('s14t1').textContent=fn(Math.round(ga4.tot*1.05))+'+';
+  document.getElementById('s14t2').textContent=Math.max(gsc.ctr+0.3,2.0).toFixed(1)+'%+';
+  document.getElementById('s14t3').textContent=fs?`${Math.max(fs.total,3)}+`:'Connect first';
+  document.getElementById('s14ms').innerHTML=`We'll open next week's meeting with these 3 numbers: <strong>visitors</strong>, <strong>Google click rate</strong>, and <strong>inquiry volume</strong>. If all 3 are up, our strategy is working. If any dropped, we spend 5 minutes investigating before moving on.`;
   }catch(e){console.error('Build error at slide build:',e);throw e;}
 }
 
@@ -1134,4 +1119,3 @@ function toggleFS(){if(!document.fullscreenElement){document.documentElement.req
 </script>
 </body>
 </html>
-
