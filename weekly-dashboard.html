@@ -617,7 +617,7 @@ body{background:var(--bg);font-family:'Montserrat',sans-serif;height:100vh;overf
   <div class="bd" style="gap:20px;">
     <div class="cl" style="width:50%;gap:10px;">
       <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-shrink:0;">
-        <div><div class="ey">What Needs to Be Fixed</div><div class="tt sm"><span class="ac">Priority Fixes</span></div></div>
+        <div><div class="ey" style="color:var(--r);letter-spacing:0.18em;">What Needs to Be Fixed</div><div class="tt sm" style="color:var(--tx);"><span class="ac">Priority Fixes</span></div></div>
         <div id="s11sm" style="display:flex;gap:7px;"></div>
       </div>
       <div class="ins" style="flex-shrink:0;">
@@ -770,8 +770,12 @@ async function loadGSC(prop,days=7){
   const tw={startDate:fd(gscStart),endDate:fd(gscEnd)};
   const r90={startDate:fd(wks[0].s),endDate:fd(new Date())};
   const gscBase=`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(prop)}/searchAnalytics/query`;
+  // Keywords always use 30-day minimum for meaningful data
+  const kwDays=Math.max(days,30);
+  const kwEnd=new Date();const kwStart=new Date(kwEnd);kwStart.setDate(kwEnd.getDate()-kwDays);
+  const kwTw={startDate:fd(kwStart),endDate:fd(kwEnd)};
   const[qw,qd,qp]=await Promise.all([
-    gf(gscBase,'POST',{...tw,dimensions:['query'],rowLimit:20,dataState:'all'}).catch(()=>null),
+    gf(gscBase,'POST',{...kwTw,dimensions:['query'],rowLimit:25,dataState:'all'}).catch(()=>null),
     gf(gscBase,'POST',{...r90,dimensions:['date'],rowLimit:1000,dataState:'all'}).catch(()=>null),
     gf(gscBase,'POST',{...tw,dimensions:['page'],rowLimit:50,dataState:'all'}).catch(()=>null)
   ]);
@@ -886,7 +890,9 @@ function build(ga4,gsc,fs){
     {metric:'New Visitor Rate',pvi:Math.round(ga4.nU/(ga4.nU+ga4.rU||1)*100)+'%',ind:'55–70%',pviRaw:Math.round(ga4.nU/(ga4.nU+ga4.rU||1)*100),indLow:55,indHigh:70},
     {metric:'Bio Page Traffic (top advisor)',pvi:fn(ga4.biR[0]?+ga4.biR[0].metricValues[0].value:0),ind:'100–300/wk',pviRaw:ga4.biR[0]?+ga4.biR[0].metricValues[0].value:0,indLow:100,indHigh:300},
   ];
-  document.getElementById('s3tbl').innerHTML=`<thead><tr><th>Metric</th><th class="r">PVI This Week</th><th class="r">Industry Average</th><th class="r">Status</th><th>What It Means</th></tr></thead><tbody>${bmarks.map(b=>{const low=b.lower?b.pviRaw<=b.indHigh:b.pviRaw>=b.indLow,high=b.lower?b.pviRaw<=b.indLow*1.2:b.pviRaw>=b.indHigh;const cls=high?'bm-g':low?'bm-a':'bm-r';const status=high?'✅ Above avg':low?'〜 At avg':'⚠ Below avg';const meanings={
+  const periodLabel=G_RANGE===7?'Last 7 Days':G_RANGE===30?'Last 30 Days':'Last 90 Days';
+  const bmpEl=document.getElementById('bm-period');if(bmpEl)bmpEl.textContent='PVI — '+periodLabel;
+  document.getElementById('s3tbl').innerHTML=`<thead><tr><th>Metric</th><th class="r" id="bm-period">PVI This Week</th><th class="r">Industry Average</th><th class="r">Status</th><th>What It Means</th></tr></thead><tbody>${bmarks.map(b=>{const low=b.lower?b.pviRaw<=b.indHigh:b.pviRaw>=b.indLow,high=b.lower?b.pviRaw<=b.indLow*1.2:b.pviRaw>=b.indHigh;const cls=high?'bm-g':low?'bm-a':'bm-r';const status=high?'✅ Above avg':low?'〜 At avg':'⚠ Below avg';const meanings={
   'Monthly Website Visitors':{g:'Maintain content cadence',a:'Publish 2 blog posts/month targeting local keywords',r:'Add location pages + advisor content urgently'},
   'Google Click Rate (CTR)':{g:'Keep improving listing descriptions',a:'Rewrite meta descriptions on top 5 pages with location + CTA',r:'Rewrite all meta descriptions immediately — biggest ROI fix available'},
   'Avg. Google Position':{g:'Build more backlinks to hold position',a:'Publish helpful content and get local citations',r:'Need more content + internal linking strategy'},
@@ -938,7 +944,9 @@ return`<tr><td class="bm-metric">${b.metric}</td><td class="r bm-pvi">${b.pvi}</
   document.getElementById('s7ins').innerHTML=visInsight;
 
   // ── S8 KEYWORD RANKINGS ──
-  const rankRows=gsc.qR.slice(0,10).map(r=>{const posCls=r.position<=3?'pos-t':r.position<=10?'pos-m':'pos-b';return`<tr><td class="kw-name">${r.keys[0]}</td><td class="r"><span class="pos-badge ${posCls}">#${r.position.toFixed(0)}</span></td><td class="r">${fn(r.clicks)}</td><td class="r">${fn(r.impressions)}</td></tr>`;}).join('');
+  const rankRows=gsc.qR.length>0
+    ? gsc.qR.slice(0,12).map(r=>{const posCls=r.position<=3?'pos-t':r.position<=10?'pos-m':'pos-b';return`<tr><td class="kw-name">${r.keys[0]}</td><td class="r"><span class="pos-badge ${posCls}">#${r.position.toFixed(0)}</span></td><td class="r">${fn(r.clicks)}</td><td class="r">${fn(r.impressions)}</td></tr>`;}).join('')
+    : `<tr><td colspan="4" style="padding:20px 12px;text-align:center;color:var(--gr);font-size:12px;line-height:1.6;">⏳ <strong>Keyword data is building.</strong><br>Search Console takes 2–4 weeks to fully populate for a new domain.<br>Check back next Tuesday — rankings will appear here automatically.</td></tr>`;
   document.getElementById('s8rank').innerHTML=`<thead><tr><th>Keyword</th><th class="r">Position</th><th class="r">Clicks</th><th class="r">Shown</th></tr></thead><tbody>${rankRows}</tbody>`;
   const opportunities=[
     {kw:'financial advisor cherry hill nj',vol:'High',reason:'Local intent',how:'Write: "How to Find a Financial Advisor in Cherry Hill, NJ"'},
@@ -981,7 +989,7 @@ return`<tr><td class="bm-metric">${b.metric}</td><td class="r bm-pvi">${b.pvi}</
   issues.push({s:'high',t:'Advisor bio pages need more content to rank individually on Google',f:'Each advisor bio should be 300+ words covering their specialty, credentials, and personal approach. This helps individual advisors show up when someone Googles their name or service + city.',imp:'Better individual advisor discoverability',eff:'1–2 hrs per advisor'});
   const top3=issues.slice(0,3);
   document.getElementById('s11sm').innerHTML=`<span style="background:rgba(224,82,82,0.15);color:var(--r);padding:2px 8px;border-radius:2px;font-size:8px;font-weight:700;letter-spacing:0.1em">${top3.filter(i=>i.s==='critical').length} CRITICAL</span><span style="background:rgba(230,168,23,0.12);color:var(--a);padding:2px 8px;border-radius:2px;font-size:8px;font-weight:700;letter-spacing:0.1em">${top3.filter(i=>i.s==='high').length} HIGH</span>`;
-  document.getElementById('s11pr').innerHTML=`These 3 fixes require no budget — only time. Fixing the click-through rate issue alone is estimated to increase our organic traffic by <strong>40–80% within 60 days</strong>. This is higher ROI than any paid advertising campaign.`;
+  document.getElementById('s11pr').innerHTML=`These fixes require no budget — only time. Fixing the click-through rate issue alone is estimated to increase our organic traffic by <strong>40–80% within 60 days</strong>. This is higher ROI than any paid advertising campaign.`;
   document.getElementById('s11au').innerHTML=top3.map(i=>`<div class="aitem"><span class="sev ${i.s==='critical'?'sc-badge':'sh-badge'}">${i.s}</span><div><div class="at">${i.t}</div><div class="af">Fix: ${i.f}</div></div><div><div class="ai">${i.imp}</div><div class="ae">${i.eff}</div></div></div>`).join('');
   // CTR Opportunities table + chart
   const opps=gsc.ctrOpps||[];
