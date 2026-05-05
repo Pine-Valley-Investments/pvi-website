@@ -236,7 +236,13 @@ body{background:var(--bg);font-family:'Montserrat',sans-serif;height:100vh;overf
 .cdv{width:1px;height:16px;background:rgba(255,255,255,0.1);}
 .ab{padding:4px 10px;background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:12px;color:rgba(255,255,255,0.5);font-family:'Montserrat',sans-serif;font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
 .ab.on{background:var(--gd);color:var(--g);border-color:rgba(201,169,110,0.3);}
-@media print{#ctrl,#pb{display:none!important;}#pres{display:block!important;height:auto!important;position:relative!important;}.sl{display:none!important;}.sl.on{display:flex!important;height:100vh;page-break-after:always;}}
+@media print{
+  #ctrl,#pb,#setup,#ld{display:none!important;}
+  body{overflow:visible!important;height:auto!important;}
+  #pres{display:block!important;height:auto!important;position:relative!important;overflow:visible!important;}
+  .sl{position:relative!important;height:100vh!important;page-break-after:always!important;break-after:page!important;}
+  .sl:not([style*="flex"]){display:none!important;}
+}
 </style>
 </head>
 <body>
@@ -620,13 +626,17 @@ body{background:var(--bg);font-family:'Montserrat',sans-serif;height:100vh;overf
 </div><!-- /pres -->
 
 <div id="ctrl" style="display:none;">
+  <button class="cb" id="hbn" onclick="gto(1)" title="Back to slide 1 (H)" style="font-size:11px;">⌂</button>
+  <div class="cdv"></div>
   <button class="cb" id="pbn" onclick="prev()" disabled>←</button>
   <div class="dots" id="dots"></div>
   <button class="cb" id="nbn" onclick="next()">→</button>
   <div class="cdv"></div>
   <button class="ab" id="abn" onclick="toggleAuto()">Auto</button>
   <div class="cdv"></div>
-  <button class="ab" onclick="window.print()" title="Print / Save as PDF">⎙ Print</button>
+  <button class="ab" onclick="dlPDF()" title="Download PDF (D)" style="color:var(--g);border-color:rgba(201,169,110,0.35);">↓ PDF</button>
+  <div class="cdv"></div>
+  <button class="ab" onclick="toggleFS()" title="Fullscreen (F)">⛶ Full</button>
 </div>
 
 <script>
@@ -953,12 +963,43 @@ function demo(){
 }
 
 // NAV
-function showPres(){document.getElementById('pres').style.display='block';document.getElementById('ctrl').style.display='flex';document.getElementById('dots').innerHTML=Array.from({length:T},(_,i)=>`<div class="dot${i===0?' on':''}" onclick="gto(${i+1})"></div>`).join('');gto(1);}
+function showPres(){
+  document.getElementById('pres').style.display='block';
+  document.getElementById('ctrl').style.display='flex';
+  document.getElementById('dots').innerHTML=Array.from({length:T},(_,i)=>`<div class="dot${i===0?' on':''}" onclick="gto(${i+1})"></div>`).join('');
+  // Stamp load time on every header
+  const ts='Data loaded '+new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+  document.querySelectorAll('.hdd').forEach(el=>el.textContent=el.textContent||ts);
+  gto(1);
+}
+function dlPDF(){
+  // Show all slides, print to PDF, restore
+  const was=cur;
+  document.querySelectorAll('.sl').forEach(s=>s.style.display='flex');
+  document.querySelectorAll('.sl').forEach((s,i)=>{s.style.pageBreakAfter='always';s.style.height='100vh';});
+  setTimeout(()=>{
+    window.print();
+    setTimeout(()=>{
+      document.querySelectorAll('.sl').forEach(s=>{s.style.display='';s.style.pageBreakAfter='';s.style.height='';});
+      gto(was);
+    },500);
+  },200);
+}
 function gto(n){document.getElementById(`s${cur}`).className='sl';cur=n;const s=document.getElementById(`s${cur}`);s.className='sl on in';setTimeout(()=>s.className='sl on',340);document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===n-1));document.getElementById('pbn').disabled=n===1;document.getElementById('nbn').disabled=n===T;document.getElementById('pb').style.width=(n/T*100)+'%';}
 function next(){if(cur<T)gto(cur+1);}
 function prev(){if(cur>1)gto(cur-1);}
 function toggleAuto(){aut=!aut;const b=document.getElementById('abn');b.classList.toggle('on',aut);b.textContent=aut?'Auto ●':'Auto';if(aut){atm=setInterval(()=>{if(cur<T)next();else{clearInterval(atm);aut=false;b.classList.remove('on');b.textContent='Auto';}},11000);}else clearInterval(atm);}
-document.addEventListener('keydown',e=>{if(document.getElementById('pres').style.display==='none')return;if(e.key==='ArrowRight'||e.key==='ArrowDown')next();if(e.key==='ArrowLeft'||e.key==='ArrowUp')prev();if(e.key===' '){e.preventDefault();toggleAuto();}});
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('pres').style.display==='none')return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')next();
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')prev();
+  if(e.key===' '){e.preventDefault();toggleAuto();}
+  if(e.key==='h'||e.key==='H'){gto(1);}
+  if(e.key==='f'||e.key==='F'){toggleFS();}
+  if(e.key==='d'||e.key==='D'){dlPDF();}
+  if(e.key==='Escape'){if(document.fullscreenElement)document.exitFullscreen();}
+});
+function toggleFS(){if(!document.fullscreenElement){document.documentElement.requestFullscreen().catch(()=>{});}else{document.exitFullscreen();}}
 </script>
 </body>
 </html>
