@@ -236,6 +236,7 @@ body{background:var(--n);font-family:'Montserrat',sans-serif;height:100vh;overfl
 .cdv{width:1px;height:15px;background:var(--br);}
 .ab{padding:3px 9px;background:transparent;border:1px solid var(--br);border-radius:12px;color:var(--gr);font-family:'Montserrat',sans-serif;font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
 .ab.on{background:var(--gd);color:var(--g);border-color:rgba(201,169,110,0.3);}
+@media print{#ctrl,#pb{display:none!important;}#pres{display:block!important;height:auto!important;position:relative!important;}.sl{display:none!important;}.sl.on{display:flex!important;height:100vh;page-break-after:always;}}
 </style>
 </head>
 <body>
@@ -603,6 +604,8 @@ body{background:var(--n);font-family:'Montserrat',sans-serif;height:100vh;overfl
   <button class="cb" id="nbn" onclick="next()">→</button>
   <div class="cdv"></div>
   <button class="ab" id="abn" onclick="toggleAuto()">Auto</button>
+  <div class="cdv"></div>
+  <button class="ab" onclick="window.print()" title="Print / Save as PDF">⎙ Print</button>
 </div>
 
 <script>
@@ -631,8 +634,8 @@ function lc(id,labels,ds,opts={}){return mk(id,'line',{labels,datasets:ds.map(d=
 function bc(id,labels,vals,colors,horiz=false){return mk(id,'bar',{labels,datasets:[{data:vals,backgroundColor:Array.isArray(colors)?colors:vals.map(()=>colors+'bb'),borderColor:Array.isArray(colors)?colors:vals.map(()=>colors),borderWidth:1,borderRadius:3}]},{responsive:true,maintainAspectRatio:false,p:{legend:{display:false}},indexAxis:horiz?'y':'x',sc:{x:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{color:'#babab9',font:{size:8}}},y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#babab9',font:{size:8}},beginAtZero:true}}});}
 
 // AUTH
-async function auth(cid){return new Promise((res,rej)=>{const c=google.accounts.oauth2.initTokenClient({client_id:cid,scope:'https://www.googleapis.com/auth/analytics.readonly https://www.googleapis.com/auth/webmasters.readonly',callback:r=>r.error?rej(r.error):res(r.access_token)});c.requestAccessToken();});}
-async function gf(url,m='GET',b=null){const o={method:m,headers:{'Authorization':'Bearer '+tok,'Content-Type':'application/json'}};if(b)o.body=JSON.stringify(b);const r=await fetch(url,o);if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||r.status);}return r.json();}
+async function auth(cid){return new Promise((res,rej)=>{const c=google.accounts.oauth2.initTokenClient({client_id:cid,scope:'https://www.googleapis.com/auth/analytics.readonly https://www.googleapis.com/auth/webmasters.readonly https://www.googleapis.com/auth/analytics',callback:r=>r.error?rej(r.error):res(r.access_token)});c.requestAccessToken();});}
+async function gf(url,m='GET',b=null){const o={method:m,headers:{'Authorization':'Bearer '+tok,'Content-Type':'application/json'}};if(b)o.body=JSON.stringify(b);const r=await fetch(url,o);if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error((e.error?.message||r.status)+' — '+url.split('/').pop());}return r.json();}
 
 // GA4
 async function g4r(pid,dates,dims,mets){return gf(`https://analyticsdata.googleapis.com/v1beta/properties/${pid}:runReport`,'POST',{dateRanges:dates,dimensions:dims.map(n=>({name:n})),metrics:mets.map(n=>({name:n}))});}
@@ -660,7 +663,7 @@ async function loadGSC(prop){
   const cl=qR.reduce((s,r)=>s+r.clicks,0),im=qR.reduce((s,r)=>s+r.impressions,0);
   const ctr=im>0?cl/im*100:0;const pw=qR.reduce((s,r)=>s+r.position*r.clicks,0),pos=cl>0?pw/cl:0;
   const dm={};qd?.rows?.forEach(r=>{dm[r.keys[0]]={cl:r.clicks,im:r.impressions,ctr:r.ctr};});
-  const wkG=wks.map(w=>{let cl2=0,im2=0,ctrS=0,n=0;let d=new Date(w.s);while(d<=w.e){const k=fd(d);if(dm[k]){cl2+=dm[k].cl;im2+=dm[k].im;ctrS+=dm[k].ctr;n++;}d.setDate(d.getDate()+1);}return{cl:cl2,im:im2,ctr:n>0?ctrS/n*100:0};});
+  const wkG=wks.map(w=>{let cl2=0,im2=0,ctrSum=0,n=0;let d=new Date(w.s);while(d<=w.e){const k=fd(d);if(dm[k]&&dm[k].im>0){cl2+=dm[k].cl;im2+=dm[k].im;ctrSum+=dm[k].ctr;n++;}d.setDate(d.getDate()+1);}return{cl:cl2,im:im2,ctr:n>0?+(ctrSum/n*100).toFixed(2):null};});
   const lowCTR=qR.filter(r=>r.impressions>50&&r.ctr<0.02).sort((a,b)=>b.impressions-a.impressions).slice(0,2);
   const offP1=qR.filter(r=>r.position>=11&&r.position<=20).sort((a,b)=>b.impressions-a.impressions).slice(0,1);
   return{cl,im,ctr,pos,qR,wkG,lowCTR,offP1,wkLbl:wks.map(w=>w.l)};
@@ -694,13 +697,20 @@ function build(ga4,gsc,fs){
   document.getElementById('s1ag').innerHTML=`<strong>1.</strong> Executive Summary — what happened this week<br><strong>2.</strong> How PVI compares to industry benchmarks<br><strong>3.</strong> Keyword rankings — what we own + what we're missing<br><strong>4.</strong> Top 3 issues to fix + what's working vs not<br><strong>5.</strong> Next 30-day content calendar + action items`;
 
   // ── S2 EXEC SUMMARY CARDS ──
+  const iconUp=`<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 17l6-6 4 4 8-9" stroke="${GN}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const iconDn=`<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 7l6 6 4-4 8 9" stroke="${RD}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const iconOk=`<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="${GN}" stroke-width="2"/><path d="M8 12l3 3 5-5" stroke="${GN}" stroke-width="2" stroke-linecap="round"/></svg>`;
+  const iconWarn=`<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 4L3 19h18L12 4z" stroke="${AM}" stroke-width="2" stroke-linejoin="round"/><line x1="12" y1="11" x2="12" y2="15" stroke="${AM}" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17.5" r="0.8" fill="${AM}"/></svg>`;
+  const iconTarget=`<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="${G}" stroke-width="2"/><circle cx="12" cy="12" r="5" stroke="${G}" stroke-width="2"/><circle cx="12" cy="12" r="1.5" fill="${G}"/></svg>`;
+  const iconPlug=`<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 17l-4 4M17 7l4-4M8 16l8-8M9 7v4M15 7v4M9 11a3 3 0 006 0" stroke="${AM}" stroke-width="2" stroke-linecap="round"/></svg>`;
+  const iconForm=`<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="${GN}" stroke-width="2"/><line x1="8" y1="8" x2="16" y2="8" stroke="${GN}" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="12" x2="16" y2="12" stroke="${GN}" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="16" x2="12" y2="16" stroke="${GN}" stroke-width="1.5" stroke-linecap="round"/></svg>`;
   const cards=[];
-  cards.push({t:ga4.tot>=ga4.lastS?'cg':'cr2',i:ga4.tot>=ga4.lastS?'📈':'📉',ti:`Traffic: ${fn(ga4.tot)} visitors this week`,d:`${ga4.tot>=ga4.lastS?'Up':'Down'} ${pct(ga4.tot,ga4.lastS)} vs the same week last month. The 13-week trend is ${ga4.wks13[12]>=ga4.wks13[0]?'pointing up.':'worth investigating.'}`,imp:ga4.tot>=ga4.lastS?'Momentum is building.':'Identify which source declined.'});
-  cards.push({t:gsc.ctr>=2?'cg':'ca',i:gsc.ctr>=2?'✅':'⚠️',ti:`Google: Showing up ${fn(gsc.im)} times in search`,d:`${fn(gsc.cl)} people clicked through — a ${gsc.ctr.toFixed(1)}% click rate. ${gsc.ctr<2?'Industry target is 2%. We\'re below that.':'That\'s above the 2% industry target. Strong.'}`,imp:gsc.ctr<2?'Improving listing descriptions could double clicks.':'Maintain and expand keyword coverage.'});
-  if(fs) cards.push({t:fs.total>0?'cg':'ca',i:fs.total>0?'📋':'⚠️',ti:`Inquiries: ${fs.total>0?fs.total+' received this week':'None this week'}`,d:fs.total>0?`${pct(fs.total,fs.lastW)} vs last week. Every inquiry needs a response within 24 hours.`:'Forms are live. Advisors should share their bio links on LinkedIn to drive more inquiries.',imp:fs.total>0?`Top advisor: ${Object.entries(fs.byA).sort((a,b)=>b[1]-a[1])[0]?.[0]||'—'}`:'Action: Share advisor bio links on LinkedIn this week.'});
-  else cards.push({t:'ca',i:'🔌',ti:'Inquiry tracking not yet connected',d:'Formspree API key needed to see how many contact forms are submitted each week. 10-minute setup.',imp:'Add API key → formspree.io → Account → API Keys'});
-  cards.push({t:'ca',i:'🎯',ti:'Highest-ROI action right now',d:gsc.lowCTR.length>0?`The "${gsc.lowCTR[0]?.keys[0]?.replace(/^https?:\/\/[^/]+/,'')||'/services'}" page shows up in Google ${fn(gsc.lowCTR[0]?.impressions||648)} times but almost nobody clicks. Rewriting the description text takes 30 minutes and could significantly increase traffic.`:'Continue building organic content and promoting advisor bio pages on LinkedIn.',imp:'No ad spend required — just execution.'});
-  document.getElementById('s2cards').innerHTML=cards.map(c=>`<div class="card ${c.t}"><div class="card-icon">${c.i}</div><div class="card-body"><div class="card-title">${c.ti}</div><div class="card-desc">${c.d}</div><div class="card-imp">${c.imp}</div></div></div>`).join('');
+  cards.push({t:ga4.tot>=ga4.lastS?'cg':'cr2',icon:ga4.tot>=ga4.lastS?iconUp:iconDn,ti:`Traffic: ${fn(ga4.tot)} visitors this week`,d:`${ga4.tot>=ga4.lastS?'Up':'Down'} ${pct(ga4.tot,ga4.lastS)} vs the same week last month. The 13-week trend is ${ga4.wks13[12]>=ga4.wks13[0]?'pointing up.':'worth investigating.'}`,imp:ga4.tot>=ga4.lastS?'Momentum is building.':'Identify which source declined.'});
+  cards.push({t:gsc.ctr>=2?'cg':'ca',icon:gsc.ctr>=2?iconOk:iconWarn,ti:`Google: Showing up ${fn(gsc.im)} times in search`,d:`${fn(gsc.cl)} people clicked through — a ${gsc.ctr.toFixed(1)}% click rate. ${gsc.ctr<2?'Industry target is 2%. We\'re below that.':'That\'s above the 2% industry target. Strong.'}`,imp:gsc.ctr<2?'Improving listing descriptions could double clicks.':'Maintain and expand keyword coverage.'});
+  if(fs) cards.push({t:fs.total>0?'cg':'ca',icon:fs.total>0?iconForm:iconWarn,ti:`Inquiries: ${fs.total>0?fs.total+' received this week':'None this week'}`,d:fs.total>0?`${pct(fs.total,fs.lastW)} vs last week. Every inquiry needs a response within 24 hours.`:'Forms are live. Advisors should share their bio links on LinkedIn to drive more inquiries.',imp:fs.total>0?`Top advisor: ${Object.entries(fs.byA).sort((a,b)=>b[1]-a[1])[0]?.[0]||'—'}`:'Action: Share advisor bio links on LinkedIn this week.'});
+  else cards.push({t:'ca',icon:iconPlug,ti:'Inquiry tracking not yet connected',d:'Formspree API key needed to see how many contact forms are submitted each week. 10-minute setup.',imp:'Add API key → formspree.io → Account → API Keys'});
+  cards.push({t:'ca',icon:iconTarget,ti:'Highest-ROI action right now',d:gsc.lowCTR.length>0?`The "${gsc.lowCTR[0]?.keys[0]?.replace(/^https?:\/\/[^/]+/,'')||'/services'}" page shows up in Google ${fn(gsc.lowCTR[0]?.impressions||648)} times but almost nobody clicks. Rewriting the description text takes 30 minutes and could significantly increase traffic.`:'Continue building organic content and promoting advisor bio pages on LinkedIn.',imp:'No ad spend required — just execution.'});
+  document.getElementById('s2cards').innerHTML=cards.map(c=>`<div class="card ${c.t}"><div class="card-icon">${c.icon}</div><div class="card-body"><div class="card-title">${c.ti}</div><div class="card-desc">${c.d}</div><div class="card-imp">${c.imp}</div></div></div>`).join('');
   const goodCount=cards.filter(c=>c.t==='cg').length,issueCount=cards.filter(c=>c.t!=='cg').length;
   document.getElementById('s2bl').innerHTML=`<strong>${goodCount} of 4 metrics are positive</strong> this week. ${issueCount>0?`The ${issueCount} item${issueCount>1?'s':''} flagged can all be addressed without budget — just execution and follow-through from the team.`:'Strong week across the board.'}`;
 
@@ -745,7 +755,7 @@ function build(ga4,gsc,fs){
   document.getElementById('s7im').textContent=fn(gsc.im);document.getElementById('s7cl').textContent=fn(gsc.cl);
   document.getElementById('s7ct').textContent=gsc.ctr.toFixed(1)+'%';document.getElementById('s7po').textContent=gsc.pos?gsc.pos.toFixed(1):'—';
   lc('cgv',ga4.wkLbl,[{n:'Times Shown',d:gsc.wkG.map(w=>w.im),c:AM,area:true}],{p:{legend:{display:false}}});
-  lc('cctr',ga4.wkLbl,[{n:'Click Rate %',d:gsc.wkG.map(w=>+w.ctr.toFixed(2)),c:GN,area:false,pts:2}],{p:{legend:{display:false}}});
+  lc('cctr',ga4.wkLbl,[{n:'Click Rate %',d:gsc.wkG.map(w=>w.ctr),c:GN,area:false,pts:2}],{p:{legend:{display:false}},y:{beginAtZero:false}});
   document.getElementById('s7ins').innerHTML=`We appear in Google <strong>${fn(gsc.im)} times</strong> and <strong>${fn(gsc.cl)} people click</strong>. ${gsc.ctr<2?`At ${gsc.ctr.toFixed(1)}%, we're below the 2% target. The text people see in Google results isn't compelling enough to click — this is fixable.`:`At ${gsc.ctr.toFixed(1)}%, we're above the 2% industry target. Google is converting well.`} Average position ${gsc.pos.toFixed(1)} — ${gsc.pos<=10?'page 1':'page 2, needs improvement'}.`;
 
   // ── S8 KEYWORD RANKINGS ──
@@ -821,15 +831,17 @@ function build(ga4,gsc,fs){
   document.getElementById('s14so').innerHTML=['Each advisor posts bio link on LinkedIn <strong>every Monday</strong> — 40 advisors = 40 weekly touchpoints','Morning Core newsletter posted to company LinkedIn page daily','2 culture posts/week on company page (team, client wins, milestones)','Engage on 5+ LinkedIn comments/week as the PVI brand','1 short advisor Q&A video clip per week'].map(t=>`<div style="padding-left:10px;position:relative;margin-bottom:5px;font-size:10px;color:var(--c);line-height:1.5;"><span style="position:absolute;left:0;color:var(--g);">→</span>${t}</div>`).join('');
   document.getElementById('s14em').innerHTML=['Monthly client update email linking to relevant advisor bios','"Meet Your Advisor" feature — 2 advisors per month with bio link','Morning Core weekly digest to all email subscribers','Re-engagement: clients not in portal in 60+ days','Referral ask: top clients invite one person to PVI conversation'].map(t=>`<div style="padding-left:10px;position:relative;margin-bottom:5px;font-size:10px;color:var(--c);line-height:1.5;"><span style="position:absolute;left:0;color:var(--g);">→</span>${t}</div>`).join('');
 
-  // CONTENT CALENDAR — 6 blog post cards
-  const nextMonday=new Date();nextMonday.setDate(nextMonday.getDate()+(nextMonday.getDay()===1?0:(8-nextMonday.getDay())%7||7));
+  // CONTENT CALENDAR — always computed from current Monday
+  const now=new Date();const day=now.getDay();const nextMon=new Date(now);
+  nextMon.setDate(now.getDate()+(day===1?7:(8-day)%7));nextMon.setHours(0,0,0,0);
+  const addDays=(d,n)=>{const r=new Date(d);r.setDate(r.getDate()+n);return r;};
   const posts=[
-    {w:'Week 1',title:'How to Find the Right Financial Advisor in Cherry Hill, NJ',kw:'financial advisor cherry hill nj',date:new Date(nextMonday)},
-    {w:'Week 2',title:'What is Wealth Management? A Guide for NJ Families',kw:'wealth management new jersey',date:new Date(nextMonday.getTime()+7*24*60*60*1000)},
-    {w:'Week 2',title:'5 Questions to Ask Before Choosing a Financial Advisor',kw:'questions financial advisor',date:new Date(nextMonday.getTime()+10*24*60*60*1000)},
-    {w:'Week 3',title:'Retirement Planning in New Jersey: What You Need to Know',kw:'retirement planning new jersey',date:new Date(nextMonday.getTime()+14*24*60*60*1000)},
-    {w:'Week 3',title:'Estate Planning & Trust Administration in South Jersey',kw:'estate planning advisor NJ',date:new Date(nextMonday.getTime()+17*24*60*60*1000)},
-    {w:'Week 4',title:'Understanding Investment Management Fees: What\'s Normal?',kw:'investment management cherry hill',date:new Date(nextMonday.getTime()+21*24*60*60*1000)},
+    {w:'Week 1',title:'How to Find the Right Financial Advisor in Cherry Hill, NJ',kw:'financial advisor cherry hill nj',date:nextMon},
+    {w:'Week 2',title:'What is Wealth Management? A Guide for NJ Families',kw:'wealth management new jersey',date:addDays(nextMon,7)},
+    {w:'Week 2',title:'5 Questions to Ask Before Choosing a Financial Advisor',kw:'questions financial advisor nj',date:addDays(nextMon,10)},
+    {w:'Week 3',title:'Retirement Planning in New Jersey: What You Need to Know',kw:'retirement planning new jersey',date:addDays(nextMon,14)},
+    {w:'Week 3',title:'Estate Planning & Trust Administration in South Jersey',kw:'estate planning advisor nj',date:addDays(nextMon,17)},
+    {w:'Week 4',title:'Understanding Investment Management Fees: What\'s Normal?',kw:'investment management cherry hill',date:addDays(nextMon,21)},
   ];
   document.getElementById('s14cal').innerHTML=posts.map(p=>`<div class="cal-card"><div class="cal-week">${p.w}</div><div class="cal-title">${p.title}</div><div class="cal-kw">Keyword: <span>${p.kw}</span></div><div class="cal-date">Publish: ${fmtFull(p.date)}</div></div>`).join('');
   document.getElementById('s14tr').innerHTML=`Next Tuesday we check: <strong>Did traffic grow?</strong> (target: ${fn(Math.round(ga4.tot*1.05))}+) | <strong>Did click rate improve?</strong> (target: ${Math.max(gsc.ctr+0.3,2.0).toFixed(1)}%+) | <strong>Did advisors post on LinkedIn?</strong> | <strong>First blog post published?</strong>`;
