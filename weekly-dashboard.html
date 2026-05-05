@@ -701,8 +701,8 @@ function build(ga4,gsc,fs){
   else cards.push({t:'ca',i:'🔌',ti:'Inquiry tracking not yet connected',d:'Formspree API key needed to see how many contact forms are submitted each week. 10-minute setup.',imp:'Add API key → formspree.io → Account → API Keys'});
   cards.push({t:'ca',i:'🎯',ti:'Highest-ROI action right now',d:gsc.lowCTR.length>0?`The "${gsc.lowCTR[0]?.keys[0]?.replace(/^https?:\/\/[^/]+/,'')||'/services'}" page shows up in Google ${fn(gsc.lowCTR[0]?.impressions||648)} times but almost nobody clicks. Rewriting the description text takes 30 minutes and could significantly increase traffic.`:'Continue building organic content and promoting advisor bio pages on LinkedIn.',imp:'No ad spend required — just execution.'});
   document.getElementById('s2cards').innerHTML=cards.map(c=>`<div class="card ${c.t}"><div class="card-icon">${c.i}</div><div class="card-body"><div class="card-title">${c.ti}</div><div class="card-desc">${c.d}</div><div class="card-imp">${c.imp}</div></div></div>`).join('');
-  const good=cards.filter(c=>c.t==='cg').length,issues=cards.filter(c=>c.t!=='cg').length;
-  document.getElementById('s2bl').innerHTML=`<strong>${good} of 4 metrics are positive</strong> this week. ${issues>0?`The ${issues} item${issues>1?'s':''} flagged can all be addressed without budget — just execution and follow-through from the team.`:'Strong week across the board.'}`;
+  const goodCount=cards.filter(c=>c.t==='cg').length,issueCount=cards.filter(c=>c.t!=='cg').length;
+  document.getElementById('s2bl').innerHTML=`<strong>${goodCount} of 4 metrics are positive</strong> this week. ${issueCount>0?`The ${issueCount} item${issueCount>1?'s':''} flagged can all be addressed without budget — just execution and follow-through from the team.`:'Strong week across the board.'}`;
 
   // ── S3 BENCHMARKS ──
   const bmarks=[
