@@ -750,7 +750,11 @@ async function loadGA4(pid){
 
 // GSC
 async function loadGSC(prop){
-  const wks=w13();const tw={startDate:fd(wks[12].s),endDate:fd(wks[12].e)};const r90={startDate:fd(wks[0].s),endDate:fd(wks[12].e)};
+  const wks=w13();
+  // Use last 7 days for GSC queries so Tuesday always has real data (GSC has 2-3 day lag)
+  const today7=new Date();const week7=new Date(today7);week7.setDate(today7.getDate()-7);
+  const tw={startDate:fd(week7),endDate:fd(today7)};
+  const r90={startDate:fd(wks[0].s),endDate:fd(new Date())};
   const gscBase=`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(prop)}/searchAnalytics/query`;
   const[qw,qd,qp]=await Promise.all([
     gf(gscBase,'POST',{...tw,dimensions:['query'],rowLimit:20,dataState:'all'}).catch(()=>null),
@@ -907,11 +911,16 @@ return`<tr><td class="bm-metric">${b.metric}</td><td class="r bm-pvi">${b.pvi}</
   document.getElementById('s6ins').innerHTML=`${bioCount>0?`<strong>${bioCount} advisor bio page${bioCount>1?'s':''}</strong> are in the top list — prospects are researching specific advisors. A complete, professional bio page is now a sales tool.`:'No advisor bio pages in the top traffic yet.'} High team page traffic means people are vetting our advisors before reaching out.`;
 
   // ── S7 GOOGLE ──
-  document.getElementById('s7im').textContent=fn(gsc.im);document.getElementById('s7cl').textContent=fn(gsc.cl);
-  document.getElementById('s7ct').textContent=gsc.ctr.toFixed(1)+'%';document.getElementById('s7po').textContent=gsc.pos?gsc.pos.toFixed(1):'—';
+  document.getElementById('s7im').textContent=gsc.im>0?fn(gsc.im):'Updating…';
+  document.getElementById('s7cl').textContent=gsc.cl>0?fn(gsc.cl):'Updating…';
+  document.getElementById('s7ct').textContent=gsc.im>0?gsc.ctr.toFixed(1)+'%':'—';
+  document.getElementById('s7po').textContent=gsc.pos>0?gsc.pos.toFixed(1):'—';
   lc('cgv',ga4.wkLbl,[{n:'Times Shown',d:gsc.wkG.map(w=>w.im),c:AM,area:true}],{p:{legend:{display:false}}});
   lc('cctr',ga4.wkLbl,[{n:'Click Rate %',d:gsc.wkG.map(w=>w.ctr),c:GN,area:false,pts:2}],{p:{legend:{display:false}},y:{beginAtZero:false}});
-  document.getElementById('s7ins').innerHTML=`We appear in Google <strong>${fn(gsc.im)} times</strong> and <strong>${fn(gsc.cl)} people click</strong>. ${gsc.ctr<2?`At ${gsc.ctr.toFixed(1)}%, we're below the 2% target. The text people see in Google results isn't compelling enough to click — this is fixable.`:`At ${gsc.ctr.toFixed(1)}%, we're above the 2% industry target. Google is converting well.`} Average position ${gsc.pos.toFixed(1)} — ${gsc.pos<=10?'page 1':'page 2, needs improvement'}.`;
+  const visInsight = gsc.im===0
+    ? `Search Console data has a 2–3 day lag and this week just started. <strong>The data will populate within 24–48 hours.</strong> Check back Wednesday or Thursday for this week's visibility numbers. Your keywords and historical data are still accurate on the previous slide.`
+    : `We appear in Google <strong>${fn(gsc.im)} times</strong> and <strong>${fn(gsc.cl)} people click</strong>. ${gsc.ctr<2?`At ${gsc.ctr.toFixed(1)}%, we're below the 2% target — improving our listing descriptions could significantly increase clicks.`:`At ${gsc.ctr.toFixed(1)}%, we're above the 2% industry target. Google is converting well.`} Average position ${gsc.pos>0?gsc.pos.toFixed(1):'—'} — ${gsc.pos>0&&gsc.pos<=10?'page 1.':gsc.pos>10?'page 2, needs improvement.':'improving.'}`;
+  document.getElementById('s7ins').innerHTML=visInsight;
 
   // ── S8 KEYWORD RANKINGS ──
   const rankRows=gsc.qR.slice(0,10).map(r=>{const posCls=r.position<=3?'pos-t':r.position<=10?'pos-m':'pos-b';return`<tr><td class="kw-name">${r.keys[0]}</td><td class="r"><span class="pos-badge ${posCls}">#${r.position.toFixed(0)}</span></td><td class="r">${fn(r.clicks)}</td><td class="r">${fn(r.impressions)}</td></tr>`;}).join('');
