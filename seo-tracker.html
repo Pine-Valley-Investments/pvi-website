@@ -5,1234 +5,455 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PVI SEO Tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
-  :root {
-    --navy: #03213d;
-    --navy-mid: #062e56;
-    --navy-light: #0a3a68;
-    --gold: #c9a96e;
-    --gold-dim: rgba(201,169,110,0.15);
-    --blue: #294d6b;
-    --cream: #f0e6d3;
-    --white: #ffffff;
-    --gray: #babab9;
-    --light-bg: #f5f5f3;
-    --green: #4caf82;
-    --red: #e05252;
-    --amber: #e6a817;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--navy);
-    color: var(--cream);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 13px;
-    min-height: 100vh;
-  }
-
-  /* ── TOP BAR ── */
-  .topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 32px;
-    height: 60px;
-    border-bottom: 1px solid rgba(201,169,110,0.2);
-    background: rgba(3,33,61,0.98);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .topbar-brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .topbar-brand .logo-mark {
-    width: 32px; height: 32px;
-    background: var(--gold);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--navy);
-    flex-shrink: 0;
-  }
-  .topbar-brand .brand-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    font-weight: 500;
-    color: var(--white);
-    letter-spacing: 0.02em;
-  }
-  .topbar-brand .brand-sub {
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-top: 1px;
-  }
-  .topbar-controls {
-    display: flex; align-items: center; gap: 12px;
-  }
-
-  /* ── SETUP PANEL ── */
-  #setup-panel {
-    max-width: 640px;
-    margin: 80px auto;
-    padding: 40px;
-    background: var(--navy-mid);
-    border: 1px solid rgba(201,169,110,0.25);
-    border-radius: 4px;
-  }
-  #setup-panel h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 500;
-    color: var(--white);
-    margin-bottom: 6px;
-  }
-  #setup-panel .subtitle {
-    color: var(--gray);
-    font-size: 12px;
-    margin-bottom: 32px;
-    line-height: 1.6;
-  }
-  .setup-step {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 24px;
-    align-items: flex-start;
-  }
-  .step-num {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    font-size: 11px;
-    font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-  .step-content h4 {
-    font-weight: 600;
-    color: var(--white);
-    font-size: 12px;
-    margin-bottom: 4px;
-    letter-spacing: 0.05em;
-  }
-  .step-content p {
-    color: var(--gray);
-    font-size: 11px;
-    line-height: 1.7;
-  }
-  .step-content a { color: var(--gold); }
-  .step-content code {
-    background: rgba(0,0,0,0.3);
-    border: 1px solid rgba(201,169,110,0.2);
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-family: 'Courier New', monospace;
-    font-size: 11px;
-    color: var(--cream);
-  }
-  .input-row {
-    margin-top: 28px;
-  }
-  .input-row label {
-    display: block;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 8px;
-  }
-  .input-row input {
-    width: 100%;
-    background: rgba(0,0,0,0.25);
-    border: 1px solid rgba(201,169,110,0.3);
-    border-radius: 3px;
-    padding: 10px 14px;
-    color: var(--white);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .input-row input:focus { border-color: var(--gold); }
-  .input-row input::placeholder { color: rgba(186,186,185,0.4); }
-
-  /* ── BUTTONS ── */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 9px 20px;
-    border: none;
-    border-radius: 3px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-gold {
-    background: var(--gold);
-    color: var(--navy);
-  }
-  .btn-gold:hover { background: #d4b87e; }
-  .btn-outline {
-    background: transparent;
-    color: var(--gold);
-    border: 1px solid rgba(201,169,110,0.5);
-  }
-  .btn-outline:hover { border-color: var(--gold); background: var(--gold-dim); }
-  .btn-ghost {
-    background: transparent;
-    color: var(--gray);
-    border: 1px solid rgba(186,186,185,0.2);
-  }
-  .btn-ghost:hover { border-color: var(--gray); color: var(--white); }
-  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  /* ── SIGN-IN ── */
-  #google-signin-btn {
-    margin-top: 24px;
-    width: 100%;
-    padding: 12px;
-    background: var(--gold);
-    color: var(--navy);
-    border: none;
-    border-radius: 3px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.2s;
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-  }
-  #google-signin-btn:hover { background: #d4b87e; }
-
-  /* ── MAIN DASHBOARD ── */
-  #dashboard { display: none; }
-
-  .dash-header {
-    padding: 24px 32px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  .dash-header h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
-    font-weight: 500;
-    color: var(--white);
-  }
-  .dash-header .site-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--gold-dim);
-    border: 1px solid rgba(201,169,110,0.3);
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: var(--gold);
-    text-transform: uppercase;
-  }
-  .dash-controls {
-    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-  }
-
-  /* Date range tabs */
-  .date-tabs {
-    display: flex;
-    background: rgba(0,0,0,0.25);
-    border: 1px solid rgba(201,169,110,0.15);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-  .date-tab {
-    padding: 7px 14px;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--gray);
-    cursor: pointer;
-    border: none;
-    background: transparent;
-    font-family: 'Montserrat', sans-serif;
-    transition: all 0.15s;
-  }
-  .date-tab:hover { color: var(--white); }
-  .date-tab.active {
-    background: var(--gold);
-    color: var(--navy);
-  }
-
-  /* Property selector */
-  .property-select {
-    background: rgba(0,0,0,0.25);
-    border: 1px solid rgba(201,169,110,0.2);
-    border-radius: 3px;
-    padding: 7px 12px;
-    color: var(--cream);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
-    outline: none;
-    cursor: pointer;
-    min-width: 240px;
-  }
-  .property-select option { background: var(--navy-mid); }
-
-  /* ── KPI CARDS ── */
-  .kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    margin: 24px 32px;
-    background: rgba(201,169,110,0.1);
-    border: 1px solid rgba(201,169,110,0.1);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .kpi-card {
-    background: var(--navy-mid);
-    padding: 22px 24px;
-    position: relative;
-    overflow: hidden;
-  }
-  .kpi-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--gold);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .kpi-card:hover::before { opacity: 1; }
-  .kpi-label {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gray);
-    margin-bottom: 10px;
-  }
-  .kpi-value {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 36px;
-    font-weight: 500;
-    color: var(--white);
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-  .kpi-delta {
-    font-size: 10px;
-    font-weight: 600;
-    display: flex; align-items: center; gap: 4px;
-  }
-  .delta-up { color: var(--green); }
-  .delta-down { color: var(--red); }
-  .delta-neutral { color: var(--gray); }
-
-  /* ── SECTION GRID ── */
-  .section-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    padding: 0 32px;
-    margin-bottom: 16px;
-  }
-  .section-grid.full { grid-template-columns: 1fr; }
-  .section-grid.thirds { grid-template-columns: 2fr 1fr; }
-
-  .panel {
-    background: var(--navy-mid);
-    border: 1px solid rgba(201,169,110,0.12);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .panel-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 20px;
-    border-bottom: 1px solid rgba(201,169,110,0.1);
-  }
-  .panel-title {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-  .panel-subtitle {
-    font-size: 10px;
-    color: var(--gray);
-    margin-top: 2px;
-  }
-  .panel-badge {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 2px;
-    background: var(--gold-dim);
-    color: var(--gold);
-    border: 1px solid rgba(201,169,110,0.2);
-  }
-
-  /* ── DATA TABLE ── */
-  .data-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  .data-table th {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--gray);
-    padding: 10px 20px;
-    text-align: left;
-    border-bottom: 1px solid rgba(201,169,110,0.08);
-    cursor: pointer;
-    user-select: none;
-    white-space: nowrap;
-  }
-  .data-table th:hover { color: var(--gold); }
-  .data-table th.sort-asc::after { content: ' ↑'; color: var(--gold); }
-  .data-table th.sort-desc::after { content: ' ↓'; color: var(--gold); }
-  .data-table th.right, .data-table td.right { text-align: right; }
-  .data-table td {
-    padding: 10px 20px;
-    border-bottom: 1px solid rgba(255,255,255,0.03);
-    color: var(--cream);
-    font-size: 11px;
-    vertical-align: middle;
-  }
-  .data-table tr:last-child td { border-bottom: none; }
-  .data-table tr:hover td { background: rgba(201,169,110,0.04); }
-
-  .query-cell {
-    max-width: 260px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .page-cell {
-    max-width: 300px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: var(--gray);
-    font-size: 10px;
-  }
-  .page-cell span {
-    color: var(--gold);
-    font-weight: 600;
-  }
-
-  /* Position badge */
-  .pos-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 22px;
-    border-radius: 2px;
-    font-size: 11px;
-    font-weight: 700;
-  }
-  .pos-1-3 { background: rgba(76,175,130,0.15); color: var(--green); }
-  .pos-4-10 { background: rgba(230,168,23,0.15); color: var(--amber); }
-  .pos-11plus { background: rgba(224,82,82,0.1); color: var(--red); }
-
-  /* CTR bar */
-  .ctr-bar-wrap { display: flex; align-items: center; gap: 8px; }
-  .ctr-bar-bg {
-    flex: 1; height: 4px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 2px;
-    overflow: hidden;
-    min-width: 60px;
-  }
-  .ctr-bar-fill {
-    height: 100%;
-    border-radius: 2px;
-    background: var(--gold);
-    transition: width 0.6s ease;
-  }
-  .ctr-val { font-size: 11px; font-weight: 600; white-space: nowrap; }
-
-  /* Opportunity tag */
-  .opp-tag {
-    display: inline-block;
-    padding: 2px 7px;
-    border-radius: 2px;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .opp-high { background: rgba(76,175,130,0.15); color: var(--green); }
-  .opp-med  { background: rgba(230,168,23,0.12); color: var(--amber); }
-  .opp-low  { background: rgba(186,186,185,0.1); color: var(--gray); }
-
-  /* ── CHART ── */
-  .chart-wrap {
-    padding: 16px 20px 12px;
-    height: 180px;
-    position: relative;
-  }
-  canvas { display: block; }
-
-  /* ── DEVICE BREAKDOWN ── */
-  .device-rows { padding: 8px 0; }
-  .device-row {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    gap: 12px;
-    border-bottom: 1px solid rgba(255,255,255,0.03);
-  }
-  .device-row:last-child { border-bottom: none; }
-  .device-icon { width: 28px; text-align: center; font-size: 16px; }
-  .device-label { font-size: 11px; color: var(--cream); flex: 1; }
-  .device-pct { font-size: 12px; font-weight: 700; color: var(--gold); width: 44px; text-align: right; }
-  .device-bar-bg { flex: 2; height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; }
-  .device-bar-fill { height: 100%; background: var(--gold); border-radius: 2px; }
-
-  /* ── EMPTY / LOADING ── */
-  .loading-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    color: var(--gray);
-    gap: 12px;
-  }
-  .spinner {
-    width: 28px; height: 28px;
-    border: 2px solid rgba(201,169,110,0.15);
-    border-top-color: var(--gold);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .empty-text { font-size: 11px; text-align: center; }
-
-  /* ── STATUS BAR ── */
-  #status-bar {
-    position: fixed;
-    bottom: 20px;
-    right: 24px;
-    background: var(--navy-mid);
-    border: 1px solid rgba(201,169,110,0.25);
-    border-radius: 3px;
-    padding: 10px 16px;
-    font-size: 11px;
-    color: var(--gray);
-    display: none;
-    gap: 8px;
-    align-items: center;
-    z-index: 200;
-    max-width: 320px;
-  }
-  #status-bar.show { display: flex; }
-  #status-bar.error { border-color: rgba(224,82,82,0.4); color: var(--red); }
-  #status-bar.success { border-color: rgba(76,175,130,0.4); color: var(--green); }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    .kpi-grid { grid-template-columns: 1fr 1fr; }
-    .section-grid, .section-grid.thirds { grid-template-columns: 1fr; }
-    .dash-header { padding: 16px 16px 0; }
-    .kpi-grid, .section-grid { margin-left: 16px; margin-right: 16px; }
-  }
-
-  /* ── USER CHIP ── */
-  .user-chip {
-    display: flex; align-items: center; gap: 8px;
-    padding: 5px 12px;
-    background: rgba(0,0,0,0.2);
-    border: 1px solid rgba(201,169,110,0.15);
-    border-radius: 20px;
-    font-size: 11px;
-    color: var(--cream);
-  }
-  .user-chip img {
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    border: 1px solid var(--gold);
-  }
+:root{--navy:#03213d;--navy-mid:#062e56;--navy-light:#0d3d6b;--gold:#c9a96e;--gold-dim:rgba(201,169,110,0.12);--blue:#294d6b;--cream:#f0e6d3;--white:#fff;--gray:#babab9;--green:#3dba7e;--red:#e05252;--amber:#e6a817;--border:rgba(201,169,110,0.15);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--navy);color:var(--cream);font-family:'Montserrat',sans-serif;font-size:13px;min-height:100vh;}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:56px;border-bottom:1px solid var(--border);background:rgba(3,33,61,0.98);position:sticky;top:0;z-index:200;}
+.tb-left{display:flex;align-items:center;gap:10px;}
+.logo{width:30px;height:30px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:13px;color:var(--navy);flex-shrink:0;}
+.brand-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;color:var(--white);}
+.brand-tag{font-size:8px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);}
+.tb-right{display:flex;align-items:center;gap:10px;}
+.user-chip{display:flex;align-items:center;gap:7px;padding:4px 12px;background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:20px;font-size:11px;color:var(--cream);}
+.user-chip img{width:20px;height:20px;border-radius:50%;border:1px solid var(--gold);}
+#setup-panel{max-width:620px;margin:70px auto;padding:36px;background:var(--navy-mid);border:1px solid rgba(201,169,110,0.25);border-radius:6px;}
+#setup-panel h2{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:var(--white);margin-bottom:6px;}
+.setup-sub{color:var(--gray);font-size:11px;margin-bottom:28px;line-height:1.7;}
+.step{display:flex;gap:14px;margin-bottom:20px;align-items:flex-start;}
+.step-n{width:26px;height:26px;border-radius:50%;border:1px solid var(--gold);color:var(--gold);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.step h4{font-weight:600;color:var(--white);font-size:11px;margin-bottom:3px;letter-spacing:0.04em;}
+.step p{color:var(--gray);font-size:10px;line-height:1.7;}
+.step a{color:var(--gold);}
+.step code{background:rgba(0,0,0,0.3);border:1px solid var(--border);padding:1px 5px;border-radius:2px;font-family:monospace;font-size:10px;color:var(--cream);}
+.field-label{font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:7px;margin-top:24px;}
+.text-input{width:100%;background:rgba(0,0,0,0.25);border:1px solid rgba(201,169,110,0.3);border-radius:3px;padding:9px 13px;color:var(--white);font-family:'Montserrat',sans-serif;font-size:11px;outline:none;transition:border-color .2s;}
+.text-input:focus{border-color:var(--gold);}
+.text-input::placeholder{color:rgba(186,186,185,0.35);}
+.signin-btn{margin-top:20px;width:100%;padding:11px;background:var(--gold);color:var(--navy);border:none;border-radius:3px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:9px;}
+.signin-btn:hover{background:#d4b87e;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border:none;border-radius:3px;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.btn-gold{background:var(--gold);color:var(--navy);}
+.btn-gold:hover{background:#d4b87e;}
+.btn-outline{background:transparent;color:var(--gold);border:1px solid rgba(201,169,110,0.4);}
+.btn-outline:hover{border-color:var(--gold);background:var(--gold-dim);}
+.btn-ghost{background:transparent;color:var(--gray);border:1px solid rgba(186,186,185,0.2);font-size:9px;}
+.btn-ghost:hover{color:var(--white);border-color:var(--gray);}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+#dashboard{display:none;}
+.summary-bar{padding:14px 28px;background:var(--navy-mid);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.summary-left{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.summary-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--white);}
+.site-badge{display:inline-flex;align-items:center;gap:5px;background:var(--gold-dim);border:1px solid rgba(201,169,110,0.25);border-radius:20px;padding:3px 10px;font-size:9px;font-weight:700;letter-spacing:0.1em;color:var(--gold);text-transform:uppercase;}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;box-shadow:0 0 6px var(--green);}
+.summary-right{display:flex;align-items:center;gap:8px;}
+.date-tabs{display:flex;background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:3px;overflow:hidden;}
+.date-tab{padding:6px 12px;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray);cursor:pointer;border:none;background:transparent;font-family:'Montserrat',sans-serif;transition:all .15s;}
+.date-tab:hover{color:var(--white);}
+.date-tab.active{background:var(--gold);color:var(--navy);}
+.prop-select{background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:3px;padding:6px 10px;color:var(--cream);font-family:'Montserrat',sans-serif;font-size:10px;outline:none;cursor:pointer;min-width:200px;}
+.prop-select option{background:var(--navy-mid);}
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-bottom:1px solid var(--border);}
+.kpi{background:var(--navy);padding:18px 22px;position:relative;}
+.kpi::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .3s;transform-origin:left;}
+.kpi:hover::after{transform:scaleX(1);}
+.kpi-label{font-size:8px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gray);margin-bottom:7px;}
+.kpi-val{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:500;color:var(--white);line-height:1;margin-bottom:4px;}
+.kpi-sub{font-size:9px;color:var(--gray);}
+.kpi-sub.up{color:var(--green);}
+.kpi-sub.dn{color:var(--red);}
+.kpi-sub.am{color:var(--amber);}
+.health-bar{display:flex;align-items:center;gap:14px;padding:10px 28px;background:rgba(0,0,0,0.12);border-bottom:1px solid var(--border);}
+.health-label{font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray);white-space:nowrap;}
+.health-track{flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;}
+.health-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--red),var(--amber) 40%,var(--green));transition:width .8s ease;}
+.health-score{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--white);white-space:nowrap;}
+.health-items{display:flex;gap:8px;flex-wrap:wrap;}
+.h-item{font-size:8px;font-weight:700;letter-spacing:0.06em;padding:2px 7px;border-radius:2px;}
+.h-good{background:rgba(61,186,126,0.12);color:var(--green);}
+.h-warn{background:rgba(230,168,23,0.1);color:var(--amber);}
+.h-bad{background:rgba(224,82,82,0.1);color:var(--red);}
+.tabs-nav{display:flex;padding:0 28px;border-bottom:1px solid var(--border);background:var(--navy-mid);}
+.tab-btn{padding:12px 16px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);cursor:pointer;border:none;background:transparent;font-family:'Montserrat',sans-serif;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;}
+.tab-btn:hover{color:var(--cream);}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-panel{display:none;padding:20px 28px 32px;}
+.tab-panel.active{display:block;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.g32{display:grid;grid-template-columns:3fr 2fr;gap:14px;margin-bottom:14px;}
+.g1{margin-bottom:14px;}
+.panel{background:var(--navy-mid);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+.ph{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);}
+.pt{font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);}
+.ps{font-size:10px;color:var(--gray);margin-top:2px;}
+.pbadge{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:3px 7px;border-radius:2px;background:var(--gold-dim);color:var(--gold);border:1px solid rgba(201,169,110,0.2);}
+.pbadge.green{background:rgba(61,186,126,0.1);color:var(--green);border-color:rgba(61,186,126,0.2);}
+.pbadge.amber{background:rgba(230,168,23,0.1);color:var(--amber);border-color:rgba(230,168,23,0.2);}
+.dt{width:100%;border-collapse:collapse;}
+.dt th{font-size:8px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray);padding:8px 16px;text-align:left;border-bottom:1px solid rgba(201,169,110,0.07);white-space:nowrap;}
+.dt th.r,.dt td.r{text-align:right;}
+.dt td{padding:8px 16px;border-bottom:1px solid rgba(255,255,255,0.025);color:var(--cream);font-size:11px;vertical-align:middle;}
+.dt tr:last-child td{border-bottom:none;}
+.dt tr:hover td{background:rgba(201,169,110,0.03);}
+.qc{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pc-name{color:var(--gold);font-weight:600;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:240px;}
+.pc-path{color:var(--gray);font-size:9px;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:240px;}
+.pos-b{display:inline-flex;align-items:center;justify-content:center;width:36px;height:20px;border-radius:2px;font-size:10px;font-weight:700;}
+.pos-top{background:rgba(61,186,126,0.15);color:var(--green);}
+.pos-p1{background:rgba(230,168,23,0.15);color:var(--amber);}
+.pos-p2{background:rgba(224,82,82,0.1);color:var(--red);}
+.cbar{display:flex;align-items:center;gap:5px;}
+.cbar-bg{width:44px;height:3px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
+.cbar-fill{height:100%;border-radius:2px;background:var(--gold);}
+.cbar-v{font-size:10px;font-weight:600;width:34px;text-align:right;}
+.ot{display:inline-block;padding:2px 6px;border-radius:2px;font-size:8px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;}
+.ot-h{background:rgba(61,186,126,0.12);color:var(--green);}
+.ot-m{background:rgba(230,168,23,0.1);color:var(--amber);}
+.ot-l{background:rgba(186,186,185,0.08);color:var(--gray);}
+.dev-rows{padding:4px 0;}
+.dev-row{display:flex;align-items:center;gap:10px;padding:8px 16px;border-bottom:1px solid rgba(255,255,255,0.025);}
+.dev-row:last-child{border-bottom:none;}
+.dev-icon{font-size:14px;width:20px;text-align:center;}
+.dev-lbl{flex:1;font-size:11px;}
+.dev-bar-bg{flex:2;height:3px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
+.dev-bar-fill{height:100%;background:var(--gold);border-radius:2px;}
+.dev-pct{font-size:11px;font-weight:700;color:var(--gold);width:36px;text-align:right;}
+.insight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;}
+.ic{background:var(--navy-mid);border:1px solid var(--border);border-radius:4px;padding:14px 16px;}
+.ic-icon{font-size:18px;margin-bottom:6px;}
+.ic-title{font-size:8px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+.ic-val{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;color:var(--white);margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ic-desc{font-size:10px;color:var(--gray);line-height:1.5;}
+.wl-add-row{display:flex;gap:8px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--border);}
+.wl-inp{flex:1;background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:3px;padding:7px 10px;color:var(--white);font-family:'Montserrat',sans-serif;font-size:11px;outline:none;transition:border-color .2s;}
+.wl-inp:focus{border-color:var(--gold);}
+.wl-inp::placeholder{color:rgba(186,186,185,0.3);}
+.filter-row{padding:8px 16px 0;}
+.fi{width:100%;background:rgba(0,0,0,0.15);border:1px solid var(--border);border-radius:3px;padding:7px 10px;color:var(--white);font-family:'Montserrat',sans-serif;font-size:11px;outline:none;}
+.fi:focus{border-color:var(--gold);}
+.fi::placeholder{color:rgba(186,186,185,0.28);}
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px;color:var(--gray);gap:9px;}
+.spin{width:22px;height:22px;border:2px solid rgba(201,169,110,0.1);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.empty-msg{font-size:11px;text-align:center;line-height:1.6;max-width:300px;}
+#status{position:fixed;bottom:16px;right:20px;background:var(--navy-mid);border:1px solid var(--border);border-radius:3px;padding:8px 13px;font-size:11px;color:var(--gray);display:none;align-items:center;gap:6px;z-index:300;}
+#status.show{display:flex;}
+#status.ok{border-color:rgba(61,186,126,0.4);color:var(--green);}
+#status.err{border-color:rgba(224,82,82,0.4);color:var(--red);}
+@media(max-width:900px){.kpi-strip{grid-template-columns:1fr 1fr;}.g2,.g32{grid-template-columns:1fr;}.insight-grid{grid-template-columns:1fr 1fr;}.tabs-nav{overflow-x:auto;}}
+@media(max-width:600px){.insight-grid{grid-template-columns:1fr;}.health-items{display:none;}}
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
-  <div class="topbar-brand">
-    <div class="logo-mark">PVI</div>
-    <div>
-      <div class="brand-text">Pine Valley Investments</div>
-      <div class="brand-sub">SEO Intelligence</div>
-    </div>
+  <div class="tb-left">
+    <div class="logo">PVI</div>
+    <div><div class="brand-name">Pine Valley Investments</div><div class="brand-tag">SEO Intelligence</div></div>
   </div>
-  <div class="topbar-controls" id="topbar-controls">
-    <!-- populated after login -->
-  </div>
+  <div class="tb-right" id="tb-right"></div>
 </div>
 
-<!-- SETUP PANEL -->
 <div id="setup-panel">
-  <h2>SEO Dashboard Setup</h2>
-  <p class="subtitle">Connect your Google Search Console property to track keyword rankings, clicks, impressions, and opportunities - all free, no third-party subscriptions needed.</p>
-
-  <div class="setup-step">
-    <div class="step-num">1</div>
-    <div class="step-content">
-      <h4>Enable Search Console API</h4>
-      <p>Go to <a href="https://console.cloud.google.com/apis/library/searchconsole.googleapis.com" target="_blank">Google Cloud Console</a>, create or select a project, and enable the <strong>Google Search Console API</strong>.</p>
-    </div>
-  </div>
-
-  <div class="setup-step">
-    <div class="step-num">2</div>
-    <div class="step-content">
-      <h4>Create OAuth 2.0 Credentials</h4>
-      <p>In APIs & Services → Credentials, click <strong>Create Credentials → OAuth client ID</strong>. Select <strong>Web application</strong>. Under <em>Authorized JavaScript origins</em>, add both:<br>
-      <code>https://pvi-website.vercel.app</code> and <code>https://modica21-code.github.io</code><br>
-      For local testing also add <code>http://localhost</code>.</p>
-    </div>
-  </div>
-
-  <div class="setup-step">
-    <div class="step-num">3</div>
-    <div class="step-content">
-      <h4>Add OAuth Consent Screen</h4>
-      <p>Under <em>OAuth consent screen</em>, set app name to <strong>PVI SEO Tracker</strong>, add <code>mmodica@pinevalleyinvestments.com</code> as a test user, and add the scope <code>https://www.googleapis.com/auth/webmasters.readonly</code>.</p>
-    </div>
-  </div>
-
-  <div class="setup-step">
-    <div class="step-num">4</div>
-    <div class="step-content">
-      <h4>Paste Your Client ID Below</h4>
-      <p>Copy the Client ID from the credential you just created. It looks like <code>123456789-abc.apps.googleusercontent.com</code>.</p>
-    </div>
-  </div>
-
-  <div class="input-row">
-    <label>Google OAuth Client ID</label>
-    <input type="text" id="client-id-input" placeholder="123456789-abcdef.apps.googleusercontent.com">
-  </div>
-
-  <button id="google-signin-btn" onclick="initAndSignIn()">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-    </svg>
+  <h2>Connect Search Console</h2>
+  <p class="setup-sub">Sign in with Google to pull live SEO data — keyword rankings, clicks, impressions, and opportunities. Free, no subscriptions.</p>
+  <div class="step"><div class="step-n">1</div><div><h4>Enable Search Console API</h4><p>Go to <a href="https://console.cloud.google.com/apis/library/searchconsole.googleapis.com" target="_blank">Google Cloud Console</a> → select <strong>PVI Website</strong> project → enable <strong>Google Search Console API</strong>.</p></div></div>
+  <div class="step"><div class="step-n">2</div><div><h4>Create OAuth Credentials</h4><p>APIs & Services → Credentials → Create credentials → OAuth client ID → Web application. Add <code>https://pvi-website.vercel.app</code> as an authorized origin.</p></div></div>
+  <div class="step"><div class="step-n">3</div><div><h4>Test users already set</h4><p>Both <code>mwcarter86@gmail.com</code> and <code>modica21@gmail.com</code> are authorized test users.</p></div></div>
+  <label class="field-label">Google OAuth Client ID</label>
+  <input class="text-input" id="client-id-input" type="text" placeholder="194475383057-cubnt199a9lbuop39nvj06o2a5mn0ntd.apps.googleusercontent.com">
+  <button class="signin-btn" onclick="initAndSignIn()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
     Sign in with Google
   </button>
-
-  <p style="margin-top:16px; font-size:10px; color:var(--gray); line-height:1.7;">
-    This page only requests <strong>read-only</strong> access to your Search Console data. No data is sent to any external server - everything runs directly in your browser. Once set up, save the file to the PVI repo so both Mike M. and Mike C. can use it.
-  </p>
+  <p style="margin-top:14px;font-size:10px;color:var(--gray);line-height:1.7;">Read-only access only. No data leaves your browser.</p>
 </div>
 
-<!-- DASHBOARD -->
 <div id="dashboard">
-  <div class="dash-header">
-    <div>
-      <h1>SEO Performance</h1>
-      <div style="margin-top:6px;">
-        <span class="site-pill" id="active-property-pill">● pinevalleyinvestments.com</span>
-      </div>
+  <div class="summary-bar">
+    <div class="summary-left">
+      <div class="summary-title">SEO Dashboard</div>
+      <span class="site-badge"><span class="live-dot"></span>&nbsp;<span id="prop-label">pinevalleyinvestments.com</span></span>
     </div>
-    <div class="dash-controls">
-      <select class="property-select" id="property-select" onchange="onPropertyChange()">
-        <option value="">Loading properties…</option>
-      </select>
+    <div class="summary-right">
+      <select class="prop-select" id="prop-select" onchange="onPropChange()"><option>Loading…</option></select>
       <div class="date-tabs">
-        <button class="date-tab" data-days="7" onclick="setDays(7)">7d</button>
-        <button class="date-tab active" data-days="28" onclick="setDays(28)">28d</button>
-        <button class="date-tab" data-days="90" onclick="setDays(90)">90d</button>
-        <button class="date-tab" data-days="180" onclick="setDays(180)">6mo</button>
+        <button class="date-tab" data-d="7" onclick="setDays(7)">7d</button>
+        <button class="date-tab active" data-d="28" onclick="setDays(28)">28d</button>
+        <button class="date-tab" data-d="90" onclick="setDays(90)">90d</button>
+        <button class="date-tab" data-d="180" onclick="setDays(180)">6mo</button>
       </div>
-      <button class="btn btn-outline" onclick="refreshData()" id="refresh-btn">↻ Refresh</button>
+      <button class="btn btn-outline" id="refresh-btn" onclick="refreshData()">↻ Refresh</button>
     </div>
   </div>
 
-  <!-- KPI CARDS -->
-  <div class="kpi-grid">
-    <div class="kpi-card">
-      <div class="kpi-label">Total Clicks</div>
-      <div class="kpi-value" id="kpi-clicks">-</div>
-      <div class="kpi-delta" id="kpi-clicks-delta"></div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Total Impressions</div>
-      <div class="kpi-value" id="kpi-impressions">-</div>
-      <div class="kpi-delta" id="kpi-impressions-delta"></div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Avg. CTR</div>
-      <div class="kpi-value" id="kpi-ctr">-</div>
-      <div class="kpi-delta" id="kpi-ctr-delta"></div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Avg. Position</div>
-      <div class="kpi-value" id="kpi-position">-</div>
-      <div class="kpi-delta" id="kpi-position-delta"></div>
-    </div>
+  <div class="kpi-strip">
+    <div class="kpi"><div class="kpi-label">Total Clicks</div><div class="kpi-val" id="k-clicks">—</div><div class="kpi-sub" id="k-clicks-s">last period</div></div>
+    <div class="kpi"><div class="kpi-label">Impressions</div><div class="kpi-val" id="k-impr">—</div><div class="kpi-sub" id="k-impr-s">search appearances</div></div>
+    <div class="kpi"><div class="kpi-label">Avg. CTR</div><div class="kpi-val" id="k-ctr">—</div><div class="kpi-sub" id="k-ctr-s">click-through rate</div></div>
+    <div class="kpi"><div class="kpi-label">Avg. Position</div><div class="kpi-val" id="k-pos">—</div><div class="kpi-sub" id="k-pos-s">—</div></div>
   </div>
 
-  <!-- KEYWORD WATCHLIST -->
-  <div class="section-grid full" style="padding: 0 32px; margin-bottom: 16px;">
-    <div class="panel">
-      <div class="panel-header">
-        <div>
-          <div class="panel-title">Keyword Watchlist</div>
-          <div class="panel-subtitle">Track specific keywords - add any term to monitor its ranking</div>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center;">
-          <input type="text" id="watchlist-input" placeholder="e.g. financial advisor cherry hill" onkeydown="if(event.key==='Enter')addWatchKeyword()" style="background:rgba(0,0,0,0.25);border:1px solid rgba(201,169,110,0.3);border-radius:3px;padding:7px 12px;color:var(--white);font-family:'Montserrat',sans-serif;font-size:11px;outline:none;width:280px;">
-          <button class="btn btn-gold" onclick="addWatchKeyword()" style="padding:7px 16px;">+ Add</button>
-        </div>
-      </div>
-      <div id="watchlist-body">
-        <div class="loading-state"><span class="empty-text">Add keywords above to start tracking them. Tip: try your advisors' names, your firm name, and service keywords like "financial advisor" + your city.</span></div>
-      </div>
-    </div>
+  <div class="health-bar">
+    <span class="health-label">SEO Health</span>
+    <div class="health-track"><div class="health-fill" id="health-fill" style="width:0%"></div></div>
+    <span class="health-score" id="health-score">—</span>
+    <div class="health-items" id="health-items"></div>
   </div>
 
-  <!-- QUERIES + DEVICES -->
-  <div class="section-grid thirds">
-    <!-- Top Queries -->
-    <div class="panel">
-      <div class="panel-header">
-        <div>
-          <div class="panel-title">Top Queries</div>
-          <div class="panel-subtitle">Ranked by clicks</div>
-        </div>
-        <span class="panel-badge" id="query-count-badge">-</span>
-      </div>
-      <div style="padding:10px 20px 0;">
-        <input type="text" id="query-filter" placeholder="Filter queries…" oninput="filterQueries()" style="width:100%;background:rgba(0,0,0,0.2);border:1px solid rgba(201,169,110,0.2);border-radius:3px;padding:7px 12px;color:var(--white);font-family:'Montserrat',sans-serif;font-size:11px;outline:none;">
-      </div>
-      <div id="queries-body">
-        <div class="loading-state"><div class="spinner"></div><span class="empty-text">Loading…</span></div>
-      </div>
-    </div>
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('overview',this)">📊 Overview</button>
+    <button class="tab-btn" onclick="switchTab('keywords',this)">🔍 Keywords</button>
+    <button class="tab-btn" onclick="switchTab('pages',this)">📄 Pages</button>
+    <button class="tab-btn" onclick="switchTab('watchlist',this)">⭐ Watchlist</button>
+    <button class="tab-btn" onclick="switchTab('opps',this)">💡 Opportunities</button>
+  </div>
 
-    <!-- Devices -->
-    <div class="panel">
-      <div class="panel-header">
-        <div>
-          <div class="panel-title">Device Split</div>
-          <div class="panel-subtitle">Clicks by device type</div>
-        </div>
+  <!-- OVERVIEW -->
+  <div class="tab-panel active" id="tab-overview">
+    <div class="insight-grid">
+      <div class="ic"><div class="ic-icon">🏆</div><div class="ic-title">Best Ranking Page</div><div class="ic-val" id="ov-best">—</div><div class="ic-desc" id="ov-best-d">—</div></div>
+      <div class="ic"><div class="ic-icon">🔑</div><div class="ic-title">Top Keyword</div><div class="ic-val" id="ov-kw">—</div><div class="ic-desc" id="ov-kw-d">—</div></div>
+      <div class="ic"><div class="ic-icon">💡</div><div class="ic-title">Quick Win</div><div class="ic-val" id="ov-qw">—</div><div class="ic-desc" id="ov-qw-d">—</div></div>
+    </div>
+    <div class="g32">
+      <div class="panel">
+        <div class="ph"><div><div class="pt">Top Queries</div><div class="ps">Last <span id="ov-days">28</span> days · ranked by clicks</div></div><span class="pbadge" id="ov-q-ct">—</span></div>
+        <div id="ov-q-body"><div class="loading"><div class="spin"></div></div></div>
       </div>
-      <div class="device-rows" id="device-body">
-        <div class="loading-state"><div class="spinner"></div></div>
+      <div class="panel">
+        <div class="ph"><div><div class="pt">Device Split</div><div class="ps">Clicks by device type</div></div></div>
+        <div id="ov-dev-body"><div class="loading"><div class="spin"></div></div></div>
       </div>
     </div>
   </div>
 
-  <!-- TOP PAGES -->
-  <div class="section-grid full" style="padding: 0 32px; margin-bottom: 16px;">
+  <!-- KEYWORDS -->
+  <div class="tab-panel" id="tab-keywords">
     <div class="panel">
-      <div class="panel-header">
-        <div>
-          <div class="panel-title">Top Pages</div>
-          <div class="panel-subtitle">Ranked by impressions</div>
-        </div>
-        <span class="panel-badge" id="pages-count-badge">-</span>
-      </div>
-      <div id="pages-body">
-        <div class="loading-state"><div class="spinner"></div><span class="empty-text">Loading…</span></div>
-      </div>
+      <div class="ph"><div><div class="pt">All Keywords</div><div class="ps">Every search query driving impressions to your site</div></div><span class="pbadge" id="kw-ct">—</span></div>
+      <div class="filter-row"><input class="fi" id="kw-fi" placeholder="Filter keywords…" oninput="filterKw()"></div>
+      <div id="kw-body"><div class="loading"><div class="spin"></div></div></div>
     </div>
   </div>
 
-  <!-- CTR OPPORTUNITIES -->
-  <div class="section-grid full" style="padding: 0 32px; margin-bottom: 32px;">
+  <!-- PAGES -->
+  <div class="tab-panel" id="tab-pages">
     <div class="panel">
-      <div class="panel-header">
-        <div>
-          <div class="panel-title">CTR Opportunities</div>
-          <div class="panel-subtitle">High impressions, low click-through - quick wins if you improve title or meta description</div>
-        </div>
-        <span class="panel-badge" style="background:rgba(76,175,130,0.1);color:var(--green);border-color:rgba(76,175,130,0.2);">Quick Wins</span>
+      <div class="ph"><div><div class="pt">Page Performance</div><div class="ps">Every page ranked by impressions</div></div><span class="pbadge" id="pg-ct">—</span></div>
+      <div class="filter-row"><input class="fi" id="pg-fi" placeholder="Filter pages…" oninput="filterPg()"></div>
+      <div id="pg-body"><div class="loading"><div class="spin"></div></div></div>
+    </div>
+  </div>
+
+  <!-- WATCHLIST -->
+  <div class="tab-panel" id="tab-watchlist">
+    <div class="panel">
+      <div class="ph"><div><div class="pt">Keyword Watchlist</div><div class="ps">Track specific terms — saved in your browser</div></div></div>
+      <div class="wl-add-row">
+        <input class="wl-inp" id="wl-inp" placeholder='e.g. "financial advisor cherry hill" or "pine valley investments"' onkeydown="if(event.key==='Enter')addWatch()">
+        <button class="btn btn-gold" onclick="addWatch()">+ Add</button>
       </div>
-      <div id="opps-body">
-        <div class="loading-state"><div class="spinner"></div><span class="empty-text">Loading…</span></div>
+      <div id="wl-body"><div class="loading"><span class="empty-msg">Add keywords to track their rankings over time. Try advisor names, location-based service terms, and your firm name.</span></div></div>
+    </div>
+  </div>
+
+  <!-- OPPORTUNITIES -->
+  <div class="tab-panel" id="tab-opps">
+    <div class="g1">
+      <div class="panel">
+        <div class="ph"><div><div class="pt">CTR Opportunities</div><div class="ps">High impressions, low click-through — improve title or meta description for quick gains</div></div><span class="pbadge green">Quick Wins</span></div>
+        <div id="op-body"><div class="loading"><div class="spin"></div></div></div>
+      </div>
+    </div>
+    <div class="g1">
+      <div class="panel">
+        <div class="ph"><div><div class="pt">Just Off Page 1</div><div class="ps">Keywords ranking positions 11–20 — a small content push could land these on page 1</div></div><span class="pbadge amber">Low-Hanging Fruit</span></div>
+        <div id="p2-body"><div class="loading"><div class="spin"></div></div></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- STATUS BAR -->
-<div id="status-bar"></div>
+<div id="status"></div>
 
 <script>
-// ── STATE ──────────────────────────────────────────────────────────────
-const state = {
-  token: null,
-  userInfo: null,
-  property: null,
-  properties: [],
-  days: 28,
-  data: { queries: [], pages: [], devices: [], totals: null }
-};
+const S={token:null,userInfo:null,property:null,properties:[],days:28,data:{queries:[],pages:[],devices:[]}};
 
-// ── OAUTH ──────────────────────────────────────────────────────────────
-function initAndSignIn() {
-  const clientId = document.getElementById('client-id-input').value.trim();
-  if (!clientId) {
-    showStatus('Please enter your Google OAuth Client ID.', 'error');
-    return;
-  }
-
-  // Store for session
-  window._pviClientId = clientId;
-
-  const client = google.accounts.oauth2.initTokenClient({
-    client_id: clientId,
-    scope: 'https://www.googleapis.com/auth/webmasters.readonly https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
-    callback: async (resp) => {
-      if (resp.error) {
-        showStatus('Sign-in failed: ' + resp.error, 'error');
-        return;
-      }
-      state.token = resp.access_token;
-      await loadUserInfo();
-      await loadProperties();
-      showDashboard();
-    }
-  });
-  client.requestAccessToken();
+function initAndSignIn(){
+  const cid=document.getElementById('client-id-input').value.trim();
+  if(!cid){showSt('Enter your Client ID','err');return;}
+  window._cid=cid;
+  const c=google.accounts.oauth2.initTokenClient({client_id:cid,scope:'https://www.googleapis.com/auth/webmasters.readonly https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',callback:async r=>{if(r.error){showSt('Sign-in failed: '+r.error,'err');return;}S.token=r.access_token;await loadUser();await loadProps();showDash();}});
+  c.requestAccessToken();
 }
-
-async function loadUserInfo() {
-  const r = await gFetch('https://www.googleapis.com/oauth2/v2/userinfo');
-  if (r) state.userInfo = r;
-}
-
-// ── SEARCH CONSOLE API ─────────────────────────────────────────────────
-async function gFetch(url, method = 'GET', body = null) {
-  const opts = {
-    method,
-    headers: { 'Authorization': 'Bearer ' + state.token, 'Content-Type': 'application/json' }
-  };
-  if (body) opts.body = JSON.stringify(body);
-  const r = await fetch(url, opts);
-  if (!r.ok) {
-    const err = await r.json().catch(() => ({}));
-    showStatus('API error: ' + (err.error?.message || r.status), 'error');
-    return null;
-  }
+async function loadUser(){const r=await gf('https://www.googleapis.com/oauth2/v2/userinfo');if(r)S.userInfo=r;}
+async function gf(url,method='GET',body=null){
+  const o={method,headers:{'Authorization':'Bearer '+S.token,'Content-Type':'application/json'}};
+  if(body)o.body=JSON.stringify(body);
+  const r=await fetch(url,o);
+  if(!r.ok){const e=await r.json().catch(()=>({}));showSt('API: '+(e.error?.message||r.status),'err');return null;}
   return r.json();
 }
+async function loadProps(){
+  const d=await gf('https://www.googleapis.com/webmasters/v3/sites');
+  if(!d?.siteEntry){showSt('No GSC properties found','err');return;}
+  S.properties=d.siteEntry.sort((a,b)=>{const p=s=>(s.siteUrl.includes('pinevalleyinvestments')||s.siteUrl.includes('pvi-website'))?0:1;return p(a)-p(b);});
+  const sel=document.getElementById('prop-select');
+  sel.innerHTML=S.properties.map(p=>`<option value="${p.siteUrl}">${p.siteUrl.replace(/^https?:\/\//,'')}</option>`).join('');
+  const pref=S.properties.find(p=>p.siteUrl.includes('pinevalleyinvestments')||p.siteUrl.includes('pvi-website'));
+  S.property=pref?pref.siteUrl:S.properties[0].siteUrl;
+  sel.value=S.property;updatePL();
+}
+function onPropChange(){S.property=document.getElementById('prop-select').value;updatePL();refreshData();}
+function updatePL(){document.getElementById('prop-label').textContent=S.property.replace(/^https?:\/\//,'');}
+function dr(days){const e=new Date(),s=new Date();s.setDate(e.getDate()-days);return{startDate:fd(s),endDate:fd(e)};}
+function fd(d){return d.toISOString().split('T')[0];}
+async function qsc(dims,rowLimit=100){const{startDate,endDate}=dr(S.days);return gf(`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(S.property)}/searchAnalytics/query`,'POST',{startDate,endDate,dimensions:dims,rowLimit,dataState:'all'});}
 
-async function loadProperties() {
-  const data = await gFetch('https://www.googleapis.com/webmasters/v3/sites');
-  if (!data?.siteEntry) {
-    showStatus('No Search Console properties found. Make sure the site is verified in GSC.', 'error');
-    return;
-  }
-  state.properties = data.siteEntry.sort((a, b) => {
-    const pvi = (s) => s.siteUrl.includes('pinevalleyinvestments.com') || s.siteUrl.includes('pvi-website') ? 0 : 1;
-    return pvi(a) - pvi(b);
-  });
-  const sel = document.getElementById('property-select');
-  sel.innerHTML = state.properties.map(p => `<option value="${p.siteUrl}">${p.siteUrl.replace(/^https?:\/\//, '')}</option>`).join('');
-
-  // prefer pinevalleyinvestments.com
-  const preferred = state.properties.find(p => p.siteUrl.includes('pinevalleyinvestments.com'));
-  state.property = preferred ? preferred.siteUrl : state.properties[0].siteUrl;
-  sel.value = state.property;
-  updatePropertyPill();
+async function refreshData(){
+  if(!S.property)return;
+  document.getElementById('refresh-btn').disabled=true;
+  showSt('Fetching data…');setLd();
+  const[qR,pgR,dvR]=await Promise.all([qsc(['query'],100),qsc(['page'],100),qsc(['device'],10)]);
+  S.data.queries=qR?.rows||[];S.data.pages=pgR?.rows||[];S.data.devices=dvR?.rows||[];
+  const cl=S.data.queries.reduce((s,r)=>s+r.clicks,0);
+  const im=S.data.queries.reduce((s,r)=>s+r.impressions,0);
+  const ct=im>0?cl/im:0;
+  const pw=S.data.queries.reduce((s,r)=>s+(r.position*r.clicks),0);
+  const po=cl>0?pw/cl:0;
+  renderKPIs(cl,im,ct,po);renderHealth(cl,im,ct,po);
+  renderOv();renderKw();renderPg();renderWL();renderOp();renderP2();
+  document.getElementById('ov-days').textContent=S.days;
+  document.getElementById('refresh-btn').disabled=false;
+  showSt('Updated','ok');setTimeout(hideSt,2000);
 }
 
-function onPropertyChange() {
-  state.property = document.getElementById('property-select').value;
-  updatePropertyPill();
+function renderKPIs(cl,im,ct,po){
+  document.getElementById('k-clicks').textContent=fn(cl);
+  document.getElementById('k-impr').textContent=fn(im);
+  document.getElementById('k-ctr').textContent=(ct*100).toFixed(1)+'%';
+  document.getElementById('k-pos').textContent=po?po.toFixed(1):'—';
+  document.getElementById('k-clicks-s').textContent=`last ${S.days} days`;
+  document.getElementById('k-impr-s').textContent=`${S.data.queries.length} keywords`;
+  document.getElementById('k-ctr-s').textContent=im>0?(cl/im*100).toFixed(2)+'% raw':'—';
+  const ps=document.getElementById('k-pos-s');
+  if(po<=3){ps.textContent='🟢 Top 3 avg';ps.className='kpi-sub up';}
+  else if(po<=10){ps.textContent='🟡 Page 1 avg';ps.className='kpi-sub am';}
+  else{ps.textContent='🔴 Page 2+ avg';ps.className='kpi-sub dn';}
+}
+
+function renderHealth(cl,im,ct,po){
+  let sc=0,items=[];
+  const cp=ct*100;
+  if(cp>=5){sc+=30;items.push({l:'CTR Excellent',c:'h-good'});}
+  else if(cp>=2){sc+=20;items.push({l:'CTR Good',c:'h-good'});}
+  else if(cp>=1){sc+=10;items.push({l:'CTR Low',c:'h-warn'});}
+  else{items.push({l:'CTR Poor',c:'h-bad'});}
+  if(po>0&&po<=3){sc+=30;items.push({l:'Top 3',c:'h-good'});}
+  else if(po<=10){sc+=22;items.push({l:'Page 1',c:'h-good'});}
+  else if(po<=20){sc+=10;items.push({l:'Page 2',c:'h-warn'});}
+  else{items.push({l:'Page 3+',c:'h-bad'});}
+  if(im>=10000){sc+=20;items.push({l:'High Visibility',c:'h-good'});}
+  else if(im>=1000){sc+=14;items.push({l:'Growing',c:'h-good'});}
+  else if(im>=100){sc+=7;items.push({l:'Early Stage',c:'h-warn'});}
+  else{items.push({l:'Low Visibility',c:'h-bad'});}
+  const opps=S.data.pages.filter(r=>r.impressions>30&&r.ctr<0.03&&r.position<=10).length;
+  if(opps===0){sc+=20;items.push({l:'No CTR Gaps',c:'h-good'});}
+  else if(opps<=2){sc+=12;items.push({l:`${opps} CTR Gap${opps>1?'s':''}`,c:'h-warn'});}
+  else{sc+=4;items.push({l:`${opps} CTR Gaps`,c:'h-bad'});}
+  document.getElementById('health-fill').style.width=sc+'%';
+  document.getElementById('health-score').textContent=sc+'/100';
+  document.getElementById('health-items').innerHTML=items.map(i=>`<span class="h-item ${i.c}">${i.l}</span>`).join('');
+}
+
+function renderOv(){
+  const sorted=[...S.data.pages].sort((a,b)=>a.position-b.position);
+  if(sorted.length){const p=sorted[0];const path=p.keys[0].replace(/^https?:\/\/[^/]+/,'')||'/';document.getElementById('ov-best').textContent=path;document.getElementById('ov-best-d').textContent=`Position ${p.position.toFixed(1)} · ${fn(p.clicks)} clicks`;}
+  const tkw=[...S.data.queries].sort((a,b)=>b.clicks-a.clicks)[0];
+  if(tkw){document.getElementById('ov-kw').textContent=tkw.keys[0];document.getElementById('ov-kw-d').textContent=`${fn(tkw.clicks)} clicks · pos ${tkw.position.toFixed(1)}`;}
+  const qw=S.data.pages.filter(r=>r.impressions>30&&r.ctr<0.03&&r.position<=10).sort((a,b)=>b.impressions-a.impressions)[0];
+  if(qw){const path=qw.keys[0].replace(/^https?:\/\/[^/]+/,'')||'/';document.getElementById('ov-qw').textContent=path;document.getElementById('ov-qw-d').textContent=`${fn(qw.impressions)} impressions, ${(qw.ctr*100).toFixed(2)}% CTR`;}
+  else{document.getElementById('ov-qw').textContent='None';document.getElementById('ov-qw-d').textContent='All top pages have healthy CTR';}
+  document.getElementById('ov-q-ct').textContent=S.data.queries.length+' keywords';
+  document.getElementById('ov-q-body').innerHTML=qtbl(S.data.queries.slice(0,15));
+  renderDev(document.getElementById('ov-dev-body'),S.data.devices);
+}
+
+function renderKw(){document.getElementById('kw-ct').textContent=S.data.queries.length+' total';document.getElementById('kw-body').innerHTML=qtbl(S.data.queries);}
+function filterKw(){const f=document.getElementById('kw-fi').value.toLowerCase();document.getElementById('kw-body').innerHTML=qtbl(f?S.data.queries.filter(r=>r.keys[0].toLowerCase().includes(f)):S.data.queries);}
+function renderPg(){document.getElementById('pg-ct').textContent=S.data.pages.length+' pages';document.getElementById('pg-body').innerHTML=ptbl(S.data.pages);}
+function filterPg(){const f=document.getElementById('pg-fi').value.toLowerCase();document.getElementById('pg-body').innerHTML=ptbl(f?S.data.pages.filter(r=>r.keys[0].toLowerCase().includes(f)):S.data.pages);}
+
+function loadWL(){try{return JSON.parse(localStorage.getItem('pvi-wl')||'[]');}catch{return[];}}
+function saveWL(l){localStorage.setItem('pvi-wl',JSON.stringify(l));}
+function addWatch(){const i=document.getElementById('wl-inp');const kw=i.value.trim().toLowerCase();if(!kw)return;const l=loadWL();if(l.includes(kw)){i.value='';return;}l.push(kw);saveWL(l);i.value='';renderWL();}
+function rmWatch(kw){saveWL(loadWL().filter(k=>k!==kw));renderWL();}
+function renderWL(){
+  const el=document.getElementById('wl-body');const list=loadWL();
+  if(!list.length){el.innerHTML=`<div class="loading"><span class="empty-msg">No keywords tracked yet. Add terms like advisor names, "financial advisor cherry hill", or "pine valley investments".</span></div>`;return;}
+  const qd=S.data.queries;
+  el.innerHTML=`<table class="dt"><thead><tr><th>Keyword</th><th class="r">Position</th><th class="r">Clicks</th><th class="r">Impressions</th><th class="r">CTR</th><th class="r">Status</th><th></th></tr></thead><tbody>${list.map(kw=>{
+    const m=qd.find(r=>r.keys[0].toLowerCase()===kw)||qd.find(r=>r.keys[0].toLowerCase().includes(kw));
+    if(m){const st=m.position<=3?'🟢 Top 3':m.position<=10?'🟡 Page 1':m.position<=20?'🟠 Page 2':'🔴 Page 3+';
+      return `<tr><td style="font-weight:600;color:var(--white)">${esc(kw)}</td><td class="r">${posb(m.position)}</td><td class="r">${fn(m.clicks)}</td><td class="r">${fn(m.impressions)}</td><td class="r">${cbar(m.ctr)}</td><td class="r" style="font-size:10px">${st}</td><td><button onclick="rmWatch('${esc(kw)}')" style="background:none;border:none;color:var(--gray);cursor:pointer;font-size:16px;padding:0 4px">×</button></td></tr>`;}
+    return `<tr><td style="font-weight:600;color:var(--white)">${esc(kw)}</td><td class="r" colspan="4" style="color:var(--gray);font-size:10px">Not in top results this period</td><td class="r" style="font-size:10px">⚫ No data</td><td><button onclick="rmWatch('${esc(kw)}')" style="background:none;border:none;color:var(--gray);cursor:pointer;font-size:16px;padding:0 4px">×</button></td></tr>`;
+  }).join('')}</tbody></table>`;
+}
+
+function renderOp(){
+  const el=document.getElementById('op-body');
+  const ops=S.data.pages.filter(r=>r.impressions>30&&r.ctr<0.03&&r.position<=20).sort((a,b)=>b.impressions-a.impressions).slice(0,15);
+  if(!ops.length){el.innerHTML=`<div class="loading"><span class="empty-msg">No CTR opportunities right now — all top pages are performing well!</span></div>`;return;}
+  el.innerHTML=`<table class="dt"><thead><tr><th>Page</th><th class="r">Position</th><th class="r">Impressions</th><th class="r">CTR</th><th class="r">Potential</th><th>Action</th></tr></thead><tbody>${ops.map(r=>{
+    const path=r.keys[0].replace(/^https?:\/\/[^/]+/,'')||'/';
+    const pot=r.position<=5?'h':r.position<=10?'m':'l';
+    const pl=pot==='h'?'High':pot==='m'?'Medium':'Low';
+    const act=r.position<=3?'Rewrite meta description':r.position<=10?'Improve title tag':'Improve content depth';
+    return `<tr><td><div class="pc-name" title="${esc(r.keys[0])}">${esc(path)}</div></td><td class="r">${posb(r.position)}</td><td class="r">${fn(r.impressions)}</td><td class="r" style="color:var(--amber);font-weight:600">${(r.ctr*100).toFixed(2)}%</td><td class="r"><span class="ot ot-${pot}">${pl}</span></td><td style="color:var(--gray);font-size:10px">${act}</td></tr>`;
+  }).join('')}</tbody></table>`;
+}
+
+function renderP2(){
+  const el=document.getElementById('p2-body');
+  const rows=S.data.queries.filter(r=>r.position>=11&&r.position<=20).sort((a,b)=>b.impressions-a.impressions).slice(0,20);
+  if(!rows.length){el.innerHTML=`<div class="loading"><span class="empty-msg">No keywords in positions 11–20 for this period.</span></div>`;return;}
+  el.innerHTML=qtbl(rows);
+}
+
+function renderDev(el,rows){
+  if(!rows.length){el.innerHTML=`<div class="loading"><span class="empty-msg">No device data</span></div>`;return;}
+  const icons={MOBILE:'📱',DESKTOP:'🖥️',TABLET:'⬛'};
+  const tot=rows.reduce((s,r)=>s+r.clicks,0)||1;
+  el.innerHTML=`<div class="dev-rows">${rows.map(r=>{const pct=(r.clicks/tot*100).toFixed(1);const dv=r.keys[0];return`<div class="dev-row"><div class="dev-icon">${icons[dv]||'📱'}</div><div class="dev-lbl">${dv.charAt(0)+dv.slice(1).toLowerCase()}</div><div class="dev-bar-bg"><div class="dev-bar-fill" style="width:${pct}%"></div></div><div class="dev-pct">${pct}%</div></div>`;}).join('')}</div>`;
+}
+
+function qtbl(rows){
+  if(!rows.length)return`<div class="loading"><span class="empty-msg">No results</span></div>`;
+  return`<table class="dt"><thead><tr><th>Query</th><th class="r">Clicks</th><th class="r">Impr.</th><th class="r">CTR</th><th class="r">Position</th></tr></thead><tbody>${rows.map(r=>`<tr><td class="qc">${esc(r.keys[0])}</td><td class="r">${fn(r.clicks)}</td><td class="r">${fn(r.impressions)}</td><td class="r">${cbar(r.ctr)}</td><td class="r">${posb(r.position)}</td></tr>`).join('')}</tbody></table>`;
+}
+function ptbl(rows){
+  if(!rows.length)return`<div class="loading"><span class="empty-msg">No results</span></div>`;
+  return`<table class="dt"><thead><tr><th>Page</th><th class="r">Clicks</th><th class="r">Impressions</th><th class="r">CTR</th><th class="r">Position</th></tr></thead><tbody>${rows.map(r=>{const url=r.keys[0];const path=url.replace(/^https?:\/\/[^/]+/,'')||'/';const lbl=path.split('/').filter(Boolean).pop()?.replace('.html','').replace(/-/g,' ')||'Homepage';return`<tr><td><div class="pc-name">${esc(lbl)}</div><div class="pc-path">${esc(path)}</div></td><td class="r">${fn(r.clicks)}</td><td class="r">${fn(r.impressions)}</td><td class="r">${cbar(r.ctr)}</td><td class="r">${posb(r.position)}</td></tr>`;}).join('')}</tbody></table>`;
+}
+function posb(p){const c=p<=3?'pos-top':p<=10?'pos-p1':'pos-p2';return`<span class="pos-b ${c}">${p.toFixed(1)}</span>`;}
+function cbar(ctr){const pct=Math.min(ctr*100*5,100);return`<div class="cbar"><div class="cbar-bg"><div class="cbar-fill" style="width:${pct}%"></div></div><span class="cbar-v">${(ctr*100).toFixed(1)}%</span></div>`;}
+function fn(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1000)return(n/1000).toFixed(1)+'K';return String(n);}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function setLd(){['ov-q-body','ov-dev-body','kw-body','pg-body','wl-body','op-body','p2-body'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerHTML=`<div class="loading"><div class="spin"></div></div>`;});['k-clicks','k-impr','k-ctr','k-pos'].forEach(id=>{document.getElementById(id).textContent='…';});}
+function switchTab(name,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+name).classList.add('active');btn.classList.add('active');}
+function setDays(d){S.days=d;document.querySelectorAll('.date-tab').forEach(t=>t.classList.toggle('active',parseInt(t.dataset.d)===d));refreshData();}
+function showDash(){
+  document.getElementById('setup-panel').style.display='none';
+  document.getElementById('dashboard').style.display='block';
+  if(S.userInfo){document.getElementById('tb-right').innerHTML=`<div class="user-chip">${S.userInfo.picture?`<img src="${S.userInfo.picture}" alt="">`:''}<span>${S.userInfo.name||S.userInfo.email}</span></div><button class="btn btn-ghost" onclick="signOut()">Sign out</button>`;}
   refreshData();
 }
-
-function updatePropertyPill() {
-  document.getElementById('active-property-pill').textContent = '● ' + state.property.replace(/^https?:\/\//, '');
-}
-
-function getDateRange(days) {
-  const end = new Date();
-  const start = new Date();
-  start.setDate(end.getDate() - days);
-  return { startDate: fmtDate(start), endDate: fmtDate(end) };
-}
-function fmtDate(d) { return d.toISOString().split('T')[0]; }
-
-async function querySearchConsole(dimensions, rowLimit = 25) {
-  const { startDate, endDate } = getDateRange(state.days);
-  return gFetch(
-    `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(state.property)}/searchAnalytics/query`,
-    'POST',
-    { startDate, endDate, dimensions, rowLimit, dataState: 'all' }
-  );
-}
-
-// ── REFRESH ────────────────────────────────────────────────────────────
-async function refreshData() {
-  if (!state.property) return;
-  document.getElementById('refresh-btn').disabled = true;
-  showStatus('Fetching data from Search Console…');
-
-  setLoadingAll();
-
-  const [totalsRes, queryRes, pageRes, deviceRes] = await Promise.all([
-    querySearchConsole([], 1),
-    querySearchConsole(['query'], 50),
-    querySearchConsole(['page'], 50),
-    querySearchConsole(['device'], 10)
-  ]);
-
-  // Totals - sum all rows from a no-dimension call
-  const totalsAll = await querySearchConsole([], 1000);
-  let clicks=0, impressions=0, ctrSum=0, posSum=0, rows=0;
-  if (totalsAll?.rows) {
-    totalsAll.rows.forEach(r => { clicks+=r.clicks; impressions+=r.impressions; });
-    const top = totalsAll.rows.reduce((a,b)=>({clicks:a.clicks+b.clicks,impressions:a.impressions+b.impressions,ctr:0,position:a.position*a.clicks+b.position*b.clicks}),{clicks:0,impressions:0,ctr:0,position:0});
-    posSum = totalsAll.rows.reduce((s,r)=>s+(r.position*r.clicks),0);
-    rows = clicks;
-  }
-
-  renderKPIs({ clicks, impressions, ctr: clicks&&impressions ? clicks/impressions : 0, position: rows > 0 ? posSum/rows : 0 });
-  renderQueries(queryRes?.rows || []);
-  renderPages(pageRes?.rows || []);
-  renderDevices(deviceRes?.rows || []);
-  renderOpportunities(pageRes?.rows || []);
-
-  document.getElementById('refresh-btn').disabled = false;
-  showStatus('Updated', 'success');
-  setTimeout(() => hideStatus(), 2000);
-}
-
-// ── RENDER ─────────────────────────────────────────────────────────────
-function setLoadingAll() {
-  ['queries-body','pages-body','device-body','opps-body','watchlist-body'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.innerHTML = `<div class="loading-state"><div class="spinner"></div></div>`;
-  });
-  ['kpi-clicks','kpi-impressions','kpi-ctr','kpi-position'].forEach(id => {
-    document.getElementById(id).textContent = '…';
-  });
-}
-
-function renderKPIs({ clicks, impressions, ctr, position }) {
-  document.getElementById('kpi-clicks').textContent = fmtNum(clicks);
-  document.getElementById('kpi-impressions').textContent = fmtNum(impressions);
-  document.getElementById('kpi-ctr').textContent = (ctr*100).toFixed(1) + '%';
-  document.getElementById('kpi-position').textContent = position ? position.toFixed(1) : '-';
-  // Deltas would need a comparison period fetch - skipped for now, show context hint
-  document.getElementById('kpi-clicks-delta').innerHTML = `<span class="delta-neutral">last ${state.days}d</span>`;
-  document.getElementById('kpi-impressions-delta').innerHTML = `<span class="delta-neutral">last ${state.days}d</span>`;
-  document.getElementById('kpi-ctr-delta').innerHTML = `<span class="delta-neutral">${impressions>0?(clicks/impressions*100).toFixed(2)+'% raw':''}</span>`;
-  document.getElementById('kpi-position-delta').innerHTML = `<span class="${position<=10?'delta-up':'delta-down'}">${position<=3?'Top 3':position<=10?'Page 1':'Page 2+'}</span>`;
-}
-
-function renderQueries(rows) {
-  state.data.queries = rows; // store for filter + watchlist
-  const el = document.getElementById('queries-body');
-  document.getElementById('query-count-badge').textContent = rows.length + ' queries';
-  if (!rows.length) { el.innerHTML = emptyState('No query data yet'); renderWatchlist(); return; }
-  renderQueriesFiltered(rows);
-  renderWatchlist();
-}
-
-function renderPages(rows) {
-  const el = document.getElementById('pages-body');
-  document.getElementById('pages-count-badge').textContent = rows.length + ' pages';
-  if (!rows.length) { el.innerHTML = emptyState('No page data yet'); return; }
-
-  el.innerHTML = `<table class="data-table">
-    <thead><tr>
-      <th>Page</th>
-      <th class="right">Clicks</th>
-      <th class="right">Impr.</th>
-      <th class="right">CTR</th>
-      <th class="right">Avg. Pos.</th>
-    </tr></thead>
-    <tbody>
-    ${rows.slice(0,20).map(r=>{
-      const url = r.keys[0];
-      const path = url.replace(/^https?:\/\/[^/]+/,'') || '/';
-      const parts = path.split('/').filter(Boolean);
-      const label = parts.length ? parts[parts.length-1].replace('.html','').replace(/-/g,' ') : 'Homepage';
-      return `<tr>
-        <td><div class="page-cell" title="${escHtml(url)}"><span>${escHtml(label)}</span><br>${escHtml(path)}</div></td>
-        <td class="right">${fmtNum(r.clicks)}</td>
-        <td class="right">${fmtNum(r.impressions)}</td>
-        <td class="right"><div class="ctr-bar-wrap"><div class="ctr-bar-bg"><div class="ctr-bar-fill" style="width:${Math.min(r.ctr*100*4,100)}%"></div></div><span class="ctr-val">${(r.ctr*100).toFixed(1)}%</span></div></td>
-        <td class="right">${posBadge(r.position)}</td>
-      </tr>`;
-    }).join('')}
-    </tbody>
-  </table>`;
-}
-
-function renderDevices(rows) {
-  const el = document.getElementById('device-body');
-  if (!rows.length) { el.innerHTML = emptyState('No device data'); return; }
-  const icons = { MOBILE:'📱', DESKTOP:'🖥️', TABLET:'⬛' };
-  const total = rows.reduce((s,r)=>s+r.clicks,0)||1;
-  el.innerHTML = `<div class="device-rows">${rows.map(r=>{
-    const pct = (r.clicks/total*100).toFixed(1);
-    const device = r.keys[0];
-    return `<div class="device-row">
-      <div class="device-icon">${icons[device]||'📱'}</div>
-      <div class="device-label">${device.charAt(0)+device.slice(1).toLowerCase()}</div>
-      <div class="device-bar-bg"><div class="device-bar-fill" style="width:${pct}%"></div></div>
-      <div class="device-pct">${pct}%</div>
-    </div>`;
-  }).join('')}</div>`;
-}
-
-function renderOpportunities(rows) {
-  const el = document.getElementById('opps-body');
-  // Filter: impressions > 50, ctr < 3%, position <= 20
-  const opps = rows.filter(r => r.impressions > 50 && r.ctr < 0.03 && r.position <= 20)
-    .sort((a,b) => b.impressions - a.impressions)
-    .slice(0, 15);
-
-  if (!opps.length) {
-    el.innerHTML = emptyState('No obvious CTR opportunities right now - that\'s a good sign!');
-    return;
-  }
-
-  el.innerHTML = `<table class="data-table">
-    <thead><tr>
-      <th>Page</th>
-      <th class="right">Position</th>
-      <th class="right">Impressions</th>
-      <th class="right">Current CTR</th>
-      <th class="right">Potential</th>
-      <th>Action</th>
-    </tr></thead>
-    <tbody>
-    ${opps.map(r=>{
-      const url = r.keys[0];
-      const path = url.replace(/^https?:\/\/[^/]+/,'') || '/';
-      const potential = r.position <= 5 ? 'high' : r.position <= 10 ? 'med' : 'low';
-      const potLabel = potential==='high' ? 'High' : potential==='med' ? 'Medium' : 'Low';
-      const action = r.position <= 3 ? 'Rewrite meta description' : r.position <= 10 ? 'Improve title tag' : 'Improve content depth';
-      return `<tr>
-        <td><div class="page-cell" title="${escHtml(url)}">${escHtml(path)}</div></td>
-        <td class="right">${posBadge(r.position)}</td>
-        <td class="right">${fmtNum(r.impressions)}</td>
-        <td class="right" style="color:var(--amber);font-weight:600;">${(r.ctr*100).toFixed(2)}%</td>
-        <td class="right"><span class="opp-tag opp-${potential}">${potLabel}</span></td>
-        <td style="color:var(--gray);font-size:10px;">${action}</td>
-      </tr>`;
-    }).join('')}
-    </tbody>
-  </table>`;
-}
-
-// ── HELPERS ────────────────────────────────────────────────────────────
-function posBadge(pos) {
-  const cls = pos <= 3 ? 'pos-1-3' : pos <= 10 ? 'pos-4-10' : 'pos-11plus';
-  return `<span class="pos-badge ${cls}">${pos.toFixed(1)}</span>`;
-}
-function fmtNum(n) {
-  if (n >= 1000000) return (n/1000000).toFixed(1)+'M';
-  if (n >= 1000) return (n/1000).toFixed(1)+'K';
-  return n.toString();
-}
-function escHtml(str) {
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-function emptyState(msg) {
-  return `<div class="loading-state"><span class="empty-text">${msg}</span></div>`;
-}
-
-// ── KEYWORD WATCHLIST ──────────────────────────────────────────────────
-function loadWatchlist() {
-  try { return JSON.parse(localStorage.getItem('pvi-watchlist') || '[]'); } catch { return []; }
-}
-function saveWatchlist(list) {
-  localStorage.setItem('pvi-watchlist', JSON.stringify(list));
-}
-
-function addWatchKeyword() {
-  const input = document.getElementById('watchlist-input');
-  const kw = input.value.trim().toLowerCase();
-  if (!kw) return;
-  const list = loadWatchlist();
-  if (list.includes(kw)) { input.value = ''; return; }
-  list.push(kw);
-  saveWatchlist(list);
-  input.value = '';
-  renderWatchlist();
-}
-
-function removeWatchKeyword(kw) {
-  const list = loadWatchlist().filter(k => k !== kw);
-  saveWatchlist(list);
-  renderWatchlist();
-}
-
-function renderWatchlist() {
-  const el = document.getElementById('watchlist-body');
-  const list = loadWatchlist();
-  if (!list.length) {
-    el.innerHTML = emptyState('Add keywords above to start tracking them. Tip: try your advisors\' names, your firm name, and service keywords like "financial advisor" + your city.');
-    return;
-  }
-
-  // Match against loaded query data
-  const queryData = state.data.queries || [];
-
-  el.innerHTML = `<table class="data-table">
-    <thead><tr>
-      <th>Keyword</th>
-      <th class="right">Position</th>
-      <th class="right">Clicks</th>
-      <th class="right">Impressions</th>
-      <th class="right">CTR</th>
-      <th class="right">Status</th>
-      <th></th>
-    </tr></thead>
-    <tbody>
-    ${list.map(kw => {
-      // Find exact or partial match in query data
-      const match = queryData.find(r => r.keys[0].toLowerCase() === kw) ||
-                    queryData.find(r => r.keys[0].toLowerCase().includes(kw));
-      if (match) {
-        const status = match.position <= 3 ? '🟢 Top 3' : match.position <= 10 ? '🟡 Page 1' : match.position <= 20 ? '🟠 Page 2' : '🔴 Page 3+';
-        return `<tr>
-          <td style="font-weight:600;color:var(--white);">${escHtml(kw)}</td>
-          <td class="right">${posBadge(match.position)}</td>
-          <td class="right">${fmtNum(match.clicks)}</td>
-          <td class="right">${fmtNum(match.impressions)}</td>
-          <td class="right"><div class="ctr-bar-wrap"><div class="ctr-bar-bg"><div class="ctr-bar-fill" style="width:${Math.min(match.ctr*100*4,100)}%"></div></div><span class="ctr-val">${(match.ctr*100).toFixed(1)}%</span></div></td>
-          <td class="right" style="font-size:10px;">${status}</td>
-          <td><button onclick="removeWatchKeyword('${escHtml(kw)}')" style="background:none;border:none;color:var(--gray);cursor:pointer;font-size:14px;padding:0 4px;" title="Remove">×</button></td>
-        </tr>`;
-      } else {
-        return `<tr>
-          <td style="font-weight:600;color:var(--white);">${escHtml(kw)}</td>
-          <td class="right" colspan="4" style="color:var(--gray);font-size:10px;">No data yet - not ranking or below threshold</td>
-          <td class="right" style="font-size:10px;">⚫ No data</td>
-          <td><button onclick="removeWatchKeyword('${escHtml(kw)}')" style="background:none;border:none;color:var(--gray);cursor:pointer;font-size:14px;padding:0 4px;" title="Remove">×</button></td>
-        </tr>`;
-      }
-    }).join('')}
-    </tbody>
-  </table>`;
-}
-
-// ── QUERY FILTER ───────────────────────────────────────────────────────
-function filterQueries() {
-  const filter = document.getElementById('query-filter').value.trim().toLowerCase();
-  const rows = state.data.queries || [];
-  const filtered = filter ? rows.filter(r => r.keys[0].toLowerCase().includes(filter)) : rows;
-  renderQueriesFiltered(filtered);
-}
-
-function renderQueriesFiltered(rows) {
-  const el = document.getElementById('queries-body');
-  if (!rows.length) { el.innerHTML = emptyState('No matching queries'); return; }
-  el.innerHTML = `<table class="data-table">
-    <thead><tr>
-      <th>Query</th>
-      <th class="right">Clicks</th>
-      <th class="right">Impr.</th>
-      <th class="right">CTR</th>
-      <th class="right">Pos.</th>
-    </tr></thead>
-    <tbody>
-    ${rows.slice(0,50).map(r=>`
-      <tr>
-        <td class="query-cell">${escHtml(r.keys[0])}</td>
-        <td class="right">${fmtNum(r.clicks)}</td>
-        <td class="right">${fmtNum(r.impressions)}</td>
-        <td class="right"><div class="ctr-bar-wrap"><div class="ctr-bar-bg"><div class="ctr-bar-fill" style="width:${Math.min(r.ctr*100*4,100)}%"></div></div><span class="ctr-val">${(r.ctr*100).toFixed(1)}%</span></div></td>
-        <td class="right">${posBadge(r.position)}</td>
-      </tr>`).join('')}
-    </tbody>
-  </table>`;
-}
-
-
-function setDays(d) {
-  state.days = d;
-  document.querySelectorAll('.date-tab').forEach(t => {
-    t.classList.toggle('active', parseInt(t.dataset.days) === d);
-  });
-  refreshData();
-}
-
-// ── SHOW DASHBOARD ─────────────────────────────────────────────────────
-function showDashboard() {
-  document.getElementById('setup-panel').style.display = 'none';
-  document.getElementById('dashboard').style.display = 'block';
-
-  // User chip
-  if (state.userInfo) {
-    const ctrl = document.getElementById('topbar-controls');
-    ctrl.innerHTML = `<div class="user-chip">
-      ${state.userInfo.picture ? `<img src="${state.userInfo.picture}" alt="">` : ''}
-      <span>${state.userInfo.name || state.userInfo.email}</span>
-    </div>
-    <button class="btn btn-ghost" onclick="signOut()" style="font-size:10px;">Sign out</button>`;
-  }
-
-  refreshData();
-}
-
-function signOut() {
-  state.token = null;
-  state.userInfo = null;
-  state.property = null;
-  document.getElementById('dashboard').style.display = 'none';
-  document.getElementById('setup-panel').style.display = 'block';
-  document.getElementById('topbar-controls').innerHTML = '';
-}
-
-// ── STATUS BAR ─────────────────────────────────────────────────────────
-function showStatus(msg, type = '') {
-  const el = document.getElementById('status-bar');
-  el.textContent = msg;
-  el.className = 'show' + (type ? ' ' + type : '');
-}
-function hideStatus() {
-  document.getElementById('status-bar').className = '';
-}
+function signOut(){S.token=null;S.userInfo=null;S.property=null;document.getElementById('dashboard').style.display='none';document.getElementById('setup-panel').style.display='block';document.getElementById('tb-right').innerHTML='';}
+function showSt(msg,type=''){const e=document.getElementById('status');e.textContent=msg;e.className='show'+(type?' '+type:'');}
+function hideSt(){document.getElementById('status').className='';}
 </script>
 </body>
 </html>
