@@ -515,16 +515,37 @@ body{background:var(--n);font-family:'Montserrat',sans-serif;height:100vh;overfl
 <!-- S11: TOP 3 SEO ISSUES -->
 <div class="sl" id="s11">
   <div class="hd"><div class="hdb"><div class="hdl">PVI</div><div class="hdn">Pine Valley Investments</div></div><div class="hdr"><span class="hdd" id="h11">—</span><span class="hdp">11 / 15</span></div></div>
-  <div class="bd" style="flex-direction:column;gap:10px;">
-    <div style="flex-shrink:0;display:flex;align-items:flex-end;justify-content:space-between;">
-      <div><div class="ey">What Needs to Be Fixed</div><div class="tt sm">Top 3 <span class="ac">Priority Fixes</span></div></div>
-      <div id="s11sm" style="display:flex;gap:7px;"></div>
+  <div class="bd" style="gap:20px;">
+    <div class="cl" style="width:50%;gap:10px;">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-shrink:0;">
+        <div><div class="ey">What Needs to Be Fixed</div><div class="tt sm">Top 3 <span class="ac">Priority Fixes</span></div></div>
+        <div id="s11sm" style="display:flex;gap:7px;"></div>
+      </div>
+      <div class="ins" style="flex-shrink:0;">
+        <div class="ins-hd">🎯 Why These Matter</div>
+        <div class="ins-bd" id="s11pr">Loading…</div>
+      </div>
+      <div class="audit" id="s11au"></div>
     </div>
-    <div class="ins" style="flex-shrink:0;">
-      <div class="ins-hd">🎯 Why These Matter</div>
-      <div class="ins-bd" id="s11pr">Loading…</div>
+    <div class="cr" style="gap:8px;">
+      <div class="ctl">CTR Opportunities — High Impressions, Low Click-Through</div>
+      <div style="flex:1;min-height:0;overflow-y:auto;border:1px solid var(--br);border-radius:3px;background:var(--nm);">
+        <table style="width:100%;border-collapse:collapse;" id="s11ctr">
+          <thead><tr>
+            <th style="font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gr);padding:8px 12px;text-align:left;border-bottom:1px solid rgba(201,169,110,0.1);">Page</th>
+            <th style="font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gr);padding:8px 12px;text-align:center;border-bottom:1px solid rgba(201,169,110,0.1);">Position</th>
+            <th style="font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gr);padding:8px 12px;text-align:center;border-bottom:1px solid rgba(201,169,110,0.1);">Impressions</th>
+            <th style="font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gr);padding:8px 12px;text-align:center;border-bottom:1px solid rgba(201,169,110,0.1);">CTR</th>
+            <th style="font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gr);padding:8px 12px;text-align:left;border-bottom:1px solid rgba(201,169,110,0.1);">Action</th>
+          </tr></thead>
+          <tbody id="s11ctr-body"></tbody>
+        </table>
+      </div>
+      <div style="height:130px;position:relative;flex-shrink:0;">
+        <div class="ctl" style="margin-bottom:4px;">Impressions vs Clicks — Top Opportunity Pages</div>
+        <canvas id="c-ctr-opp"></canvas>
+      </div>
     </div>
-    <div class="audit" id="s11au"></div>
   </div>
 </div>
 
@@ -658,7 +679,12 @@ async function loadGA4(pid){
 // GSC
 async function loadGSC(prop){
   const wks=w13();const tw={startDate:fd(wks[12].s),endDate:fd(wks[12].e)};const r90={startDate:fd(wks[0].s),endDate:fd(wks[12].e)};
-  const[qw,qd]=await Promise.all([gf(`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(prop)}/searchAnalytics/query`,'POST',{...tw,dimensions:['query'],rowLimit:20,dataState:'all'}).catch(()=>null),gf(`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(prop)}/searchAnalytics/query`,'POST',{...r90,dimensions:['date'],rowLimit:1000,dataState:'all'}).catch(()=>null)]);
+  const gscBase=`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(prop)}/searchAnalytics/query`;
+  const[qw,qd,qp]=await Promise.all([
+    gf(gscBase,'POST',{...tw,dimensions:['query'],rowLimit:20,dataState:'all'}).catch(()=>null),
+    gf(gscBase,'POST',{...r90,dimensions:['date'],rowLimit:1000,dataState:'all'}).catch(()=>null),
+    gf(gscBase,'POST',{...tw,dimensions:['page'],rowLimit:50,dataState:'all'}).catch(()=>null)
+  ]);
   const qR=qw?.rows||[];
   const cl=qR.reduce((s,r)=>s+r.clicks,0),im=qR.reduce((s,r)=>s+r.impressions,0);
   const ctr=im>0?cl/im*100:0;const pw=qR.reduce((s,r)=>s+r.position*r.clicks,0),pos=cl>0?pw/cl:0;
@@ -666,7 +692,9 @@ async function loadGSC(prop){
   const wkG=wks.map(w=>{let cl2=0,im2=0,ctrSum=0,n=0;let d=new Date(w.s);while(d<=w.e){const k=fd(d);if(dm[k]&&dm[k].im>0){cl2+=dm[k].cl;im2+=dm[k].im;ctrSum+=dm[k].ctr;n++;}d.setDate(d.getDate()+1);}return{cl:cl2,im:im2,ctr:n>0?+(ctrSum/n*100).toFixed(2):null};});
   const lowCTR=qR.filter(r=>r.impressions>50&&r.ctr<0.02).sort((a,b)=>b.impressions-a.impressions).slice(0,2);
   const offP1=qR.filter(r=>r.position>=11&&r.position<=20).sort((a,b)=>b.impressions-a.impressions).slice(0,1);
-  return{cl,im,ctr,pos,qR,wkG,lowCTR,offP1,wkLbl:wks.map(w=>w.l)};
+  // Page-level CTR opportunities
+  const ctrOpps=(qp?.rows||[]).filter(r=>r.impressions>30&&r.ctr<0.03&&r.position<=25).sort((a,b)=>b.impressions-a.impressions).slice(0,8);
+  return{cl,im,ctr,pos,qR,wkG,lowCTR,offP1,ctrOpps,wkLbl:wks.map(w=>w.l)};
 }
 
 // FORMSPREE
@@ -805,6 +833,27 @@ function build(ga4,gsc,fs){
   document.getElementById('s11sm').innerHTML=`<span style="background:rgba(224,82,82,0.15);color:var(--r);padding:2px 8px;border-radius:2px;font-size:8px;font-weight:700;letter-spacing:0.1em">${top3.filter(i=>i.s==='critical').length} CRITICAL</span><span style="background:rgba(230,168,23,0.12);color:var(--a);padding:2px 8px;border-radius:2px;font-size:8px;font-weight:700;letter-spacing:0.1em">${top3.filter(i=>i.s==='high').length} HIGH</span>`;
   document.getElementById('s11pr').innerHTML=`These 3 fixes require no budget — only time. Fixing the click-through rate issue alone is estimated to increase our organic traffic by <strong>40–80% within 60 days</strong>. This is higher ROI than any paid advertising campaign.`;
   document.getElementById('s11au').innerHTML=top3.map(i=>`<div class="aitem"><span class="sev ${i.s==='critical'?'sc-badge':'sh-badge'}">${i.s}</span><div><div class="at">${i.t}</div><div class="af">Fix: ${i.f}</div></div><div><div class="ai">${i.imp}</div><div class="ae">${i.eff}</div></div></div>`).join('');
+  // CTR Opportunities table + chart
+  const opps=gsc.ctrOpps||[];
+  const posBadge=p=>p<=3?`<span style="background:rgba(61,186,126,0.15);color:${GN};padding:2px 7px;border-radius:2px;font-size:10px;font-weight:700;">#${p.toFixed(1)}</span>`:p<=10?`<span style="background:rgba(230,168,23,0.15);color:${AM};padding:2px 7px;border-radius:2px;font-size:10px;font-weight:700;">#${p.toFixed(1)}</span>`:`<span style="background:rgba(224,82,82,0.1);color:${RD};padding:2px 7px;border-radius:2px;font-size:10px;font-weight:700;">#${p.toFixed(1)}</span>`;
+  const actionLabel=p=>p<=3?'Rewrite meta description':p<=10?'Improve title tag':'Improve content depth';
+  document.getElementById('s11ctr-body').innerHTML=opps.length?opps.map(r=>{
+    const path=r.keys[0].replace(/^https?:\/\/[^/]+/,'')||'/';
+    return`<tr style="border-bottom:1px solid rgba(255,255,255,0.03);">
+      <td style="padding:8px 12px;font-size:11px;color:var(--w);font-weight:600;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${path}</td>
+      <td style="padding:8px 12px;text-align:center;">${posBadge(r.position)}</td>
+      <td style="padding:8px 12px;text-align:center;font-size:11px;font-weight:700;color:var(--w);">${fn(r.impressions)}</td>
+      <td style="padding:8px 12px;text-align:center;font-size:11px;font-weight:700;color:${AM};">${(r.ctr*100).toFixed(2)}%</td>
+      <td style="padding:8px 12px;font-size:10px;color:var(--gr);">${actionLabel(r.position)}</td>
+    </tr>`;
+  }).join(''):`<tr><td colspan="5" style="padding:16px;text-align:center;color:var(--gr);font-size:11px;">No CTR opportunities — all pages are performing well!</td></tr>`;
+  if(opps.length){
+    const oppLabels=opps.slice(0,5).map(r=>r.keys[0].replace(/^https?:\/\/[^/]+/,'')||'/');
+    mk('c-ctr-opp','bar',{labels:oppLabels,datasets:[
+      {label:'Impressions',data:opps.slice(0,5).map(r=>r.impressions),backgroundColor:G+'99',borderColor:G,borderWidth:1,borderRadius:2},
+      {label:'Clicks',data:opps.slice(0,5).map(r=>Math.round(r.impressions*r.ctr)),backgroundColor:GN+'99',borderColor:GN,borderWidth:1,borderRadius:2}
+    ]},{responsive:true,maintainAspectRatio:false,p:{legend:{display:true,labels:{boxWidth:9,padding:10,color:'#babab9'}}},sc:{x:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{color:'#babab9',font:{size:8}}},y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#babab9',font:{size:8}},beginAtZero:true}}});
+  }
 
   // ── S12 WORKING ──
   const good=[];
@@ -879,7 +928,16 @@ function demo(){
   const wks=w13();const base=[210,198,234,267,245,289,312,298,276,334,318,356,287];
   const ga4d={tot:287,lastS:312,nU:1190,rU:487,sm:{'Organic Search':892,'Direct':561,'Organic Social':187,'Referral':207},wks13:base,wOrg:base.map(v=>Math.round(v*.48)),wDir:base.map(v=>Math.round(v*.30)),wkLbl:wks.map(w=>w.l),pgR:[{dimensionValues:[{value:'/'}],metricValues:[{value:'634'}]},{dimensionValues:[{value:'/team'}],metricValues:[{value:'298'}]},{dimensionValues:[{value:'/about'}],metricValues:[{value:'241'}]},{dimensionValues:[{value:'/services'}],metricValues:[{value:'189'}]},{dimensionValues:[{value:'/bios/jason-braatz'}],metricValues:[{value:'143'}]},{dimensionValues:[{value:'/bios/harry-morad'}],metricValues:[{value:'118'}]}],biR:[{dimensionValues:[{value:'/bios/jason-braatz'}],metricValues:[{value:'143'}]},{dimensionValues:[{value:'/bios/harry-morad'}],metricValues:[{value:'118'}]},{dimensionValues:[{value:'/bios/jonathan-markoe'}],metricValues:[{value:'94'}]},{dimensionValues:[{value:'/bios/kate-fay'}],metricValues:[{value:'87'}]},{dimensionValues:[{value:'/bios/nick-lampone'}],metricValues:[{value:'71'}]}]};
   const ctrT=[1.2,1.4,1.8,1.6,2.1,2.3,2.0,2.4,2.7,2.5,2.9,3.1,3.5],imT=[620,710,840,780,920,1040,980,1120,1280,1180,1450,1620,1340];
-  const gscd={cl:312,im:8940,ctr:3.49,pos:8.2,lowCTR:[{keys:['https://pinevalleyinvestments.com/services'],impressions:648,ctr:0.0031,position:13.4}],offP1:[{keys:['financial advisor new jersey'],impressions:1240,ctr:.022,position:14.2}],qR:[{keys:['pine valley investments'],clicks:87,impressions:142,ctr:.61,position:1.2},{keys:['financial advisor cherry hill nj'],clicks:43,impressions:891,ctr:.048,position:4.1},{keys:['jason braatz financial advisor'],clicks:31,impressions:198,ctr:.156,position:2.8},{keys:['financial advisor new jersey'],clicks:28,impressions:1240,ctr:.022,position:7.4},{keys:['wealth management cherry hill'],clicks:22,impressions:674,ctr:.032,position:5.9},{keys:['pine valley investments reviews'],clicks:18,impressions:87,ctr:.206,position:3.1},{keys:['cherry hill financial advisor fee only'],clicks:14,impressions:412,ctr:.034,position:8.7},{keys:['ria advisor new jersey'],clicks:11,impressions:287,ctr:.038,position:9.2}],wkG:imT.map((im,i)=>({cl:Math.round(im*ctrT[i]/100),im,ctr:ctrT[i]})),wkLbl:wks.map(w=>w.l)};
+  const gscd={cl:312,im:8940,ctr:3.49,pos:8.2,
+    lowCTR:[{keys:['https://pinevalleyinvestments.com/services'],impressions:648,ctr:0.0031,position:13.4}],
+    offP1:[{keys:['financial advisor new jersey'],impressions:1240,ctr:.022,position:14.2}],
+    ctrOpps:[
+      {keys:['https://pinevalleyinvestments.com/services'],impressions:648,ctr:0.0031,position:13.4},
+      {keys:['https://pinevalleyinvestments.com/client-login'],impressions:312,ctr:0.0096,position:3.5},
+      {keys:['https://pinevalleyinvestments.com/for-advisors'],impressions:198,ctr:0.011,position:8.2},
+      {keys:['https://pinevalleyinvestments.com/about'],impressions:167,ctr:0.018,position:6.1},
+      {keys:['https://pinevalleyinvestments.com/bios/jason-braatz'],impressions:143,ctr:0.021,position:4.8},
+    ],qR:[{keys:['pine valley investments'],clicks:87,impressions:142,ctr:.61,position:1.2},{keys:['financial advisor cherry hill nj'],clicks:43,impressions:891,ctr:.048,position:4.1},{keys:['jason braatz financial advisor'],clicks:31,impressions:198,ctr:.156,position:2.8},{keys:['financial advisor new jersey'],clicks:28,impressions:1240,ctr:.022,position:7.4},{keys:['wealth management cherry hill'],clicks:22,impressions:674,ctr:.032,position:5.9},{keys:['pine valley investments reviews'],clicks:18,impressions:87,ctr:.206,position:3.1},{keys:['cherry hill financial advisor fee only'],clicks:14,impressions:412,ctr:.034,position:8.7},{keys:['ria advisor new jersey'],clicks:11,impressions:287,ctr:.038,position:9.2}],wkG:imT.map((im,i)=>({cl:Math.round(im*ctrT[i]/100),im,ctr:ctrT[i]})),wkLbl:wks.map(w=>w.l)};
   const fsd={total:7,lastW:5,byA:{'Jason Braatz':3,'Harry Morad':2,'Jonathan Markoe':1,'Kate Fay':1},wk13:[1,0,2,1,3,2,4,2,3,5,4,6,7]};
   try{build(ga4d,gscd,fsd);showPres();}catch(e){console.error('Demo error:',e);document.getElementById('setup').style.display='flex';document.getElementById('ld').classList.add('h');alert('Demo error: '+e.message+'\n\nCheck browser console for details.');}
 }
