@@ -794,7 +794,16 @@ function build(ga4,gsc,fs){
   try{
   const today=new Date();
   hdrs(today.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'}));
-  
+
+  // Pre-calculate shared variables used throughout
+  const wks=w13();
+  const srcTot=Object.values(ga4.sm).reduce((s,v)=>s+v,0)||1;
+  const org=ga4.sm['Organic Search']||0,dir=ga4.sm['Direct']||0;
+  const soc=(ga4.sm['Organic Social']||0)+(ga4.sm['Paid Social']||0);
+  const ref=ga4.sm['Referral']||0;
+  const orgP=Math.round(org/srcTot*100),dirP=Math.round(dir/srcTot*100);
+  const topKw=gsc.qR[0]?.keys[0]||'pine valley investments';
+
   // ── SCORE CALCULATION ──
   let score=0,scoreMax=0;
   const addScore=(val,max)=>{score+=Math.min(val,max);scoreMax+=max;};
@@ -836,13 +845,6 @@ function build(ga4,gsc,fs){
     :`Targets "financial advisor cherry hill nj" — highest value local keyword in our market.`;
   const nbmTitleEl=document.getElementById('nbm-title');if(nbmTitleEl)nbmTitleEl.textContent=nbmTitle;
   const nbmDescEl=document.getElementById('nbm-desc');if(nbmDescEl)nbmDescEl.textContent=nbmDesc;
-  const wks=w13();
-  const srcTot=Object.values(ga4.sm).reduce((s,v)=>s+v,0)||1;
-  const org=ga4.sm['Organic Search']||0,dir=ga4.sm['Direct']||0;
-  const soc=(ga4.sm['Organic Social']||0)+(ga4.sm['Paid Social']||0);
-  const ref=ga4.sm['Referral']||0;
-  const orgP=Math.round(org/srcTot*100),dirP=Math.round(dir/srcTot*100);
-  const topKw=gsc.qR[0]?.keys[0]||'pine valley investments';
 
   // ── S1 COVER ──
   document.getElementById('s1r').textContent=`${fmtD(wks[12].s)} – ${fmtD(wks[12].e)}, ${wks[12].e.getFullYear()}`;
