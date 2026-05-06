@@ -831,21 +831,21 @@ async function loadFS(key){
     const headers={'Authorization':'Bearer '+key,'Content-Type':'application/json'};
     // Try both Bearer token and basic key formats
     const fetchForm=async(id)=>{
-      // Try account-level API key format first
-      // Formspree per-form key uses Basic auth: base64(hashid:key)
-      const basicAuth='Basic '+btoa(id+':'+key);
-      let r=await fetch(`https://api.formspree.io/api/0/forms/${id}/submissions?page_size=500`,{headers:{'Authorization':basicAuth}});
-      if(!r.ok){
-        // Fallback: try Bearer token format
-        r=await fetch(`https://api.formspree.io/api/0/forms/${id}/submissions?page_size=500`,{headers:{'Authorization':'Bearer '+key}});
-      }
-      if(!r.ok){
-        // Fallback: try key as Basic password with empty username
-        r=await fetch(`https://api.formspree.io/api/0/forms/${id}/submissions?page_size=500`,{headers:{'Authorization':'Basic '+btoa(':'+key)}});
-      }
-      if(!r.ok)return[];
-      const d=await r.json();
-      return d.submissions||[];
+      // Try 1: Bearer token (account-level key)
+      let r=await fetch(`https://api.formspree.io/api/0/forms/${id}/submissions?page_size=500`,{headers:{'Authorization':'Bearer '+key}});
+      console.log(`[FS] ${id} Bearer:`,r.status);
+      if(r.ok){const d=await r.json();console.log(`[FS] ${id} got ${d.submissions?.length||0} submissions`);return d.submissions||[];}
+      // Try 2: Basic auth with hashid:key
+      r=await fetch(`https://api.formspree.io/api/0/forms/${id}/submissions?page_size=500`,{headers:{'Authorization':'Basic '+btoa(id+':'+key)}});
+      console.log(`[FS] ${id} Basic hashid:key:`,r.status);
+      if(r.ok){const d=await r.json();return d.submissions||[];}
+      // Try 3: key only as Bearer without form prefix
+      r=await fetch(`https://api.formspree.io/api/0/forms/${id}/submissions?page_size=500`,{headers:{'Authorization':key}});
+      console.log(`[FS] ${id} raw key:`,r.status);
+      if(r.ok){const d=await r.json();return d.submissions||[];}
+      const errText=await r.text().catch(()=>'');
+      console.warn(`[FS] ${id} all auth failed. Last error:`,errText.slice(0,200));
+      return[];
     };
     const results=await Promise.all(formIds.map(fetchForm));
     const all=results.flat();
