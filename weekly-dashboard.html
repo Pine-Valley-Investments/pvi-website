@@ -748,17 +748,26 @@ async function loadGA4(pid,days=7){
   const today=new Date();const rangeStart=new Date(today);rangeStart.setDate(today.getDate()-days);
   const tw={startDate:fd(rangeStart),endDate:fd(today)};
   const lm={startDate:fd(wks[8].s),endDate:fd(wks[8].e)};const r90={startDate:fd(wks[0].s),endDate:fd(today)};
-  const[nv,nvl,sr,pg,bi,wk,ws]=await Promise.all([g4r(pid,[tw],['newVsReturning'],['sessions','totalUsers']),g4r(pid,[lm],['newVsReturning'],['sessions']),g4r(pid,[tw],['sessionDefaultChannelGroup'],['sessions']),g4r(pid,[tw],['pagePath'],['screenPageViews']),g4r(pid,[tw],['pagePath'],['screenPageViews']),g4r(pid,[r90],['week'],['sessions']),g4r(pid,[r90],['week','sessionDefaultChannelGroup'],['sessions'])]);
+  const[nv,nvl,sr,pg,bi,dd,ds]=await Promise.all([
+    g4r(pid,[tw],['newVsReturning'],['sessions','totalUsers']),
+    g4r(pid,[lm],['newVsReturning'],['sessions']),
+    g4r(pid,[tw],['sessionDefaultChannelGroup'],['sessions']),
+    g4r(pid,[tw],['pagePath'],['screenPageViews']),
+    g4r(pid,[tw],['pagePath'],['screenPageViews']),
+    g4r(pid,[r90],['date'],['sessions']),          // daily totals
+    g4r(pid,[r90],['date','sessionDefaultChannelGroup'],['sessions'])  // daily by channel
+  ]);
   let nU=0,rU=0,tot=0;nv.rows?.forEach(r=>{const d=r.dimensionValues[0].value;tot+=+r.metricValues[0].value;if(d==='new')nU+=+r.metricValues[1].value;else rU+=+r.metricValues[1].value;});
   const lastS=nvl.rows?.reduce((s,r)=>s+(+r.metricValues[0].value),0)||0;
   const sm={};sr.rows?.forEach(r=>{sm[r.dimensionValues[0].value]=(+r.metricValues[0].value)||0;});
   const pgR=pg.rows?.filter(r=>!r.dimensionValues[0].value.match(/seo-tracker|tracker|rebrand|google|^\/index\.html$|^\/index$/)).sort((a,b)=>+b.metricValues[0].value-+a.metricValues[0].value).slice(0,8)||[];
   const biR=bi.rows?.filter(r=>r.dimensionValues[0].value.includes('/bios/')).sort((a,b)=>+b.metricValues[0].value-+a.metricValues[0].value).slice(0,6)||[];
-  const wm={};wk.rows?.forEach(r=>{wm[r.dimensionValues[0].value]=(+r.metricValues[0].value)||0;});
-  const wsm={};ws.rows?.forEach(r=>{const k=r.dimensionValues[0].value,s=r.dimensionValues[1].value,v=+r.metricValues[0].value;if(!wsm[k])wsm[k]={};wsm[k][s]=(wsm[k][s]||0)+v;});
-  const wks13=wks.map(w=>{const k=wkKey(w.s);return wm[k]||0;});
-  const wOrg=wks.map(w=>{const k=wkKey(w.s);return(wsm[k]||{})['Organic Search']||0;});
-  const wDir=wks.map(w=>{const k=wkKey(w.s);return(wsm[k]||{})['Direct']||0;});
+  // Aggregate daily → weekly using our wkKey (much more reliable than GA4's week dimension)
+  const dm_ga4={};dd.rows?.forEach(r=>{const raw=r.dimensionValues[0].value;dm_ga4[raw]=(+r.metricValues[0].value)||0;});
+  const dsm={};ds.rows?.forEach(r=>{const date=r.dimensionValues[0].value,ch=r.dimensionValues[1].value,v=+r.metricValues[0].value;if(!dsm[date])dsm[date]={};dsm[date][ch]=(dsm[date][ch]||0)+v;});
+  const wks13=wks.map(w=>{let s=0;let d=new Date(w.s);while(d<=w.e){const k=fd(d);s+=dm_ga4[k.replace(/-/g,'')]||dm_ga4[k]||0;d.setDate(d.getDate()+1);}return s;});
+  const wOrg=wks.map(w=>{let s=0;let d=new Date(w.s);while(d<=w.e){const k=fd(d).replace(/-/g,'');const dk=fd(d);s+=(dsm[k]||dsm[dk]||{})['Organic Search']||0;d.setDate(d.getDate()+1);}return s;});
+  const wDir=wks.map(w=>{let s=0;let d=new Date(w.s);while(d<=w.e){const k=fd(d).replace(/-/g,'');const dk=fd(d);s+=(dsm[k]||dsm[dk]||{})['Direct']||0;d.setDate(d.getDate()+1);}return s;});
   return{tot,lastS,nU,rU,sm,pgR,biR,wks13,wOrg,wDir,wkLbl:wks.map(w=>w.l)};
 }
 
@@ -769,16 +778,26 @@ async function loadGSC(prop,days=7){
   const gscEnd=new Date();const gscStart=new Date(gscEnd);gscStart.setDate(gscEnd.getDate()-days);
   const tw={startDate:fd(gscStart),endDate:fd(gscEnd)};
   const r90={startDate:fd(wks[0].s),endDate:fd(new Date())};
+  // Try both URL-prefix and domain property formats
   const gscBase=`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(prop)}/searchAnalytics/query`;
+  const gscBaseDomain=`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent('sc-domain:'+prop.replace(/^https?:\/\//,'').replace(/\//,''))}/searchAnalytics/query`;
   // Keywords always use 30-day minimum for meaningful data
   const kwDays=Math.max(days,30);
   const kwEnd=new Date();const kwStart=new Date(kwEnd);kwStart.setDate(kwEnd.getDate()-kwDays);
   const kwTw={startDate:fd(kwStart),endDate:fd(kwEnd)};
-  const[qw,qd,qp]=await Promise.all([
+  let[qw,qd,qp]=await Promise.all([
     gf(gscBase,'POST',{...kwTw,dimensions:['query'],rowLimit:25,dataState:'all'}).catch(()=>null),
     gf(gscBase,'POST',{...r90,dimensions:['date'],rowLimit:1000,dataState:'all'}).catch(()=>null),
     gf(gscBase,'POST',{...tw,dimensions:['page'],rowLimit:50,dataState:'all'}).catch(()=>null)
   ]);
+  // If URL-prefix returns no data, try sc-domain: format
+  if((!qw?.rows?.length)&&prop.startsWith('http')){
+    [qw,qd,qp]=await Promise.all([
+      gf(gscBaseDomain,'POST',{...kwTw,dimensions:['query'],rowLimit:25,dataState:'all'}).catch(()=>null),
+      gf(gscBaseDomain,'POST',{...r90,dimensions:['date'],rowLimit:1000,dataState:'all'}).catch(()=>null),
+      gf(gscBaseDomain,'POST',{...tw,dimensions:['page'],rowLimit:50,dataState:'all'}).catch(()=>null)
+    ]).catch(()=>[qw,qd,qp]);
+  }
   const qR=qw?.rows||[];
   const cl=qR.reduce((s,r)=>s+r.clicks,0),im=qR.reduce((s,r)=>s+r.impressions,0);
   const ctr=im>0?cl/im*100:0;const pw=qR.reduce((s,r)=>s+r.position*r.clicks,0),pos=cl>0?pw/cl:0;
