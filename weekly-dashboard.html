@@ -284,6 +284,19 @@ body{background:var(--bg);font-family:'Montserrat',sans-serif;height:100vh;overf
 <body>
 <div id="pb" style="width:0%"></div>
 
+<!-- PASSWORD -->
+<div id="pw-screen" style="position:fixed;inset:0;background:var(--hdr);display:flex;align-items:center;justify-content:center;z-index:2000;">
+  <div style="width:380px;text-align:center;">
+    <div style="width:52px;height:52px;background:var(--g);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;color:var(--hdr);margin:0 auto 20px;">PVI</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;color:var(--w);margin-bottom:6px;">Pine Valley Investments</div>
+    <div style="font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:32px;">Weekly Analytics Dashboard</div>
+    <input id="pw-input" type="password" placeholder="Enter access code" onkeydown="if(event.key==='Enter')checkPW()" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(201,169,110,0.25);border-radius:4px;padding:12px 16px;color:var(--w);font-family:'Montserrat',sans-serif;font-size:13px;outline:none;text-align:center;letter-spacing:0.1em;margin-bottom:10px;" autofocus>
+    <div id="pw-err" style="font-size:11px;color:#e05252;margin-bottom:10px;height:16px;"></div>
+    <button onclick="checkPW()" style="width:100%;padding:12px;background:var(--g);color:var(--hdr);border:none;border-radius:4px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;">Access Dashboard →</button>
+    <div style="font-size:10px;color:rgba(255,255,255,0.2);margin-top:20px;">Authorized users only · Pine Valley Investments</div>
+  </div>
+</div>
+
 <!-- SETUP -->
 <div id="setup">
   <div class="sbx">
@@ -1172,6 +1185,24 @@ function gto(n){
 function next(){if(cur<T)gto(cur+1);}
 function prev(){if(cur>1)gto(cur-1);}
 function toggleAuto(){aut=!aut;const b=document.getElementById('abn');b.classList.toggle('on',aut);b.textContent=aut?'Auto ●':'Auto';if(aut){atm=setInterval(()=>{if(cur<T)next();else{clearInterval(atm);aut=false;b.classList.remove('on');b.textContent='Auto';}},11000);}else clearInterval(atm);}
+function checkPW(){
+  const val=document.getElementById('pw-input').value.trim().toLowerCase();
+  const codes=['pvi2026','pinevally','analytics','morning'];
+  if(codes.includes(val)){
+    document.getElementById('pw-screen').style.display='none';
+    // Store in session so refresh doesn't re-prompt
+    sessionStorage.setItem('pvi-auth','1');
+  } else {
+    document.getElementById('pw-err').textContent='Incorrect code. Try again.';
+    document.getElementById('pw-input').value='';
+    document.getElementById('pw-input').focus();
+  }
+}
+// Check session on load
+if(sessionStorage.getItem('pvi-auth')==='1'){
+  document.getElementById('pw-screen').style.display='none';
+}
+
 document.addEventListener('keydown',e=>{
   if(document.getElementById('pres').style.display==='none')return;
   if(e.key==='ArrowRight'||e.key==='ArrowDown')next();
