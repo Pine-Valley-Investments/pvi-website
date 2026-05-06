@@ -824,7 +824,42 @@ async function loadGSC(prop,days=7){
 }
 
 // FORMSPREE
-async function loadFS(key){if(!key)return null;try{const r=await fetch('https://api.formspree.io/api/0/forms/mjgavepv/submissions?page_size=500',{headers:{'Authorization':'Bearer '+key}});if(!r.ok)return null;const d=await r.json();const wks=w13();const tw=wks[12];const all=d.submissions||[];const thisW=all.filter(s=>{const dt=new Date(s.date);return dt>=tw.s&&dt<=tw.e;});const lastW=all.filter(s=>{const dt=new Date(s.date);const lw=wks[11];return dt>=lw.s&&dt<=lw.e;}).length;const byA={};thisW.forEach(s=>{const a=s.data?.advisor||'General';byA[a]=(byA[a]||0)+1;});const wk13=wks.map(w=>all.filter(s=>{const dt=new Date(s.date);return dt>=w.s&&dt<=w.e;}).length);return{total:thisW.length,lastW,byA,wk13};}catch{return null;}}
+async function loadFS(key){
+  if(!key)return null;
+  try{
+    const formIds=['mjgavepv','xpqyylag','xbdpyzgz','mvzvrwkr'];
+    const headers={'Authorization':'Bearer '+key,'Content-Type':'application/json'};
+    // Try both Bearer token and basic key formats
+    const fetchForm=async(id)=>{
+      // Try account-level API key format first
+      let r=await fetch(`https://api.formspree.io/api/0/forms/${id}/submissions?page_size=500`,{headers});
+      if(!r.ok){
+        // Try per-form key format (hashid:key)
+        const h={'Authorization':'Bearer '+id+':'+key,'Content-Type':'application/json'};
+        r=await fetch(`https://api.formspree.io/api/0/forms/${id}/submissions?page_size=500`,{headers:h});
+      }
+      if(!r.ok)return[];
+      const d=await r.json();
+      return d.submissions||[];
+    };
+    const results=await Promise.all(formIds.map(fetchForm));
+    const all=results.flat();
+    if(!all.length&&results.every(r=>r.length===0)){
+      // Try v2 API endpoint format
+      const r2=await fetch('https://api.formspree.io/api/0/forms',{headers});
+      if(r2.ok){
+        const forms=await r2.json();
+        console.log('Available forms:',forms);
+      }
+    }
+    const wks=w13();const tw=wks[12];const lw=wks[11];
+    const thisW=all.filter(s=>{const dt=new Date(s.date);return dt>=tw.s&&dt<=tw.e;});
+    const lastWC=all.filter(s=>{const dt=new Date(s.date);return dt>=lw.s&&dt<=lw.e;}).length;
+    const byA={};thisW.forEach(s=>{const a=s.data?.advisor||s.data?._subject?.replace('[PVI Contact] ','')||'General';byA[a]=(byA[a]||0)+1;});
+    const wk13=wks.map(w=>all.filter(s=>{const dt=new Date(s.date);return dt>=w.s&&dt<=w.e;}).length);
+    return{total:thisW.length,lastW:lastWC,byA,wk13,source:'formspree',totalAll:all.length};
+  }catch(e){console.warn('Formspree load error:',e);return null;}
+}
 
 function sd(id){const e=document.getElementById(id);e.className='ls d';e.querySelector('.si').textContent='✓';}
 function sa(id){const e=document.getElementById(id);e.className='ls ac';e.querySelector('.si').textContent='⟳';}
