@@ -832,11 +832,16 @@ async function loadFS(key){
     // Try both Bearer token and basic key formats
     const fetchForm=async(id)=>{
       // Try account-level API key format first
-      let r=await fetch(`https://api.formspree.io/api/0/forms/${id}/submissions?page_size=500`,{headers});
+      // Formspree per-form key uses Basic auth: base64(hashid:key)
+      const basicAuth='Basic '+btoa(id+':'+key);
+      let r=await fetch(`https://api.formspree.io/api/0/forms/${id}/submissions?page_size=500`,{headers:{'Authorization':basicAuth}});
       if(!r.ok){
-        // Try per-form key format (hashid:key)
-        const h={'Authorization':'Bearer '+id+':'+key,'Content-Type':'application/json'};
-        r=await fetch(`https://api.formspree.io/api/0/forms/${id}/submissions?page_size=500`,{headers:h});
+        // Fallback: try Bearer token format
+        r=await fetch(`https://api.formspree.io/api/0/forms/${id}/submissions?page_size=500`,{headers:{'Authorization':'Bearer '+key}});
+      }
+      if(!r.ok){
+        // Fallback: try key as Basic password with empty username
+        r=await fetch(`https://api.formspree.io/api/0/forms/${id}/submissions?page_size=500`,{headers:{'Authorization':'Basic '+btoa(':'+key)}});
       }
       if(!r.ok)return[];
       const d=await r.json();
