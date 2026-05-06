@@ -305,7 +305,7 @@ body{background:var(--bg);font-family:'Montserrat',sans-serif;height:100vh;overf
     <div class="fi"><label>GA4 Property ID</label><input id="g4p" value="530034836"><div class="hint">GA4 → Admin → Property details</div></div>
     <div class="fi"><label>OAuth Client ID</label><input id="oci" value="194475383057-cubnt199a9lbuop39nvj06o2a5mn0ntd.apps.googleusercontent.com"></div>
     <div class="fi"><label>Search Console Property</label><input id="gsp" value="https://pinevalleyinvestments.com"></div>
-    <div class="fi"><label>Formspree API Key <span style="color:var(--gr);font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label><input id="fsk" placeholder="Add later — formspree.io → Account → API Keys"></div>
+    <div style="padding:9px 12px;background:rgba(5,150,105,0.08);border:1px solid rgba(5,150,105,0.2);border-radius:4px;font-size:11px;color:#059669;margin-bottom:4px;">✅ Inquiry data powered by GA4 — no additional setup needed</div>
     <div class="sa">
       <button class="bg" onclick="go()">Load This Week's Data →</button>
       <button class="bgh" onclick="demo()">Preview Demo Data</button>
@@ -824,46 +824,28 @@ async function loadGSC(prop,days=7){
 }
 
 // FORMSPREE
-async function loadFS(key){
-  if(!key)return null;
+async function loadFS(pid){
+  // Uses GA4 generate_lead events — no Formspree API key needed
   try{
-    const formIds=['mjgavepv','xpqyylag','xbdpyzgz','mvzvrwkr'];
-    const headers={'Authorization':'Bearer '+key,'Content-Type':'application/json'};
-    // Try both Bearer token and basic key formats
-    const fetchForm=async(id)=>{
-      // Try 1: Bearer token (account-level key)
-      let r=await fetch(`https://api.formspree.io/api/0/forms/${id}/submissions?page_size=500`,{headers:{'Authorization':'Bearer '+key}});
-      console.log(`[FS] ${id} Bearer:`,r.status);
-      if(r.ok){const d=await r.json();console.log(`[FS] ${id} got ${d.submissions?.length||0} submissions`);return d.submissions||[];}
-      // Try 2: Basic auth with hashid:key
-      r=await fetch(`https://api.formspree.io/api/0/forms/${id}/submissions?page_size=500`,{headers:{'Authorization':'Basic '+btoa(id+':'+key)}});
-      console.log(`[FS] ${id} Basic hashid:key:`,r.status);
-      if(r.ok){const d=await r.json();return d.submissions||[];}
-      // Try 3: key only as Bearer without form prefix
-      r=await fetch(`https://api.formspree.io/api/0/forms/${id}/submissions?page_size=500`,{headers:{'Authorization':key}});
-      console.log(`[FS] ${id} raw key:`,r.status);
-      if(r.ok){const d=await r.json();return d.submissions||[];}
-      const errText=await r.text().catch(()=>'');
-      console.warn(`[FS] ${id} all auth failed. Last error:`,errText.slice(0,200));
-      return[];
-    };
-    const results=await Promise.all(formIds.map(fetchForm));
-    const all=results.flat();
-    if(!all.length&&results.every(r=>r.length===0)){
-      // Try v2 API endpoint format
-      const r2=await fetch('https://api.formspree.io/api/0/forms',{headers});
-      if(r2.ok){
-        const forms=await r2.json();
-        console.log('Available forms:',forms);
-      }
-    }
-    const wks=w13();const tw=wks[12];const lw=wks[11];
-    const thisW=all.filter(s=>{const dt=new Date(s.date);return dt>=tw.s&&dt<=tw.e;});
-    const lastWC=all.filter(s=>{const dt=new Date(s.date);return dt>=lw.s&&dt<=lw.e;}).length;
-    const byA={};thisW.forEach(s=>{const a=s.data?.advisor||s.data?._subject?.replace('[PVI Contact] ','')||'General';byA[a]=(byA[a]||0)+1;});
-    const wk13=wks.map(w=>all.filter(s=>{const dt=new Date(s.date);return dt>=w.s&&dt<=w.e;}).length);
-    return{total:thisW.length,lastW:lastWC,byA,wk13,source:'formspree',totalAll:all.length};
-  }catch(e){console.warn('Formspree load error:',e);return null;}
+    const wks=w13();
+    const r90e=fd(new Date());const r90s=fd(wks[0].s);
+    const tws=fd(wks[12].s);const twe=fd(new Date());
+    const lws=fd(wks[11].s);const lwe=fd(wks[11].e);
+    const base=`https://analyticsdata.googleapis.com/v1beta/properties/${pid}:runReport`;
+    const evF={filter:{fieldName:'eventName',stringFilter:{value:'generate_lead'}}};
+    const[twR,lwR,dailyR,advR]=await Promise.all([
+      gf(base,'POST',{dateRanges:[{startDate:tws,endDate:twe}],dimensionFilter:evF,metrics:[{name:'eventCount'}]}),
+      gf(base,'POST',{dateRanges:[{startDate:lws,endDate:lwe}],dimensionFilter:evF,metrics:[{name:'eventCount'}]}),
+      gf(base,'POST',{dateRanges:[{startDate:r90s,endDate:r90e}],dimensions:[{name:'date'}],dimensionFilter:evF,metrics:[{name:'eventCount'}]}),
+      gf(base,'POST',{dateRanges:[{startDate:tws,endDate:twe}],dimensions:[{name:'customEvent:advisor_name'}],dimensionFilter:evF,metrics:[{name:'eventCount'}]}).catch(()=>({rows:[]}))
+    ]);
+    const total=+(twR.rows?.[0]?.metricValues?.[0]?.value||0);
+    const lastW=+(lwR.rows?.[0]?.metricValues?.[0]?.value||0);
+    const dm={};dailyR.rows?.forEach(r=>{dm[r.dimensionValues[0].value]=(+r.metricValues[0].value)||0;});
+    const wk13=wks.map(w=>{let s=0;let d=new Date(w.s);while(d<=w.e){s+=dm[fd(d).replace(/-/g,'')]||0;d.setDate(d.getDate()+1);}return s;});
+    const byA={};advR.rows?.forEach(r=>{const a=r.dimensionValues[0].value||'General';if(a&&a!=='(not set)')byA[a]=(byA[a]||0)+(+r.metricValues[0].value||0);});
+    return{total,lastW,byA,wk13,source:'ga4'};
+  }catch(e){console.warn('GA4 events error:',e);return null;}
 }
 
 function sd(id){const e=document.getElementById(id);e.className='ls d';e.querySelector('.si').textContent='✓';}
@@ -947,7 +929,7 @@ function build(ga4,gsc,fs){
   cards.push({t:ga4.tot>=ga4.lastS?'cg':'cr2',icon:ga4.tot>=ga4.lastS?iconUp:iconDn,ti:`Traffic: ${fn(ga4.tot)} visitors this week`,d:`${ga4.tot>=ga4.lastS?'Up':'Down'} ${pct(ga4.tot,ga4.lastS)} vs the same week last month. The 13-week trend is ${ga4.wks13[12]>=ga4.wks13[0]?'pointing up.':'worth investigating.'}`,imp:ga4.tot>=ga4.lastS?'Momentum is building.':'Identify which source declined.'});
   cards.push({t:gsc.ctr>=2?'cg':'ca',icon:gsc.ctr>=2?iconOk:iconWarn,ti:`Google: Showing up ${fn(gsc.im)} times in search`,d:`${fn(gsc.cl)} people clicked through — a ${gsc.ctr.toFixed(1)}% click rate. ${gsc.ctr<2?'Industry target is 2%. We\'re below that.':'That\'s above the 2% industry target. Strong.'}`,imp:gsc.ctr<2?'Improving listing descriptions could double clicks.':'Maintain and expand keyword coverage.'});
   if(fs) cards.push({t:fs.total>0?'cg':'ca',icon:fs.total>0?iconForm:iconWarn,ti:`Inquiries: ${fs.total>0?fs.total+' received this week':'None this week'}`,d:fs.total>0?`${pct(fs.total,fs.lastW)} vs last week. Every inquiry needs a response within 24 hours.`:'Forms are live. Advisors should share their bio links on LinkedIn to drive more inquiries.',imp:fs.total>0?`Top advisor: ${Object.entries(fs.byA).sort((a,b)=>b[1]-a[1])[0]?.[0]||'—'}`:'Action: Share advisor bio links on LinkedIn this week.'});
-  else cards.push({t:'ca',icon:iconPlug,ti:'Inquiry tracking not yet connected',d:'Formspree API key needed to see how many contact forms are submitted each week. 10-minute setup.',imp:'Add API key → formspree.io → Account → API Keys'});
+  else cards.push({t:'ca',icon:iconWarn,ti:'No form inquiries detected yet',d:'GA4 is tracking all form submissions. No inquiries detected in this date range — try switching to 30D for more history.',imp:'Share advisor bio links on LinkedIn to drive inquiries.'});
   cards.push({t:'ca',icon:iconTarget,ti:'Highest-ROI action right now',d:gsc.lowCTR.length>0?`The "${gsc.lowCTR[0]?.keys[0]?.replace(/^https?:\/\/[^/]+/,'')||'/services'}" page shows up in Google ${fn(gsc.lowCTR[0]?.impressions||648)} times but almost nobody clicks. Rewriting the description text takes 30 minutes and could significantly increase traffic.`:'Continue building organic content and promoting advisor bio pages on LinkedIn.',imp:'No ad spend required — just execution.'});
   document.getElementById('s2cards').innerHTML=cards.map(c=>`<div class="card ${c.t}"><div class="card-icon">${c.icon}</div><div class="card-body"><div class="card-title">${c.ti}</div><div class="card-desc">${c.d}</div><div class="card-imp">${c.imp}</div></div></div>`).join('');
   const goodCount=cards.filter(c=>c.t==='cg').length,issueCount=cards.filter(c=>c.t!=='cg').length;
@@ -1057,7 +1039,7 @@ return`<tr><td class="bm-metric">${b.metric}</td><td class="r bm-pvi">${b.pvi}</
   const issues=[];
   if(gsc.ctr<2&&gsc.im>500) issues.push({s:'critical',t:'Google listing descriptions aren\'t compelling — people see us but don\'t click',f:`Rewrite the description text on our top 3 pages (the text shown in Google search results). Add location, service, and action-oriented language: "Cherry Hill NJ • Independent Wealth Management • Schedule a Consultation"`,imp:'Could double organic traffic — no ad spend required',eff:'2–3 hours'});
   if(gsc.offP1.length) issues.push({s:'critical',t:`"${gsc.offP1[0].keys[0]}" ranks #${Math.round(gsc.offP1[0].position)} — one push away from page 1`,f:'Publish 300+ words of helpful content on the relevant page and add 2–3 internal links pointing to it from other pages. Page 1 gets 10× more clicks than page 2.',imp:'10× more clicks if we reach page 1',eff:'2–3 hours'});
-  if(!fs) issues.push({s:'critical',t:'We can\'t see how many inquiries the website generates each week',f:'Connect Formspree API key to this dashboard — 10 minutes. Without this we have no visibility on lead volume from the site.',imp:'No lead visibility without this',eff:'10 minutes'});
+  // Formspree replaced by GA4 — no longer a priority fix
   issues.push({s:'high',t:'Advisor bio pages need more content to rank individually on Google',f:'Each advisor bio should be 300+ words covering their specialty, credentials, and personal approach. This helps individual advisors show up when someone Googles their name or service + city.',imp:'Better individual advisor discoverability',eff:'1–2 hrs per advisor'});
   const top3=issues.slice(0,3);
   document.getElementById('s11sm').innerHTML=`<span style="background:rgba(224,82,82,0.15);color:var(--r);padding:2px 8px;border-radius:2px;font-size:8px;font-weight:700;letter-spacing:0.1em">${top3.filter(i=>i.s==='critical').length} CRITICAL</span><span style="background:rgba(230,168,23,0.12);color:var(--a);padding:2px 8px;border-radius:2px;font-size:8px;font-weight:700;letter-spacing:0.1em">${top3.filter(i=>i.s==='high').length} HIGH</span>`;
@@ -1086,7 +1068,7 @@ return`<tr><td class="bm-metric">${b.metric}</td><td class="r bm-pvi">${b.pvi}</
   if(soc/srcTot<.1) bad.push({i:'📱',t:`Social media drives only ${Math.round(soc/srcTot*100)}% of our traffic`,d:'We have 40 advisors with LinkedIn networks. If each shared their bio link once a week, that\'s 40 weekly touchpoints to hundreds of potential clients.',f:'Launch "LinkedIn Monday" — every advisor posts their bio link weekly'});
   if(ga4.tot<ga4.lastS) bad.push({i:'📉',t:'Traffic declined vs last month',d:`${fn(ga4.tot)} this week vs ${fn(ga4.lastS)} same week last month. One source likely dropped — needs investigation in GA4.`,f:'Review GA4 Acquisition report to identify which source declined'});
   // GA4 conversion events now live — removed from not-working list
-  if(!fs) bad.push({i:'📋',t:'No visibility on lead generation',d:'Without Formspree connected, we have zero data on how many people submit contact forms each week.',f:'Add Formspree API key in dashboard setup — 10 minutes'});
+  // Formspree replaced by GA4
   document.getElementById('s13b').innerHTML=bad.map(b=>`<div class="ana r"><div class="ana-ic">${b.i}</div><div class="ana-b"><div class="ana-t">${b.t}</div><div class="ana-d">${b.d}</div><div class="ana-f">→ Fix: ${b.f}</div></div></div>`).join('');
   document.getElementById('s13ins').innerHTML=`The single biggest missed opportunity: <strong>social media</strong>. With 40 advisors, PVI has a combined LinkedIn network of thousands. One post per advisor per week = 40 weekly touchpoints to potential clients, all at zero cost. This is the highest-leverage channel we're not using.`;
 
@@ -1113,7 +1095,7 @@ return`<tr><td class="bm-metric">${b.metric}</td><td class="r bm-pvi">${b.pvi}</
   const a3=[
     {n:1,t:'Rewrite Google listing descriptions on top 3 pages',who:'Mike C',badge:'bnow',d:'Rewrite meta descriptions on Services, About, and Team pages. Include "Cherry Hill, NJ" and a call to action. Estimated impact: +40% more clicks from Google.'},
     {n:2,t:'Send all 40 advisors their bio link + LinkedIn ask',who:'Mike C',badge:'bnow',d:`Email: "Your PVI profile is live at pinevalleyinvestments.com/bios/[name]. Please share it on LinkedIn this week." Takes 15 minutes, generates 40 organic posts.`},
-    {n:3,t:fs?'Follow up on all inquiries within 24 hours':'Connect Formspree to track inquiries',who:fs?'Advisors':'Mike C',badge:'bnow',d:fs&&fs.total>0?`${fs.total} inquiry${fs.total!==1?'s':''} came in. Advisors must respond within 24 hours — after that, response rates drop significantly.`:'Add Formspree API key in dashboard setup. 10 minutes. Unlocks full lead visibility.'}
+    {n:3,t:fs&&fs.total>0?'Follow up on all inquiries within 24 hours':'Share advisor bio links on LinkedIn this week',who:fs&&fs.total>0?'Advisors':'Mike C',badge:'bnow',d:fs&&fs.total>0?`${fs.total} inquiry${fs.total!==1?'s':''} via GA4 this period. Advisors must respond within 24 hours.`:'Each advisor posts their PVI bio link on LinkedIn — 40 advisors = 40 weekly touchpoints to potential clients at zero cost.'}
   ];
   document.getElementById('s15ac').innerHTML=a3.map(a=>`<div class="act-c"><div class="act-n">${a.n}</div><div><div class="act-t">${a.t}</div><div class="act-m"><div class="act-who">${a.who}</div><span class="badge bnow">This Week</span></div><div class="act-d">${a.d}</div></div></div>`).join('');
   document.getElementById('s15t1').textContent=fn(Math.round(ga4.tot*1.05))+'+';
@@ -1125,13 +1107,13 @@ return`<tr><td class="bm-metric">${b.metric}</td><td class="r bm-pvi">${b.pvi}</
 
 // START
 async function go(){
-  const cid=document.getElementById('oci').value.trim(),pid=document.getElementById('g4p').value.trim(),gsp=document.getElementById('gsp').value.trim(),fsk=document.getElementById('fsk').value.trim();
+  const cid=document.getElementById('oci').value.trim(),pid=document.getElementById('g4p').value.trim(),gsp=document.getElementById('gsp').value.trim(),fsk='';
   document.getElementById('setup').style.display='none';document.getElementById('ld').classList.remove('h');
   try{
     sa('l1');tok=await auth(cid);sd('l1');
     sa('l2');const ga4d=await loadGA4(pid);sd('l2');
     sa('l3');const gscd=await loadGSC(gsp);sd('l3');
-    sa('l4');const fsd=await loadFS(fsk);sd('l4');
+    sa('l4');const fsd=await loadFS(pid);sd('l4'); // GA4-based
     sa('l5');
     G_PID=pid;G_GSP=gsp;G_FSK=fsk;
     G_GA4=ga4d;G_GSC=gscd;G_FS=fsd;
