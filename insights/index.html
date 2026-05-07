@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Insights & Resources | Pine Valley Investments | Cherry Hill NJ</title>
+  <meta name="description" content="Financial insights, wealth management guides, and expert commentary from Pine Valley Investments — serving Cherry Hill, Marlton, and South Jersey families."/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://pinevalleyinvestments.com/insights/"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QCY47K50CY"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QCY47K50CY',{'send_page_view':true});</script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--navy:#03213d;--blue:#294d6b;--white:#ffffff;--gray:#babab9;--gold:#c9a96e;--cream:#f0e6d3;--light:#f5f5f3;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Montserrat',Arial,sans-serif}
+    body{background:var(--navy);color:var(--white);font-family:var(--serif);overflow-x:hidden}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 56px;transition:background 0.4s,padding 0.4s}
+    nav.scrolled{background:rgba(3,33,61,0.97);padding:14px 56px;backdrop-filter:blur(10px);border-bottom:1px solid rgba(186,186,185,0.1)}
+    .nav-logo img{height:40px;width:auto}
+    .nav-links{display:flex;align-items:center;gap:20px;list-style:none}
+    .nav-links a{font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color 0.2s}
+    .nav-links a:hover{color:var(--white)}
+    .nav-btn{color:var(--white)!important;border:1px solid rgba(255,255,255,0.3);padding:9px 22px;white-space:nowrap}
+    .nav-btn:hover{border-color:var(--gold)!important;color:var(--gold)!important}
+    .nav-phone{color:var(--gold)!important}
+    .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+    .nav-toggle span{display:block;width:24px;height:2px;background:var(--white)}
+    /* HERO */
+    .insights-hero{padding:160px 56px 80px;max-width:1200px;margin:0 auto}
+    .section-label{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;gap:14px}
+    .section-label::before{content:'';display:block;width:28px;height:1px;background:var(--gold)}
+    .insights-hero h1{font-size:clamp(36px,5vw,72px);font-weight:300;line-height:1.08;color:var(--white);margin-bottom:20px}
+    .insights-hero h1 em{font-style:italic;color:var(--gold)}
+    .insights-hero p{font-size:18px;font-weight:300;color:var(--gray);max-width:560px;line-height:1.8}
+    /* GRID */
+    .insights-grid{max-width:1200px;margin:0 auto;padding:0 56px 100px;display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+    .post-card{background:rgba(255,255,255,0.02);border:1px solid rgba(186,186,185,0.1);padding:40px 36px;text-decoration:none;display:block;transition:background 0.3s;position:relative;overflow:hidden}
+    .post-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform 0.4s}
+    .post-card:hover{background:rgba(41,77,107,0.2)}
+    .post-card:hover::after{transform:scaleX(1)}
+    .post-week{font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,169,110,0.5);margin-bottom:10px}
+    .post-title{font-size:22px;font-weight:500;color:var(--white);line-height:1.25;margin-bottom:14px}
+    .post-keyword{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+    .post-date{font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);margin-bottom:20px}
+    .post-read{font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:6px;transition:gap 0.2s}
+    .post-card:hover .post-read{gap:12px}
+    /* CTA */
+    .insights-cta{background:rgba(41,77,107,0.2);border-top:1px solid rgba(186,186,185,0.1);text-align:center;padding:80px 56px}
+    .insights-cta h2{font-size:40px;font-weight:300;color:var(--white);margin-bottom:14px}
+    .insights-cta h2 em{color:var(--gold);font-style:italic}
+    .insights-cta p{font-size:16px;font-weight:300;color:var(--gray);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.75}
+    .btn-gold{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--navy);background:var(--gold);padding:15px 38px;text-decoration:none;display:inline-block}
+    /* FOOTER */
+    footer{background:rgba(0,0,0,0.35);border-top:1px solid rgba(186,186,185,0.1);padding:72px 56px 36px}
+    .footer-inner{max-width:1200px;margin:0 auto}
+    .footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:52px;margin-bottom:52px}
+    .footer-brand p{font-size:14px;font-weight:300;line-height:1.8;color:var(--gray);margin-top:18px;max-width:270px}
+    .footer-col-title{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--white);margin-bottom:22px}
+    .footer-links{list-style:none;display:flex;flex-direction:column;gap:11px}
+    .footer-links a{font-size:14px;font-weight:300;color:var(--gray);text-decoration:none;transition:color 0.2s}
+    .footer-links a:hover{color:var(--white)}
+    .footer-social{display:flex;gap:14px;margin-top:22px}
+    .social-icon{width:34px;height:34px;border:1px solid rgba(186,186,185,0.2);display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-size:10px;font-weight:700;color:var(--gray);text-decoration:none}
+    .footer-bottom{border-top:1px solid rgba(186,186,185,0.1);padding-top:28px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px}
+    .footer-copy{font-family:var(--sans);font-size:9px;letter-spacing:0.06em;color:rgba(186,186,185,0.4);max-width:700px;line-height:1.7}
+    .footer-legal{display:flex;gap:22px;flex-wrap:wrap}
+    .footer-legal a{font-family:var(--sans);font-size:9px;letter-spacing:0.08em;color:rgba(186,186,185,0.45);text-decoration:none}
+    @media(max-width:900px){nav{padding:16px 24px}.nav-links{display:none}.nav-toggle{display:flex}.insights-hero{padding:120px 24px 60px}.insights-grid{grid-template-columns:1fr;padding:0 24px 72px}.insights-cta{padding:56px 24px}footer{padding:56px 24px 32px}.footer-top{grid-template-columns:1fr 1fr;gap:36px}.footer-brand{grid-column:1/-1}}
+    @media(max-width:600px){.insights-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<nav id="nav">
+  <a href="../index.html" class="nav-logo"><img src="../pviwhite.png" alt="Pine Valley Investments"/></a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../about.html">About PVI</a></li>
+    <li><a href="../team.html">Meet Your Team</a></li>
+    <li><a href="../services.html">Our Services</a></li>
+    <li><a href="../for-advisors.html">For Advisors</a></li>
+    <li><a href="index.html" style="color:var(--white)">Insights</a></li>
+    <li><a href="tel:8563348260" class="nav-phone">856-334-8260</a></li>
+    <li><a href="../schedule.html" class="nav-btn">Schedule a Consultation</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="insights-hero">
+  <div class="section-label">Insights & Resources</div>
+  <h1>Financial Guidance for<br><em>South Jersey Families</em></h1>
+  <p>Practical insights on wealth management, retirement planning, estate planning, and investment strategy — from the independent advisors at Pine Valley Investments.</p>
+</div>
+
+<div class="insights-grid">
+  <a href="financial-advisor-cherry-hill-nj.html" class="post-card">
+    <div class="post-week">Week 1</div>
+    <div class="post-title">How to Find the Right Financial Advisor in Cherry Hill, NJ</div>
+    <div class="post-keyword">financial advisor cherry hill nj</div>
+    <div class="post-date">May 11, 2026</div>
+    <div class="post-read">Read Article →</div>
+  </a>
+  <a href="wealth-management-new-jersey.html" class="post-card">
+    <div class="post-week">Week 2</div>
+    <div class="post-title">What is Wealth Management? A Guide for NJ Families</div>
+    <div class="post-keyword">wealth management new jersey</div>
+    <div class="post-date">May 18, 2026</div>
+    <div class="post-read">Read Article →</div>
+  </a>
+  <a href="questions-financial-advisor.html" class="post-card">
+    <div class="post-week">Week 2</div>
+    <div class="post-title">5 Questions to Ask Before Choosing a Financial Advisor</div>
+    <div class="post-keyword">questions financial advisor nj</div>
+    <div class="post-date">May 21, 2026</div>
+    <div class="post-read">Read Article →</div>
+  </a>
+  <a href="retirement-planning-new-jersey.html" class="post-card">
+    <div class="post-week">Week 3</div>
+    <div class="post-title">Retirement Planning in New Jersey: What You Need to Know</div>
+    <div class="post-keyword">retirement planning new jersey</div>
+    <div class="post-date">May 25, 2026</div>
+    <div class="post-read">Read Article →</div>
+  </a>
+  <a href="estate-planning-advisor-nj.html" class="post-card">
+    <div class="post-week">Week 3</div>
+    <div class="post-title">Estate Planning & Trust Administration in South Jersey</div>
+    <div class="post-keyword">estate planning advisor nj</div>
+    <div class="post-date">May 28, 2026</div>
+    <div class="post-read">Read Article →</div>
+  </a>
+  <a href="investment-management-cherry-hill.html" class="post-card">
+    <div class="post-week">Week 4</div>
+    <div class="post-title">Understanding Investment Management Fees: What's Normal?</div>
+    <div class="post-keyword">investment management cherry hill</div>
+    <div class="post-date">June 1, 2026</div>
+    <div class="post-read">Read Article →</div>
+  </a>
+</div>
+
+<div class="insights-cta">
+  <h2>Ready to Talk to an <em>Advisor?</em></h2>
+  <p>Our team serves families across Cherry Hill, Marlton, Voorhees, and all of South Jersey. Schedule a free consultation — no obligation.</p>
+  <a href="../schedule.html" class="btn-gold">Schedule a Free Consultation</a>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo"><img src="../pviwhite.png" alt="Pine Valley Investments" style="height:48px;width:auto;"/></a>
+        <p>Independent. Fiduciary. Client-first.<br>Your private wealth partner since 2015.</p>
+        <div class="footer-social"><a href="https://www.linkedin.com/company/pine-valley-investments-llc/" target="_blank" class="social-icon">LI</a><a href="https://x.com/PV_Investments" target="_blank" class="social-icon">X</a><a href="https://www.instagram.com/pv_investments/" target="_blank" class="social-icon">IG</a></div>
+      </div>
+      <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><a href="../services.html">Wealth Management</a></li><li><a href="../services.html">Investment Advisory</a></li><li><a href="../services.html">Trust & Estate Planning</a></li><li><a href="../services.html">Retirement Plans</a></li></ul></div>
+      <div><div class="footer-col-title">Firm</div><ul class="footer-links"><li><a href="../index.html">Home</a></li><li><a href="../about.html">About PVI</a></li><li><a href="../team.html">Meet Your Team</a></li><li><a href="../contact.html">Contact Us</a></li></ul></div>
+      <div><div class="footer-col-title">Contact</div><ul class="footer-links"><li><a href="#">10 E Stow Rd, Suite 200</a></li><li><a href="#">Marlton, NJ 08053</a></li><li><a href="tel:8563348260">856-334-8260</a></li><li><a href="../contact.html">Contact Us</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Pine Valley Investments, LLC. All rights reserved. Investment advice is offered through Pine Valley Investments, LLC, a Registered Investment Advisor (RIA) registered with the U.S. Securities and Exchange Commission. The information on this website is for informational purposes only and does not constitute investment advice. Past performance is not indicative of future results. All investing involves risk, including the potential loss of principal.</div>
+      <div class="footer-legal"><a href="../disclosures/form-crs.pdf" target="_blank">Form CRS</a><a href="../disclosures/privacy-policy.pdf" target="_blank">Privacy Policy</a><a href="../terms.html">Terms of Use</a><a href="https://adviserinfo.sec.gov/firm/summary/173995" target="_blank">SEC IAPD</a></div>
+    </div>
+  </div>
+</footer>
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
+document.getElementById('navToggle').addEventListener('click',function(){this.classList.toggle('open')});
+</script>
+</body>
+</html>

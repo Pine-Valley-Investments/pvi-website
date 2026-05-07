@@ -159,6 +159,41 @@
       "source": "/services-2",
       "destination": "/services.html",
       "permanent": true
+    },
+    {
+      "source": "/insights",
+      "destination": "/insights/index.html",
+      "permanent": false
+    },
+    {
+      "source": "/blog/financial-advisor-cherry-hill-nj",
+      "destination": "/insights/financial-advisor-cherry-hill-nj.html",
+      "permanent": true
+    },
+    {
+      "source": "/blog/wealth-management-new-jersey",
+      "destination": "/insights/wealth-management-new-jersey.html",
+      "permanent": true
+    },
+    {
+      "source": "/blog/questions-financial-advisor",
+      "destination": "/insights/questions-financial-advisor.html",
+      "permanent": true
+    },
+    {
+      "source": "/blog/retirement-planning-new-jersey",
+      "destination": "/insights/retirement-planning-new-jersey.html",
+      "permanent": true
+    },
+    {
+      "source": "/blog/estate-planning-advisor-nj",
+      "destination": "/insights/estate-planning-advisor-nj.html",
+      "permanent": true
+    },
+    {
+      "source": "/blog/investment-management-cherry-hill",
+      "destination": "/insights/investment-management-cherry-hill.html",
+      "permanent": true
     }
   ],
   "rewrites": [
