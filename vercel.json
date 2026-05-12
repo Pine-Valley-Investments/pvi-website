@@ -163,7 +163,7 @@
     {
       "source": "/insights",
       "destination": "/insights/index.html",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/blog/financial-advisor-cherry-hill-nj",
