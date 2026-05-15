@@ -1,58 +1,114 @@
 # Pine Valley Investments — 301 Redirects
-# Wix URLs → New site (common Wix URL patterns)
+# Last updated: May 2026 — addresses all 42 GSC-identified 404s
 
-# Main pages — Wix typically uses no extension or different paths
-/about                    /about.html               301
-/team                     /team.html                301
-/meet-your-team           /team.html                301
-/services                 /services.html            301
-/our-services             /services.html            301
-/contact                  /contact.html             301
-/contact-us               /contact.html             301
-/announcements            /announcements.html       301
-/company-announcements    /announcements.html       301
-/morning-core             /morning-core.html        301
-/the-morning-core         /morning-core.html        301
-/client-login             /client-login.html        301
-/login                    /client-login.html        301
-/portals                  /client-login.html        301
-/tools                    /tools.html               301
-/financial-calculators    /tools.html               301
-/calculators              /tools.html               301
+# ─── ADVISOR BIO PAGES ─────────────────────────────────────────────────────
+# Wix used /first-last flat slugs; new site uses /bios/first-last.html
+/harry-morad              /bios/harry-morad.html         301
+/joseph-duncan            /bios/joseph-duncan.html       301
+/mike-modica              /bios/mike-modica.html         301
+/chris-oneill             /bios/chris-oneill.html        301
+/nick-lampone             /bios/nick-lampone.html        301
+/jason-braatz             /bios/jason-braatz.html        301
+/jonathan-markoe          /bios/jonathan-markoe.html     301
+/kate-fay                 /bios/kate-fay.html            301
+/mark-magarian            /bios/mark-magarian.html       301
+/scott-walden             /bios/scott-walden.html        301
+/darek-koleda             /bios/darek-koleda.html        301
+/keval-patel              /bios/keval-patel.html         301
+/victoria-cocciolone      /bios/victoria-cocciolone.html 301
+/victoria-allen           /bios/victoria-allen.html      301
+/isaac-jones              /bios/isaac-jones.html         301
+/joshua-feldschneider     /bios/joshua-feldschneider.html 301
+/sean-murphy              /bios/sean-murphy.html         301
 
-# Portal pages
-/rightcapital             /rightcapital.html        301
-/right-capital            /rightcapital.html        301
-/monarch                  /monarch.html             301
-/monarch-money            /monarch.html             301
-/schwab                   /schwab.html              301
-/charles-schwab           /schwab.html              301
-/altruist                 /altruist.html            301
-/emoney                   /emoney.html              301
-/e-money                  /emoney.html              301
-/tamarac                  /tamarac.html             301
-/wealthview               /tamarac.html             301
+# Wix also used /bios/first-last without .html extension
+/bios/sean-murphy         /bios/sean-murphy.html         301
+/bios/nick-lampone        /bios/nick-lampone.html        301
+/bios/tanya-schneider     /bios/tanya-schneider.html     301
+/bios/jerry-braatz        /bios/jerry-braatz.html        301
 
-# Bio pages — Wix often used /advisor/name or /team/name patterns
-/advisor/harry-morad      /bios/harry-morad.html    301
-/advisor/joseph-duncan    /bios/joseph-duncan.html  301
-/advisor/mike-modica      /bios/mike-modica.html    301
-/advisor/nick-lampone     /bios/nick-lampone.html   301
-/advisor/chris-oneill     /bios/chris-oneill.html   301
-/advisor/jason-braatz     /bios/jason-braatz.html   301
-/advisor/jonathan-markoe  /bios/jonathan-markoe.html 301
-/advisor/kate-fay         /bios/kate-fay.html       301
-/team/harry-morad         /bios/harry-morad.html    301
-/team/joseph-duncan       /bios/joseph-duncan.html  301
-/team/mike-modica         /bios/mike-modica.html    301
-/team/nick-lampone        /bios/nick-lampone.html   301
-/team/chris-oneill        /bios/chris-oneill.html   301
-/team/jason-braatz        /bios/jason-braatz.html   301
-/team/jonathan-markoe     /bios/jonathan-markoe.html 301
-/team/kate-fay            /bios/kate-fay.html       301
+# Bio pages that were indexed with .html extension directly (no /bios/ prefix)
+/bios/jake-markoe.html    /bios/jake-markoe.html         301
+/bios/max-schatzow.html   /bios/max-schatzow.html        301
+/bios/corey-fisher%2C-crpc®%2C–fps®  /bios/corey-fisher.html  301
 
-# Privacy policy alias
-/privacy-policy.html      /privacy.html             301
-/privacy-policy           /privacy.html             301
-/adv.html                 https://adviserinfo.sec.gov/firm/summary/316052  301
-/adv                      https://adviserinfo.sec.gov/firm/summary/316052  301
+# /advisor/ and /team/ prefix patterns (Wix legacy)
+/advisor/harry-morad      /bios/harry-morad.html         301
+/advisor/joseph-duncan    /bios/joseph-duncan.html       301
+/advisor/mike-modica      /bios/mike-modica.html         301
+/advisor/nick-lampone     /bios/nick-lampone.html        301
+/advisor/chris-oneill     /bios/chris-oneill.html        301
+/advisor/jason-braatz     /bios/jason-braatz.html        301
+/advisor/jonathan-markoe  /bios/jonathan-markoe.html     301
+/advisor/kate-fay         /bios/kate-fay.html            301
+/team/harry-morad         /bios/harry-morad.html         301
+/team/joseph-duncan       /bios/joseph-duncan.html       301
+/team/mike-modica         /bios/mike-modica.html         301
+/team/nick-lampone        /bios/nick-lampone.html        301
+/team/chris-oneill        /bios/chris-oneill.html        301
+/team/jason-braatz        /bios/jason-braatz.html        301
+/team/jonathan-markoe     /bios/jonathan-markoe.html     301
+/team/kate-fay            /bios/kate-fay.html            301
+
+# ─── MAIN PAGES ────────────────────────────────────────────────────────────
+/about                    /about.html                    301
+/meet-your-team           /team.html                     301
+/services                 /services.html                 301
+/our-services             /services.html                 301
+/advisory-services        /services.html                 301
+/investments              /services.html                 301
+/asset-management         /services.html                 301
+/clients                  /services.html                 301
+/401k                     /services.html                 301
+/contact                  /contact.html                  301
+/contact-us               /contact.html                  301
+/announcements            /announcements.html            301
+/announcements/page/2     /announcements.html            301
+/company-announcements    /announcements.html            301
+/newsletter               /morning-core.html             301
+/morning-core             /morning-core.html             301
+/the-morning-core         /morning-core.html             301
+/client-login             /client-login.html             301
+/client-access            /client-login.html             301
+/login                    /client-login.html             301
+/portals                  /client-login.html             301
+/tools                    /tools.html                    301
+/financial-calculators    /tools.html                    301
+/calculators              /tools.html                    301
+
+# ─── PORTAL PAGES ──────────────────────────────────────────────────────────
+/rightcapital             /rightcapital.html             301
+/right-capital            /rightcapital.html             301
+/monarch                  /monarch.html                  301
+/monarch-money            /monarch.html                  301
+/schwab                   /schwab.html                   301
+/charles-schwab           /schwab.html                   301
+/altruist                 /altruist.html                 301
+/emoney                   /emoney.html                   301
+/e-money                  /emoney.html                   301
+/tamarac                  /tamarac.html                  301
+/wealthview               /tamarac.html                  301
+
+# ─── WIX BLOG/POST PAGES → ANNOUNCEMENTS ──────────────────────────────────
+# Wix used /post/ prefix for blog entries
+/post/pvi-welcomes-darek-koleda-to-the-firm                         /announcements.html  301
+/post/danon-robinson-joins-pine-valley-investments                   /announcements.html  301
+/post/greg-pizzano-brings-over-four-decades-of-expertise-to-pvi      /announcements.html  301
+/post/isaac-jones-joins-pine-valley-investments                      /announcements.html  301
+/post/pvi-recognized-as-one-of-50-growers-across-america-by-citywire-ria  /announcements.html  301
+
+# ─── WIX EVENT PAGES → ANNOUNCEMENTS ──────────────────────────────────────
+/events                                                              /announcements.html  301
+/event-details/pvi-kades-margolis-happy-hour                         /announcements.html  301
+/event-details/financial-outlook-happy-hour-hosted-by-nick-lampone-and-mark-cole  /announcements.html  301
+
+# ─── WIX BOLT / SYSTEM URLS → HOMEPAGE ────────────────────────────────────
+/bolt-performance                                                    /             301
+
+# ─── PRIVACY & LEGAL ───────────────────────────────────────────────────────
+/privacy-policy           /privacy.html                  301
+/privacy-policy.html      /privacy.html                  301
+
+# ─── SEC / ADV ─────────────────────────────────────────────────────────────
+/adv                      https://adviserinfo.sec.gov/firm/summary/173995  301
+/adv.html                 https://adviserinfo.sec.gov/firm/summary/173995  301
