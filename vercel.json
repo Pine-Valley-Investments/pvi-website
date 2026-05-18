@@ -2,47 +2,47 @@
   "redirects": [
     {
       "source": "/ria",
-      "destination": "/for-advisors",
+      "destination": "/for-advisors.html",
       "permanent": true
     },
     {
       "source": "/asset-management",
-      "destination": "/services",
+      "destination": "/services.html",
       "permanent": true
     },
     {
       "source": "/careers",
-      "destination": "/for-advisors",
+      "destination": "/for-advisors.html",
       "permanent": true
     },
     {
       "source": "/advisory-services",
-      "destination": "/services",
+      "destination": "/services.html",
       "permanent": true
     },
     {
       "source": "/contact-us.html",
-      "destination": "/contact",
+      "destination": "/contact.html",
       "permanent": true
     },
     {
       "source": "/contact-us",
-      "destination": "/contact",
+      "destination": "/contact.html",
       "permanent": true
     },
     {
       "source": "/client-access",
-      "destination": "/client-login",
+      "destination": "/client-login.html",
       "permanent": true
     },
     {
       "source": "/our-team",
-      "destination": "/team",
+      "destination": "/team.html",
       "permanent": true
     },
     {
       "source": "/about-us",
-      "destination": "/about",
+      "destination": "/about.html",
       "permanent": true
     },
     {
@@ -193,6 +193,226 @@
     {
       "source": "/blog/investment-management-cherry-hill",
       "destination": "/insights/investment-management-cherry-hill.html",
+      "permanent": true
+    },
+    {
+      "source": "/announcements",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/announcements/page/2",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/investments",
+      "destination": "/services.html",
+      "permanent": true
+    },
+    {
+      "source": "/services",
+      "destination": "/services.html",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html",
+      "permanent": true
+    },
+    {
+      "source": "/clients",
+      "destination": "/services.html",
+      "permanent": true
+    },
+    {
+      "source": "/newsletter",
+      "destination": "/morning-core.html",
+      "permanent": true
+    },
+    {
+      "source": "/calculator",
+      "destination": "/tools.html",
+      "permanent": true
+    },
+    {
+      "source": "/events",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/401k",
+      "destination": "/services.html",
+      "permanent": true
+    },
+    {
+      "source": "/financial-planning",
+      "destination": "/services.html",
+      "permanent": true
+    },
+    {
+      "source": "/harry-morad",
+      "destination": "/bios/harry-morad.html",
+      "permanent": true
+    },
+    {
+      "source": "/joseph-duncan",
+      "destination": "/bios/joseph-duncan.html",
+      "permanent": true
+    },
+    {
+      "source": "/mike-modica",
+      "destination": "/bios/mike-modica.html",
+      "permanent": true
+    },
+    {
+      "source": "/chris-oneill",
+      "destination": "/bios/chris-oneill.html",
+      "permanent": true
+    },
+    {
+      "source": "/nick-lampone",
+      "destination": "/bios/nick-lampone.html",
+      "permanent": true
+    },
+    {
+      "source": "/jason-braatz",
+      "destination": "/bios/jason-braatz.html",
+      "permanent": true
+    },
+    {
+      "source": "/jonathan-markoe",
+      "destination": "/bios/jonathan-markoe.html",
+      "permanent": true
+    },
+    {
+      "source": "/kate-fay",
+      "destination": "/bios/kate-fay.html",
+      "permanent": true
+    },
+    {
+      "source": "/mark-magarian",
+      "destination": "/bios/mark-magarian.html",
+      "permanent": true
+    },
+    {
+      "source": "/scott-walden",
+      "destination": "/bios/scott-walden.html",
+      "permanent": true
+    },
+    {
+      "source": "/darek-koleda",
+      "destination": "/bios/darek-koleda.html",
+      "permanent": true
+    },
+    {
+      "source": "/keval-patel",
+      "destination": "/bios/keval-patel.html",
+      "permanent": true
+    },
+    {
+      "source": "/victoria-cocciolone",
+      "destination": "/bios/victoria-cocciolone.html",
+      "permanent": true
+    },
+    {
+      "source": "/victoria-allen",
+      "destination": "/bios/victoria-allen.html",
+      "permanent": true
+    },
+    {
+      "source": "/isaac-jones",
+      "destination": "/bios/isaac-jones.html",
+      "permanent": true
+    },
+    {
+      "source": "/joshua-feldschneider",
+      "destination": "/bios/joshua-feldschneider.html",
+      "permanent": true
+    },
+    {
+      "source": "/scott-lermack",
+      "destination": "/bios/scott-lermack.html",
+      "permanent": true
+    },
+    {
+      "source": "/sean-murphy",
+      "destination": "/bios/sean-murphy.html",
+      "permanent": true
+    },
+    {
+      "source": "/bios/nick-lampone",
+      "destination": "/bios/nick-lampone.html",
+      "permanent": true
+    },
+    {
+      "source": "/bios/jerry-braatz",
+      "destination": "/bios/jerry-braatz.html",
+      "permanent": true
+    },
+    {
+      "source": "/bios/tanya-schneider",
+      "destination": "/bios/tanya-schneider.html",
+      "permanent": true
+    },
+    {
+      "source": "/bios/sean-murphy",
+      "destination": "/bios/sean-murphy.html",
+      "permanent": true
+    },
+    {
+      "source": "/bios/corey-fisher,-crpc%C2%AE,-fps%C2%AE",
+      "destination": "/bios/corey-fisher.html",
+      "permanent": true
+    },
+    {
+      "source": "/post/pvi-welcomes-darek-koleda-to-the-firm",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/post/danon-robinson-joins-pine-valley-investments",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/post/greg-pizzano-brings-over-four-decades-of-expertise-to-pvi",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/post/isaac-jones-joins-pine-valley-investments",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/post/pvi-recognized-as-one-of-50-growers-across-america-by-citywire-ria",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/post/mark-magarian-joins-pvi",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/post/kate-fay",
+      "destination": "/bios/kate-fay.html",
+      "permanent": true
+    },
+    {
+      "source": "/event-details/pvi-kades-margolis-happy-hour",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/event-details/financial-outlook-happy-hour-hosted-by-nick-lampone-and-mark-cole",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/bolt-performance",
+      "destination": "/",
       "permanent": true
     }
   ],
