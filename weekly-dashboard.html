@@ -1128,14 +1128,14 @@ function demo(){
   const ga4d={tot:287,lastS:312,nU:1190,rU:487,sm:{'Organic Search':892,'Direct':561,'Organic Social':187,'Referral':207},wks13:base,wOrg:base.map(v=>Math.round(v*.48)),wDir:base.map(v=>Math.round(v*.30)),wkLbl:wks.map(w=>w.l),pgR:[{dimensionValues:[{value:'/'}],metricValues:[{value:'634'}]},{dimensionValues:[{value:'/team'}],metricValues:[{value:'298'}]},{dimensionValues:[{value:'/about'}],metricValues:[{value:'241'}]},{dimensionValues:[{value:'/services'}],metricValues:[{value:'189'}]},{dimensionValues:[{value:'/bios/jason-braatz'}],metricValues:[{value:'143'}]},{dimensionValues:[{value:'/bios/harry-morad'}],metricValues:[{value:'118'}]}],biR:[{dimensionValues:[{value:'/bios/jason-braatz'}],metricValues:[{value:'143'}]},{dimensionValues:[{value:'/bios/harry-morad'}],metricValues:[{value:'118'}]},{dimensionValues:[{value:'/bios/jonathan-markoe'}],metricValues:[{value:'94'}]},{dimensionValues:[{value:'/bios/kate-fay'}],metricValues:[{value:'87'}]},{dimensionValues:[{value:'/bios/nick-lampone'}],metricValues:[{value:'71'}]}]};
   const ctrT=[1.2,1.4,1.8,1.6,2.1,2.3,2.0,2.4,2.7,2.5,2.9,3.1,3.5],imT=[620,710,840,780,920,1040,980,1120,1280,1180,1450,1620,1340];
   const gscd={cl:312,im:8940,ctr:3.49,pos:8.2,
-    lowCTR:[{keys:['https://pinevalleyinvestments.com/services'],impressions:648,ctr:0.0031,position:13.4}],
+    lowCTR:[{keys:['https://www.pinevalleyinvestments.com/services'],impressions:648,ctr:0.0031,position:13.4}],
     offP1:[{keys:['financial advisor new jersey'],impressions:1240,ctr:.022,position:14.2}],
     ctrOpps:[
-      {keys:['https://pinevalleyinvestments.com/services'],impressions:648,ctr:0.0031,position:13.4},
-      {keys:['https://pinevalleyinvestments.com/client-login'],impressions:312,ctr:0.0096,position:3.5},
-      {keys:['https://pinevalleyinvestments.com/for-advisors'],impressions:198,ctr:0.011,position:8.2},
-      {keys:['https://pinevalleyinvestments.com/about'],impressions:167,ctr:0.018,position:6.1},
-      {keys:['https://pinevalleyinvestments.com/bios/jason-braatz'],impressions:143,ctr:0.021,position:4.8},
+      {keys:['https://www.pinevalleyinvestments.com/services'],impressions:648,ctr:0.0031,position:13.4},
+      {keys:['https://www.pinevalleyinvestments.com/client-login'],impressions:312,ctr:0.0096,position:3.5},
+      {keys:['https://www.pinevalleyinvestments.com/for-advisors'],impressions:198,ctr:0.011,position:8.2},
+      {keys:['https://www.pinevalleyinvestments.com/about'],impressions:167,ctr:0.018,position:6.1},
+      {keys:['https://www.pinevalleyinvestments.com/bios/jason-braatz'],impressions:143,ctr:0.021,position:4.8},
     ],qR:[{keys:['pine valley investments'],clicks:87,impressions:142,ctr:.61,position:1.2},{keys:['financial advisor cherry hill nj'],clicks:43,impressions:891,ctr:.048,position:4.1},{keys:['jason braatz financial advisor'],clicks:31,impressions:198,ctr:.156,position:2.8},{keys:['financial advisor new jersey'],clicks:28,impressions:1240,ctr:.022,position:7.4},{keys:['wealth management cherry hill'],clicks:22,impressions:674,ctr:.032,position:5.9},{keys:['pine valley investments reviews'],clicks:18,impressions:87,ctr:.206,position:3.1},{keys:['cherry hill financial advisor fee only'],clicks:14,impressions:412,ctr:.034,position:8.7},{keys:['ria advisor new jersey'],clicks:11,impressions:287,ctr:.038,position:9.2}],wkG:imT.map((im,i)=>({cl:Math.round(im*ctrT[i]/100),im,ctr:ctrT[i]})),wkLbl:wks.map(w=>w.l)};
   const fsd={total:7,lastW:5,byA:{'Jason Braatz':3,'Harry Morad':2,'Jonathan Markoe':1,'Kate Fay':1},wk13:[1,0,2,1,3,2,4,2,3,5,4,6,7]};
   try{G_PID='demo';G_GSP='demo';G_GA4=ga4d;G_GSC=gscd;G_FS=fsd;build(ga4d,gscd,fsd);showPres();}catch(e){console.error('Demo error:',e);document.getElementById('setup').style.display='flex';document.getElementById('ld').classList.add('h');alert('Demo error: '+e.message+'\n\nCheck browser console for details.');}

@@ -1,6 +1,11 @@
 {
   "redirects": [
     {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/ria",
       "destination": "/for-advisors.html",
       "permanent": true
