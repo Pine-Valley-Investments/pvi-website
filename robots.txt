@@ -1,7 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /api/
-Disallow: /_vercel/
 
 # Explicitly allow all AI crawlers
 User-agent: GPTBot
