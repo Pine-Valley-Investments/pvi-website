@@ -118,3 +118,12 @@
 /post/sean-murphy-joins-pine-valley-investments-in-naples-florida    /announcements.html  301
 /post/tax-planning-strategies-for-wealth-a-guide-for-high-net-worth-individuals  /announcements.html  301
 /keval-patel                                                         /bios/keval-patel.html  301
+
+# ─── ADDITIONAL GSC 404s (May 21, 2026) ─────────────────────────────────────
+/calculator                                                          /tools.html          301
+/post/kate-fay                                                       /bios/kate-fay.html  301
+/bios/jerry-braatz                                                   /bios/jerry-braatz.html  301
+# Corey Fisher credential slug variants (different URL encodings Google may use)
+/bios/corey-fisher,-crpc%C2%AE,-fps%C2%AE                           /bios/corey-fisher.html  301
+/bios/corey-fisher,-crpc®,-fps®                                     /bios/corey-fisher.html  301
+/bios/corey-fisher%2C-crpc%C2%AE%2C-fps%C2%AE                      /bios/corey-fisher.html  301
