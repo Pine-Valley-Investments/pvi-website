@@ -112,3 +112,9 @@
 # ─── SEC / ADV ─────────────────────────────────────────────────────────────
 /adv                      https://adviserinfo.sec.gov/firm/summary/173995  301
 /adv.html                 https://adviserinfo.sec.gov/firm/summary/173995  301
+
+# ─── ADDITIONAL GSC 404s (May 2026) ────────────────────────────────────────
+/members-area/*                                                      /client-login.html  301
+/post/sean-murphy-joins-pine-valley-investments-in-naples-florida    /announcements.html  301
+/post/tax-planning-strategies-for-wealth-a-guide-for-high-net-worth-individuals  /announcements.html  301
+/keval-patel                                                         /bios/keval-patel.html  301
