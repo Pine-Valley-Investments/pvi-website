@@ -419,6 +419,36 @@
       "source": "/bolt-performance",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/bios/privacy.html",
+      "destination": "/privacy.html",
+      "permanent": true
+    },
+    {
+      "source": "/bios/privacy",
+      "destination": "/privacy.html",
+      "permanent": true
+    },
+    {
+      "source": "/inherited-rmd-calculator",
+      "destination": "/tools.html",
+      "permanent": true
+    },
+    {
+      "source": "/jake-markoe",
+      "destination": "/bios/jake-markoe.html",
+      "permanent": true
+    },
+    {
+      "source": "/bios/corey-fisher,-crpc\u00ae,-fps\u00ae",
+      "destination": "/bios/corey-fisher.html",
+      "permanent": true
+    },
+    {
+      "source": "/bios/corey-fisher,-crpc\u00ae,\u2013fps\u00ae",
+      "destination": "/bios/corey-fisher.html",
+      "permanent": true
     }
   ],
   "rewrites": [
