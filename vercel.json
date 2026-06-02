@@ -467,12 +467,12 @@
     },
     {
       "source": "/tom-mcelgunn",
-      "destination": "/team.html",
+      "destination": "/bios/tommy-mcelgunn.html",
       "permanent": true
     },
     {
       "source": "/thomas-crossett",
-      "destination": "/team.html",
+      "destination": "/bios/tom-crossett.html",
       "permanent": true
     },
     {
