@@ -449,6 +449,51 @@
       "source": "/bios/corey-fisher,-crpc\u00ae,\u2013fps\u00ae",
       "destination": "/bios/corey-fisher.html",
       "permanent": true
+    },
+    {
+      "source": "/post/tax-planning-strategies-for-wealth-a-guide-for-high-net-worth-individuals",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/post/sean-murphy-joins-pine-valley-investments-in-naples-florida",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/post/pvi-welcomes-the-braatz-wealth-advisors-group",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/tom-mcelgunn",
+      "destination": "/team.html",
+      "permanent": true
+    },
+    {
+      "source": "/thomas-crossett",
+      "destination": "/team.html",
+      "permanent": true
+    },
+    {
+      "source": "/bios/greg-pizzano",
+      "destination": "/bios/greg-pizzano.html",
+      "permanent": true
+    },
+    {
+      "source": "/bios/jake-markoe.html",
+      "destination": "/bios/jake-markoe.html",
+      "permanent": true
+    },
+    {
+      "source": "/bios/max-schatow.html",
+      "destination": "/bios/max-schatzow.html",
+      "permanent": true
+    },
+    {
+      "source": "/members-area/:path*",
+      "destination": "/client-login.html",
+      "permanent": true
     }
   ],
   "rewrites": [
