@@ -1,51 +1,51 @@
 # Pine Valley Investments
-# https://pinevalleyinvestments.com
+# https://www.pinevalleyinvestments.com
 # llms.txt — Site structure for AI crawlers
 
-> Pine Valley Investments is an independent Registered Investment Advisor (RIA) based in Marlton, NJ, managing $2.65B in assets for families and business owners across the United States. Founded in 2015 by Harry Morad and Joseph Duncan, PVI has grown to 40+ advisors across multiple advisory groups. Pine Valley Investments was recognized as one of USA Today's Best Financial Advisory Firms 2025.
+> Pine Valley Investments is an independent Registered Investment Advisor (RIA) based in Marlton, NJ, managing $2.67B in assets (as of 3/30/2026) for families and business owners across the United States. Founded in 2015 by Harry Morad and Joseph Duncan, PVI has grown to 40+ advisors across multiple advisory groups. Pine Valley Investments was recognized as one of USA Today's Best Financial Advisory Firms 2025.
 
 ## Main Pages
 
-- [Home](https://pinevalleyinvestments.com/): Overview of Pine Valley Investments, AUM timeline, services summary, team preview
-- [About PVI](https://pinevalleyinvestments.com/about.html): Company history, AUM growth timeline (2015–present), founding story, firm values
-- [Meet Your Team](https://pinevalleyinvestments.com/team.html): Full directory of all 40+ advisors across PVI, BWA, The Markoe Group, and The Fay Group
-- [Our Services](https://pinevalleyinvestments.com/services.html): Wealth Management, Investment Advisory, Trust & Estate Planning, Qualified Retirement Plans, Investment Banking, Networking Opportunities
-- [Contact Us](https://pinevalleyinvestments.com/contact.html): Contact form, office address, phone number
-- [Company Announcements](https://pinevalleyinvestments.com/announcements.html): Firm news and updates
-- [Morning Core](https://pinevalleyinvestments.com/morning-core.html): PVI's daily morning newsletter for clients and subscribers
-- [Client Login](https://pinevalleyinvestments.com/client-login.html): Hub linking to all 6 client portals
+- [Home](https://www.pinevalleyinvestments.com/): Overview of Pine Valley Investments, AUM timeline, services summary, team preview
+- [About PVI](https://www.pinevalleyinvestments.com/about.html): Company history, AUM growth timeline (2015–present), founding story, firm values
+- [Meet Your Team](https://www.pinevalleyinvestments.com/team.html): Full directory of all 40+ advisors across PVI, BWA, The Markoe Group, and The Fay Group
+- [Our Services](https://www.pinevalleyinvestments.com/services.html): Wealth Management, Investment Advisory, Trust & Estate Planning, Qualified Retirement Plans, Investment Banking, Networking Opportunities
+- [Contact Us](https://www.pinevalleyinvestments.com/contact.html): Contact form, office address, phone number
+- [Company Announcements](https://www.pinevalleyinvestments.com/announcements.html): Firm news and updates
+- [Morning Core](https://www.pinevalleyinvestments.com/morning-core.html): PVI's daily morning newsletter for clients and subscribers
+- [Client Login](https://www.pinevalleyinvestments.com/client-login.html): Hub linking to all 6 client portals
 
 ## Client Portals
 
-- [RightCapital](https://pinevalleyinvestments.com/rightcapital.html): Financial planning portal — retirement projections, tax strategies, education funding
-- [Monarch Money](https://pinevalleyinvestments.com/monarch.html): Account aggregation and net worth tracking
-- [Charles Schwab](https://pinevalleyinvestments.com/schwab.html): Primary custodian — account balances, statements, tax documents
-- [Altruist](https://pinevalleyinvestments.com/altruist.html): Secondary custodian — modern RIA-focused platform
-- [eMoney](https://pinevalleyinvestments.com/emoney.html): Comprehensive financial planning portal
-- [Tamarac WealthView](https://pinevalleyinvestments.com/tamarac.html): Performance reporting and portfolio analytics
+- [RightCapital](https://www.pinevalleyinvestments.com/rightcapital.html): Financial planning portal — retirement projections, tax strategies, education funding
+- [Monarch Money](https://www.pinevalleyinvestments.com/monarch.html): Account aggregation and net worth tracking
+- [Charles Schwab](https://www.pinevalleyinvestments.com/schwab.html): Primary custodian — account balances, statements, tax documents
+- [Altruist](https://www.pinevalleyinvestments.com/altruist.html): Secondary custodian — modern RIA-focused platform
+- [eMoney](https://www.pinevalleyinvestments.com/emoney.html): Comprehensive financial planning portal
+- [Tamarac WealthView](https://www.pinevalleyinvestments.com/tamarac.html): Performance reporting and portfolio analytics
 
 ## Advisor Bio Pages
 
 All 40+ advisor bios are available at /bios/[first-last].html. Key advisors:
 
-- [Harry Morad](https://pinevalleyinvestments.com/bios/harry-morad.html): CEO & Co-Founder
-- [Joseph Duncan](https://pinevalleyinvestments.com/bios/joseph-duncan.html): COO & Co-Founder
-- [Mike Modica](https://pinevalleyinvestments.com/bios/mike-modica.html): CFO & Partner
-- [Chris O'Neill](https://pinevalleyinvestments.com/bios/chris-oneill.html): CIO, CFA & Partner
-- [Nick Lampone](https://pinevalleyinvestments.com/bios/nick-lampone.html): CSO & Partner
-- [Jason Braatz](https://pinevalleyinvestments.com/bios/jason-braatz.html): Partner, BWA Group
-- [Jonathan Markoe](https://pinevalleyinvestments.com/bios/jonathan-markoe.html): Partner, The Markoe Group
-- [Kate Fay](https://pinevalleyinvestments.com/bios/kate-fay.html): Partner, The Fay Group
+- [Harry Morad](https://www.pinevalleyinvestments.com/bios/harry-morad.html): CEO & Co-Founder
+- [Joseph Duncan](https://www.pinevalleyinvestments.com/bios/joseph-duncan.html): COO & Co-Founder
+- [Mike Modica](https://www.pinevalleyinvestments.com/bios/mike-modica.html): CFO & Partner
+- [Chris O'Neill](https://www.pinevalleyinvestments.com/bios/chris-oneill.html): CIO, CFA & Partner
+- [Nick Lampone](https://www.pinevalleyinvestments.com/bios/nick-lampone.html): CSO & Partner
+- [Jason Braatz](https://www.pinevalleyinvestments.com/bios/jason-braatz.html): Partner, BWA Group
+- [Jonathan Markoe](https://www.pinevalleyinvestments.com/bios/jonathan-markoe.html): Partner, The Markoe Group
+- [Kate Fay](https://www.pinevalleyinvestments.com/bios/kate-fay.html): Partner, The Fay Group
 
 ## Legal & Compliance
 
-- [Privacy Policy](https://pinevalleyinvestments.com/privacy.html)
-- [Terms of Use](https://pinevalleyinvestments.com/terms.html)
+- [Privacy Policy](https://www.pinevalleyinvestments.com/privacy.html)
+- [Terms of Use](https://www.pinevalleyinvestments.com/terms.html)
 - [SEC Investment Advisor Review](https://adviserinfo.sec.gov)
 - [Form ADV 2A](https://adviserinfo.sec.gov/firm/summary/316052)
 
 ## Technical
 
-- [Sitemap](https://pinevalleyinvestments.com/sitemap.xml)
+- [Sitemap](https://www.pinevalleyinvestments.com/sitemap.xml)
 - Contact: info@pinevalleyinvestments.com | 856-334-8260
 - Address: 10 E Stow Rd, Suite 200, Marlton, NJ 08053
