@@ -560,6 +560,14 @@
   ],
   "rewrites": [
     {
+      "source": "/insights",
+      "destination": "/insights/index.html"
+    },
+    {
+      "source": "/insights/:slug",
+      "destination": "/insights/:slug"
+    },
+    {
       "source": "/api/:path*",
       "destination": "/api/:path*"
     }
