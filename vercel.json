@@ -536,6 +536,26 @@
       "source": "/contact2",
       "destination": "/contact.html",
       "permanent": true
+    },
+    {
+      "source": "/amp/:path*",
+      "destination": "/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/announcements/search",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/announcements/search/:path*",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/blog-feed.xml",
+      "destination": "/sitemap.xml",
+      "permanent": true
     }
   ],
   "rewrites": [

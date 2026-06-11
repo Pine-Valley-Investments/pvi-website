@@ -45,3 +45,16 @@ Disallow: /contact2
 Disallow: /tracker.html
 Disallow: /rebrand-tracker.html
 Disallow: /seo-tracker.html
+
+# Block AMP pages (Wix-generated, no longer needed)
+Disallow: /amp/
+
+# Block search result pages
+Disallow: /announcements/search
+Disallow: /announcements/search/
+
+# Block XML feeds
+Disallow: /blog-feed.xml
+
+# Block URL parameter duplicates
+Disallow: /*?lang=
