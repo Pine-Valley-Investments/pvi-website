@@ -31,3 +31,17 @@ User-agent: Bytespider
 Allow: /
 
 Sitemap: https://www.pinevalleyinvestments.com/sitemap.xml
+
+# Block Wix members area admin paths
+Disallow: /members-area/admin/
+Disallow: /members-area/admin
+
+# Block Wix CMS artifact pages
+Disallow: /copy-of-investments
+Disallow: /copy-of-mike-wojcik
+Disallow: /contact2
+
+# Block internal tracker pages
+Disallow: /tracker.html
+Disallow: /rebrand-tracker.html
+Disallow: /seo-tracker.html

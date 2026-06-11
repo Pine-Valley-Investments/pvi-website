@@ -1,6 +1,17 @@
 {
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "pinevalleyinvestments.com"
+        }
+      ],
+      "destination": "https://www.pinevalleyinvestments.com/:path*",
+      "permanent": true
+    },
+    {
       "source": "/",
       "has": [
         {
@@ -499,6 +510,31 @@
     {
       "source": "/members-area/:path*",
       "destination": "/client-login.html",
+      "permanent": true
+    },
+    {
+      "source": "/insights/questions-financial-advisor.html",
+      "destination": "/insights/index.html",
+      "permanent": true
+    },
+    {
+      "source": "/insights/estate-planning-advisor-nj.html",
+      "destination": "/insights/index.html",
+      "permanent": true
+    },
+    {
+      "source": "/copy-of-investments",
+      "destination": "/services.html",
+      "permanent": true
+    },
+    {
+      "source": "/copy-of-mike-wojcik",
+      "destination": "/team.html",
+      "permanent": true
+    },
+    {
+      "source": "/contact2",
+      "destination": "/contact.html",
       "permanent": true
     }
   ],
