@@ -449,7 +449,7 @@ function setDays(d){S.days=d;document.querySelectorAll('.date-tab').forEach(t=>t
 function showDash(){
   document.getElementById('setup-panel').style.display='none';
   document.getElementById('dashboard').style.display='block';
-  if(S.userInfo){document.getElementById('tb-right').innerHTML=`<div class="user-chip">${S.userInfo.picture?`<img src="${S.userInfo.picture}" alt="">`:''}<span>${S.userInfo.name||S.userInfo.email}</span></div><button class="btn btn-ghost" onclick="signOut()">Sign out</button>`;}
+  if(S.userInfo){document.getElementById('tb-right').innerHTML=`<div class="user-chip">${S.userInfo.picture?`<img loading="lazy" src="${S.userInfo.picture}" alt="">`:''}<span>${S.userInfo.name||S.userInfo.email}</span></div><button class="btn btn-ghost" onclick="signOut()">Sign out</button>`;}
   refreshData();
 }
 function signOut(){S.token=null;S.userInfo=null;S.property=null;document.getElementById('dashboard').style.display='none';document.getElementById('setup-panel').style.display='block';document.getElementById('tb-right').innerHTML='';}

@@ -481,11 +481,6 @@
       "permanent": true
     },
     {
-      "source": "/bios/jake-markoe.html",
-      "destination": "/bios/jake-markoe.html",
-      "permanent": true
-    },
-    {
       "source": "/bios/max-schatow.html",
       "destination": "/bios/max-schatzow.html",
       "permanent": true
