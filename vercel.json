@@ -488,6 +488,16 @@
       "permanent": true
     },
     {
+      "source": "/post/pvi-recognized-as-one-of-usa-today-s-best-financial-advisory-firms",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/bios/jean-mcdevitt",
+      "destination": "/bios/jean-mcdevitt.html",
+      "permanent": true
+    },
+    {
       "source": "/tom-mcelgunn",
       "destination": "/bios/tommy-mcelgunn.html",
       "permanent": true
