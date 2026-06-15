@@ -556,6 +556,26 @@
       "source": "/blog-feed.xml",
       "destination": "/sitemap.xml",
       "permanent": true
+    },
+    {
+      "source": "/tools",
+      "destination": "/tools.html",
+      "permanent": true
+    },
+    {
+      "source": "/bios/james-varley",
+      "destination": "/bios/james-varley.html",
+      "permanent": true
+    },
+    {
+      "source": "/_api/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/members-area/jackson-kevin99012606/members-area",
+      "destination": "/client-login.html",
+      "permanent": true
     }
   ],
   "rewrites": [
