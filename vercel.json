@@ -576,6 +576,21 @@
       "source": "/members-area/jackson-kevin99012606/members-area",
       "destination": "/client-login.html",
       "permanent": true
+    },
+    {
+      "source": "/our-people.html",
+      "destination": "/team.html",
+      "permanent": true
+    },
+    {
+      "source": "/our-people",
+      "destination": "/team.html",
+      "permanent": true
+    },
+    {
+      "source": "/client-login",
+      "destination": "/client-login.html",
+      "permanent": true
     }
   ],
   "rewrites": [
