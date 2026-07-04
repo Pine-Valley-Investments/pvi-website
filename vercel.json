@@ -591,6 +591,226 @@
       "source": "/client-login",
       "destination": "/client-login.html",
       "permanent": true
+    },
+    {
+      "source": "/jim-vogt",
+      "destination": "/bios/jim-vogt.html",
+      "permanent": true
+    },
+    {
+      "source": "/bios/james-varley,-aams",
+      "destination": "/bios/james-varley.html",
+      "permanent": true
+    },
+    {
+      "source": "/retirement-income-calculator",
+      "destination": "/tools.html",
+      "permanent": true
+    },
+    {
+      "source": "/bios/corey-fisher,-crpc\u00ae,--fps\u00ae",
+      "destination": "/bios/corey-fisher.html",
+      "permanent": true
+    },
+    {
+      "source": "/bios/corey-fisher%2C-crpc\u00ae%2C\u2013fps\u00ae",
+      "destination": "/bios/corey-fisher.html",
+      "permanent": true
+    },
+    {
+      "source": "/advisor/harry-morad",
+      "destination": "/bios/harry-morad.html",
+      "permanent": true
+    },
+    {
+      "source": "/advisor/joseph-duncan",
+      "destination": "/bios/joseph-duncan.html",
+      "permanent": true
+    },
+    {
+      "source": "/advisor/mike-modica",
+      "destination": "/bios/mike-modica.html",
+      "permanent": true
+    },
+    {
+      "source": "/advisor/nick-lampone",
+      "destination": "/bios/nick-lampone.html",
+      "permanent": true
+    },
+    {
+      "source": "/advisor/chris-oneill",
+      "destination": "/bios/chris-oneill.html",
+      "permanent": true
+    },
+    {
+      "source": "/advisor/jason-braatz",
+      "destination": "/bios/jason-braatz.html",
+      "permanent": true
+    },
+    {
+      "source": "/advisor/jonathan-markoe",
+      "destination": "/bios/jonathan-markoe.html",
+      "permanent": true
+    },
+    {
+      "source": "/advisor/kate-fay",
+      "destination": "/bios/kate-fay.html",
+      "permanent": true
+    },
+    {
+      "source": "/team/harry-morad",
+      "destination": "/bios/harry-morad.html",
+      "permanent": true
+    },
+    {
+      "source": "/team/joseph-duncan",
+      "destination": "/bios/joseph-duncan.html",
+      "permanent": true
+    },
+    {
+      "source": "/team/mike-modica",
+      "destination": "/bios/mike-modica.html",
+      "permanent": true
+    },
+    {
+      "source": "/team/nick-lampone",
+      "destination": "/bios/nick-lampone.html",
+      "permanent": true
+    },
+    {
+      "source": "/team/chris-oneill",
+      "destination": "/bios/chris-oneill.html",
+      "permanent": true
+    },
+    {
+      "source": "/team/jason-braatz",
+      "destination": "/bios/jason-braatz.html",
+      "permanent": true
+    },
+    {
+      "source": "/team/jonathan-markoe",
+      "destination": "/bios/jonathan-markoe.html",
+      "permanent": true
+    },
+    {
+      "source": "/team/kate-fay",
+      "destination": "/bios/kate-fay.html",
+      "permanent": true
+    },
+    {
+      "source": "/meet-your-team",
+      "destination": "/team.html",
+      "permanent": true
+    },
+    {
+      "source": "/our-services",
+      "destination": "/services.html",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html",
+      "permanent": true
+    },
+    {
+      "source": "/company-announcements",
+      "destination": "/announcements.html",
+      "permanent": true
+    },
+    {
+      "source": "/morning-core",
+      "destination": "/morning-core.html",
+      "permanent": true
+    },
+    {
+      "source": "/the-morning-core",
+      "destination": "/morning-core.html",
+      "permanent": true
+    },
+    {
+      "source": "/portals",
+      "destination": "/client-login.html",
+      "permanent": true
+    },
+    {
+      "source": "/financial-calculators",
+      "destination": "/tools.html",
+      "permanent": true
+    },
+    {
+      "source": "/calculators",
+      "destination": "/tools.html",
+      "permanent": true
+    },
+    {
+      "source": "/rightcapital",
+      "destination": "/rightcapital.html",
+      "permanent": true
+    },
+    {
+      "source": "/right-capital",
+      "destination": "/rightcapital.html",
+      "permanent": true
+    },
+    {
+      "source": "/monarch",
+      "destination": "/monarch.html",
+      "permanent": true
+    },
+    {
+      "source": "/monarch-money",
+      "destination": "/monarch.html",
+      "permanent": true
+    },
+    {
+      "source": "/schwab",
+      "destination": "/schwab.html",
+      "permanent": true
+    },
+    {
+      "source": "/charles-schwab",
+      "destination": "/schwab.html",
+      "permanent": true
+    },
+    {
+      "source": "/altruist",
+      "destination": "/altruist.html",
+      "permanent": true
+    },
+    {
+      "source": "/emoney",
+      "destination": "/emoney.html",
+      "permanent": true
+    },
+    {
+      "source": "/e-money",
+      "destination": "/emoney.html",
+      "permanent": true
+    },
+    {
+      "source": "/tamarac",
+      "destination": "/tamarac.html",
+      "permanent": true
+    },
+    {
+      "source": "/wealthview",
+      "destination": "/tamarac.html",
+      "permanent": true
+    },
+    {
+      "source": "/adv",
+      "destination": "https://adviserinfo.sec.gov/firm/summary/173995",
+      "permanent": true
+    },
+    {
+      "source": "/adv.html",
+      "destination": "https://adviserinfo.sec.gov/firm/summary/173995",
+      "permanent": true
+    },
+    {
+      "source": "/bios/corey-fisher%2C-crpc%C2%AE%2C-fps%C2%AE",
+      "destination": "/bios/corey-fisher.html",
+      "permanent": true
     }
   ],
   "rewrites": [
