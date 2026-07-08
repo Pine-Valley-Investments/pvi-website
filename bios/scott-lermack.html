@@ -261,6 +261,10 @@
           <label for="message">Message</label>
           <textarea name="message" id="message" placeholder="How can Scott help you?" required></textarea>
         </div>
+        <label class="mc-optin" style="display:flex;align-items:flex-start;gap:10px;margin:0 0 20px;font-family:'Montserrat',Arial,sans-serif;font-size:12px;line-height:1.55;color:#babab9;letter-spacing:0.02em;cursor:pointer;">
+          <input type="checkbox" name="newsletter_optin" value="Yes - subscribe to The Morning Core" style="margin-top:2px;flex-shrink:0;width:16px;height:16px;accent-color:#c9a96e;cursor:pointer;" />
+          <span>Send me <strong style="color:#f0e6d3;font-weight:600;">The Morning Core</strong> &mdash; PVI's free daily market newsletter. Unsubscribe anytime.</span>
+        </label>
         <button type="submit" class="form-submit">Send Message →</button>
       </form>
     </div>
@@ -397,5 +401,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 </script>
+<script>
+/* Morning Core (Mailchimp) opt-in: fires a JSONP subscribe when the opt-in box is checked. Fire-and-forget; never blocks the Formspree submit. */
+(function(){
+  var form = document.querySelector('form[action*="formspree.io"]');
+  if(!form) return;
+  form.addEventListener('submit', function(){
+    try{
+      var cb = form.querySelector('input[name="newsletter_optin"]');
+      if(!cb || !cb.checked) return;
+      var em = form.querySelector('input[type="email"]');
+      if(!em || !em.value) return;
+      var fn = form.querySelector('[name="firstName"],[name="first_name"]');
+      var ln = form.querySelector('[name="lastName"],[name="last_name"]');
+      var u='dcc014e77dbec25b039fbec79', id='f81a9a8d75', cbn='pviMc'+Date.now();
+      window[cbn]=function(){try{delete window[cbn];}catch(_){ }};
+      var q='u='+u+'&id='+id+'&f_id=0081fbe2f0&EMAIL='+encodeURIComponent(em.value)
+        +(fn&&fn.value?'&FNAME='+encodeURIComponent(fn.value):'')
+        +(ln&&ln.value?'&LNAME='+encodeURIComponent(ln.value):'')
+        +'&b_'+u+'_'+id+'=&c='+cbn;
+      var s=document.createElement('script');
+      s.src='https://pinevalleyinvestments.us17.list-manage.com/subscribe/post-json?'+q;
+      (document.body||document.documentElement).appendChild(s);
+    }catch(_){ }
+  }, true);
+})();
+</script>
+
 </body>
 </html>
