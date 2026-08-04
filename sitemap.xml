@@ -61,48 +61,6 @@
     <ns0:priority>0.8</ns0:priority>
   </ns0:url>
   <ns0:url>
-    <ns0:loc>https://www.pinevalleyinvestments.com/client-login.html</ns0:loc>
-    <ns0:lastmod>2026-05-18</ns0:lastmod>
-    <ns0:changefreq>monthly</ns0:changefreq>
-    <ns0:priority>0.5</ns0:priority>
-  </ns0:url>
-  <ns0:url>
-    <ns0:loc>https://www.pinevalleyinvestments.com/rightcapital.html</ns0:loc>
-    <ns0:lastmod>2026-05-18</ns0:lastmod>
-    <ns0:changefreq>monthly</ns0:changefreq>
-    <ns0:priority>0.5</ns0:priority>
-  </ns0:url>
-  <ns0:url>
-    <ns0:loc>https://www.pinevalleyinvestments.com/monarch.html</ns0:loc>
-    <ns0:lastmod>2026-05-18</ns0:lastmod>
-    <ns0:changefreq>monthly</ns0:changefreq>
-    <ns0:priority>0.5</ns0:priority>
-  </ns0:url>
-  <ns0:url>
-    <ns0:loc>https://www.pinevalleyinvestments.com/schwab.html</ns0:loc>
-    <ns0:lastmod>2026-05-18</ns0:lastmod>
-    <ns0:changefreq>monthly</ns0:changefreq>
-    <ns0:priority>0.5</ns0:priority>
-  </ns0:url>
-  <ns0:url>
-    <ns0:loc>https://www.pinevalleyinvestments.com/altruist.html</ns0:loc>
-    <ns0:lastmod>2026-05-18</ns0:lastmod>
-    <ns0:changefreq>monthly</ns0:changefreq>
-    <ns0:priority>0.5</ns0:priority>
-  </ns0:url>
-  <ns0:url>
-    <ns0:loc>https://www.pinevalleyinvestments.com/emoney.html</ns0:loc>
-    <ns0:lastmod>2026-05-18</ns0:lastmod>
-    <ns0:changefreq>monthly</ns0:changefreq>
-    <ns0:priority>0.5</ns0:priority>
-  </ns0:url>
-  <ns0:url>
-    <ns0:loc>https://www.pinevalleyinvestments.com/tamarac.html</ns0:loc>
-    <ns0:lastmod>2026-05-18</ns0:lastmod>
-    <ns0:changefreq>monthly</ns0:changefreq>
-    <ns0:priority>0.5</ns0:priority>
-  </ns0:url>
-  <ns0:url>
     <ns0:loc>https://www.pinevalleyinvestments.com/privacy.html</ns0:loc>
     <ns0:lastmod>2026-05-18</ns0:lastmod>
     <ns0:changefreq>yearly</ns0:changefreq>
@@ -397,12 +355,6 @@
     <ns0:priority>0.7</ns0:priority>
   </ns0:url>
   <ns0:url>
-    <ns0:loc>https://www.pinevalleyinvestments.com/privacy-policy.html</ns0:loc>
-    <ns0:lastmod>2026-05-18</ns0:lastmod>
-    <ns0:changefreq>yearly</ns0:changefreq>
-    <ns0:priority>0.3</ns0:priority>
-  </ns0:url>
-  <ns0:url>
     <ns0:loc>https://www.pinevalleyinvestments.com/advisor-inquiry.html</ns0:loc>
     <ns0:changefreq>monthly</ns0:changefreq>
     <ns0:priority>0.6</ns0:priority>
@@ -440,12 +392,6 @@
   <ns0:url>
     <ns0:loc>https://www.pinevalleyinvestments.com/morning-core/2026-04-30.html</ns0:loc>
     <ns0:lastmod>2026-04-30</ns0:lastmod>
-    <ns0:changefreq>yearly</ns0:changefreq>
-    <ns0:priority>0.5</ns0:priority>
-  </ns0:url>
-  <ns0:url>
-    <ns0:loc>https://www.pinevalleyinvestments.com/morning-core/2026-05-01.html</ns0:loc>
-    <ns0:lastmod>2026-05-01</ns0:lastmod>
     <ns0:changefreq>yearly</ns0:changefreq>
     <ns0:priority>0.5</ns0:priority>
   </ns0:url>
