@@ -2,6 +2,16 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/tools",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/tools.html",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [
         {
@@ -240,7 +250,7 @@
     },
     {
       "source": "/calculator",
-      "destination": "/tools",
+      "destination": "/services",
       "permanent": true
     },
     {
@@ -415,7 +425,7 @@
     },
     {
       "source": "/inherited-rmd-calculator",
-      "destination": "/tools",
+      "destination": "/services",
       "permanent": true
     },
     {
@@ -540,7 +550,7 @@
     },
     {
       "source": "/retirement-income-calculator",
-      "destination": "/tools",
+      "destination": "/services",
       "permanent": true
     },
     {
@@ -660,12 +670,12 @@
     },
     {
       "source": "/financial-calculators",
-      "destination": "/tools",
+      "destination": "/services",
       "permanent": true
     },
     {
       "source": "/calculators",
-      "destination": "/tools",
+      "destination": "/services",
       "permanent": true
     },
     {
