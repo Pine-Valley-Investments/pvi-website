@@ -1,4 +1,5 @@
 {
+  "cleanUrls": true,
   "redirects": [
     {
       "source": "/:path*",
@@ -29,47 +30,47 @@
     },
     {
       "source": "/ria",
-      "destination": "/for-advisors.html",
+      "destination": "/for-advisors",
       "permanent": true
     },
     {
       "source": "/asset-management",
-      "destination": "/services.html",
+      "destination": "/services",
       "permanent": true
     },
     {
       "source": "/careers",
-      "destination": "/for-advisors.html",
+      "destination": "/for-advisors",
       "permanent": true
     },
     {
       "source": "/advisory-services",
-      "destination": "/services.html",
+      "destination": "/services",
       "permanent": true
     },
     {
       "source": "/contact-us.html",
-      "destination": "/contact.html",
+      "destination": "/contact",
       "permanent": true
     },
     {
       "source": "/contact-us",
-      "destination": "/contact.html",
+      "destination": "/contact",
       "permanent": true
     },
     {
       "source": "/client-access",
-      "destination": "/client-login.html",
+      "destination": "/client-login",
       "permanent": true
     },
     {
       "source": "/our-team",
-      "destination": "/team.html",
+      "destination": "/team",
       "permanent": true
     },
     {
       "source": "/about-us",
-      "destination": "/about.html",
+      "destination": "/about",
       "permanent": true
     },
     {
@@ -79,362 +80,322 @@
     },
     {
       "source": "/terms-of-service",
-      "destination": "/terms.html",
+      "destination": "/terms",
       "permanent": true
     },
     {
       "source": "/terms-of-service.html",
-      "destination": "/terms.html",
+      "destination": "/terms",
       "permanent": true
     },
     {
       "source": "/privacy-policy",
-      "destination": "/privacy.html",
+      "destination": "/privacy",
       "permanent": true
     },
     {
       "source": "/privacy-policy.html",
-      "destination": "/privacy.html",
+      "destination": "/privacy",
       "permanent": true
     },
     {
       "source": "/blog",
-      "destination": "/morning-core.html",
+      "destination": "/morning-core",
       "permanent": true
     },
     {
       "source": "/news",
-      "destination": "/announcements.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
       "source": "/financial-advisor",
-      "destination": "/services.html",
+      "destination": "/services",
       "permanent": true
     },
     {
       "source": "/wealth-management",
-      "destination": "/services.html",
+      "destination": "/services",
       "permanent": true
     },
     {
       "source": "/investment-management",
-      "destination": "/services.html",
+      "destination": "/services",
       "permanent": true
     },
     {
       "source": "/retirement-planning",
-      "destination": "/services.html",
+      "destination": "/services",
       "permanent": true
     },
     {
       "source": "/estate-planning",
-      "destination": "/services.html",
+      "destination": "/services",
       "permanent": true
     },
     {
       "source": "/client-portal",
-      "destination": "/client-login.html",
+      "destination": "/client-login",
       "permanent": true
     },
     {
       "source": "/login",
-      "destination": "/client-login.html",
+      "destination": "/client-login",
       "permanent": true
     },
     {
       "source": "/morning-core-newsletter",
-      "destination": "/morning-core.html",
+      "destination": "/morning-core",
       "permanent": true
     },
     {
       "source": "/advisors",
-      "destination": "/team.html",
+      "destination": "/team",
       "permanent": true
     },
     {
       "source": "/our-advisors",
-      "destination": "/team.html",
+      "destination": "/team",
       "permanent": true
     },
     {
       "source": "/team-members",
-      "destination": "/team.html",
+      "destination": "/team",
       "permanent": true
     },
     {
       "source": "/schedule-consultation",
-      "destination": "/schedule.html",
+      "destination": "/schedule",
       "permanent": true
     },
     {
       "source": "/schedule-a-consultation",
-      "destination": "/schedule.html",
-      "permanent": true
-    },
-    {
-      "source": "/for-advisors",
-      "destination": "/for-advisors.html",
+      "destination": "/schedule",
       "permanent": true
     },
     {
       "source": "/join",
-      "destination": "/for-advisors.html",
+      "destination": "/for-advisors",
       "permanent": true
     },
     {
       "source": "/services-2",
-      "destination": "/services.html",
+      "destination": "/services",
       "permanent": true
     },
     {
       "source": "/insights",
-      "destination": "/insights/index.html",
+      "destination": "/insights/index",
       "permanent": true
     },
     {
       "source": "/blog/financial-advisor-cherry-hill-nj",
-      "destination": "/insights/financial-advisor-cherry-hill-nj.html",
+      "destination": "/insights/financial-advisor-cherry-hill-nj",
       "permanent": true
     },
     {
       "source": "/blog/wealth-management-new-jersey",
-      "destination": "/insights/wealth-management-new-jersey.html",
+      "destination": "/insights/wealth-management-new-jersey",
       "permanent": true
     },
     {
       "source": "/blog/questions-financial-advisor",
-      "destination": "/insights/questions-financial-advisor.html",
+      "destination": "/insights/questions-financial-advisor",
       "permanent": true
     },
     {
       "source": "/blog/retirement-planning-new-jersey",
-      "destination": "/insights/retirement-planning-new-jersey.html",
+      "destination": "/insights/retirement-planning-new-jersey",
       "permanent": true
     },
     {
       "source": "/blog/estate-planning-advisor-nj",
-      "destination": "/insights/estate-planning-advisor-nj.html",
+      "destination": "/insights/estate-planning-advisor-nj",
       "permanent": true
     },
     {
       "source": "/blog/investment-management-cherry-hill",
-      "destination": "/insights/investment-management-cherry-hill.html",
-      "permanent": true
-    },
-    {
-      "source": "/announcements",
-      "destination": "/announcements.html",
+      "destination": "/insights/investment-management-cherry-hill",
       "permanent": true
     },
     {
       "source": "/announcements/page/2",
-      "destination": "/announcements.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
       "source": "/investments",
-      "destination": "/services.html",
-      "permanent": true
-    },
-    {
-      "source": "/services",
-      "destination": "/services.html",
-      "permanent": true
-    },
-    {
-      "source": "/about",
-      "destination": "/about.html",
+      "destination": "/services",
       "permanent": true
     },
     {
       "source": "/clients",
-      "destination": "/services.html",
+      "destination": "/services",
       "permanent": true
     },
     {
       "source": "/newsletter",
-      "destination": "/morning-core.html",
+      "destination": "/morning-core",
       "permanent": true
     },
     {
       "source": "/calculator",
-      "destination": "/tools.html",
+      "destination": "/tools",
       "permanent": true
     },
     {
       "source": "/events",
-      "destination": "/announcements.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
       "source": "/401k",
-      "destination": "/services.html",
+      "destination": "/services",
       "permanent": true
     },
     {
       "source": "/financial-planning",
-      "destination": "/services.html",
+      "destination": "/services",
       "permanent": true
     },
     {
       "source": "/harry-morad",
-      "destination": "/bios/harry-morad.html",
+      "destination": "/bios/harry-morad",
       "permanent": true
     },
     {
       "source": "/joseph-duncan",
-      "destination": "/bios/joseph-duncan.html",
+      "destination": "/bios/joseph-duncan",
       "permanent": true
     },
     {
       "source": "/mike-modica",
-      "destination": "/bios/mike-modica.html",
+      "destination": "/bios/mike-modica",
       "permanent": true
     },
     {
       "source": "/chris-oneill",
-      "destination": "/bios/chris-oneill.html",
+      "destination": "/bios/chris-oneill",
       "permanent": true
     },
     {
       "source": "/nick-lampone",
-      "destination": "/bios/nick-lampone.html",
+      "destination": "/bios/nick-lampone",
       "permanent": true
     },
     {
       "source": "/jason-braatz",
-      "destination": "/bios/jason-braatz.html",
+      "destination": "/bios/jason-braatz",
       "permanent": true
     },
     {
       "source": "/jonathan-markoe",
-      "destination": "/bios/jonathan-markoe.html",
+      "destination": "/bios/jonathan-markoe",
       "permanent": true
     },
     {
       "source": "/kate-fay",
-      "destination": "/bios/kate-fay.html",
+      "destination": "/bios/kate-fay",
       "permanent": true
     },
     {
       "source": "/mark-magarian",
-      "destination": "/bios/mark-magarian.html",
+      "destination": "/bios/mark-magarian",
       "permanent": true
     },
     {
       "source": "/scott-walden",
-      "destination": "/bios/scott-walden.html",
+      "destination": "/bios/scott-walden",
       "permanent": true
     },
     {
       "source": "/darek-koleda",
-      "destination": "/bios/darek-koleda.html",
+      "destination": "/bios/darek-koleda",
       "permanent": true
     },
     {
       "source": "/keval-patel",
-      "destination": "/bios/keval-patel.html",
+      "destination": "/bios/keval-patel",
       "permanent": true
     },
     {
       "source": "/victoria-cocciolone",
-      "destination": "/bios/victoria-cocciolone.html",
+      "destination": "/bios/victoria-cocciolone",
       "permanent": true
     },
     {
       "source": "/victoria-allen",
-      "destination": "/bios/victoria-allen.html",
+      "destination": "/bios/victoria-allen",
       "permanent": true
     },
     {
       "source": "/isaac-jones",
-      "destination": "/bios/isaac-jones.html",
+      "destination": "/bios/isaac-jones",
       "permanent": true
     },
     {
       "source": "/joshua-feldschneider",
-      "destination": "/bios/joshua-feldschneider.html",
+      "destination": "/bios/joshua-feldschneider",
       "permanent": true
     },
     {
       "source": "/scott-lermack",
-      "destination": "/bios/scott-lermack.html",
+      "destination": "/bios/scott-lermack",
       "permanent": true
     },
     {
       "source": "/sean-murphy",
-      "destination": "/bios/sean-murphy.html",
-      "permanent": true
-    },
-    {
-      "source": "/bios/nick-lampone",
-      "destination": "/bios/nick-lampone.html",
-      "permanent": true
-    },
-    {
-      "source": "/bios/jerry-braatz",
-      "destination": "/bios/jerry-braatz.html",
-      "permanent": true
-    },
-    {
-      "source": "/bios/tanya-schneider",
-      "destination": "/bios/tanya-schneider.html",
-      "permanent": true
-    },
-    {
-      "source": "/bios/sean-murphy",
-      "destination": "/bios/sean-murphy.html",
+      "destination": "/bios/sean-murphy",
       "permanent": true
     },
     {
       "source": "/bios/corey-fisher,-crpc%C2%AE,-fps%C2%AE",
-      "destination": "/bios/corey-fisher.html",
+      "destination": "/bios/corey-fisher",
       "permanent": true
     },
     {
       "source": "/post/pvi-welcomes-darek-koleda-to-the-firm",
-      "destination": "/announcements.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
       "source": "/post/danon-robinson-joins-pine-valley-investments",
-      "destination": "/announcements.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
       "source": "/post/greg-pizzano-brings-over-four-decades-of-expertise-to-pvi",
-      "destination": "/announcements.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
       "source": "/post/isaac-jones-joins-pine-valley-investments",
-      "destination": "/announcements.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
       "source": "/post/pvi-recognized-as-one-of-50-growers-across-america-by-citywire-ria",
-      "destination": "/announcements.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
       "source": "/post/mark-magarian-joins-pvi",
-      "destination": "/announcements.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
       "source": "/post/kate-fay",
-      "destination": "/bios/kate-fay.html",
+      "destination": "/bios/kate-fay",
       "permanent": true
     },
     {
       "source": "/event-details/pvi-kades-margolis-happy-hour",
-      "destination": "/announcements.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
       "source": "/event-details/financial-outlook-happy-hour-hosted-by-nick-lampone-and-mark-cole",
-      "destination": "/announcements.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
@@ -444,97 +405,87 @@
     },
     {
       "source": "/bios/privacy.html",
-      "destination": "/privacy.html",
+      "destination": "/privacy",
       "permanent": true
     },
     {
       "source": "/bios/privacy",
-      "destination": "/privacy.html",
+      "destination": "/privacy",
       "permanent": true
     },
     {
       "source": "/inherited-rmd-calculator",
-      "destination": "/tools.html",
+      "destination": "/tools",
       "permanent": true
     },
     {
       "source": "/jake-markoe",
-      "destination": "/bios/jake-markoe.html",
+      "destination": "/bios/jake-markoe",
       "permanent": true
     },
     {
       "source": "/bios/corey-fisher,-crpc\u00ae,-fps\u00ae",
-      "destination": "/bios/corey-fisher.html",
+      "destination": "/bios/corey-fisher",
       "permanent": true
     },
     {
       "source": "/bios/corey-fisher,-crpc\u00ae,\u2013fps\u00ae",
-      "destination": "/bios/corey-fisher.html",
+      "destination": "/bios/corey-fisher",
       "permanent": true
     },
     {
       "source": "/post/tax-planning-strategies-for-wealth-a-guide-for-high-net-worth-individuals",
-      "destination": "/announcements.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
       "source": "/post/sean-murphy-joins-pine-valley-investments-in-naples-florida",
-      "destination": "/announcements.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
       "source": "/post/pvi-welcomes-the-braatz-wealth-advisors-group",
-      "destination": "/announcements.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
       "source": "/post/pvi-recognized-as-one-of-usa-today-s-best-financial-advisory-firms",
-      "destination": "/announcements.html",
-      "permanent": true
-    },
-    {
-      "source": "/bios/jean-mcdevitt",
-      "destination": "/bios/jean-mcdevitt.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
       "source": "/tom-mcelgunn",
-      "destination": "/bios/tommy-mcelgunn.html",
+      "destination": "/bios/tommy-mcelgunn",
       "permanent": true
     },
     {
       "source": "/thomas-crossett",
-      "destination": "/bios/tom-crossett.html",
-      "permanent": true
-    },
-    {
-      "source": "/bios/greg-pizzano",
-      "destination": "/bios/greg-pizzano.html",
+      "destination": "/bios/tom-crossett",
       "permanent": true
     },
     {
       "source": "/bios/max-schatow.html",
-      "destination": "/bios/max-schatzow.html",
+      "destination": "/bios/max-schatzow",
       "permanent": true
     },
     {
       "source": "/members-area/:path*",
-      "destination": "/client-login.html",
+      "destination": "/client-login",
       "permanent": true
     },
     {
       "source": "/copy-of-investments",
-      "destination": "/services.html",
+      "destination": "/services",
       "permanent": true
     },
     {
       "source": "/copy-of-mike-wojcik",
-      "destination": "/team.html",
+      "destination": "/team",
       "permanent": true
     },
     {
       "source": "/contact2",
-      "destination": "/contact.html",
+      "destination": "/contact",
       "permanent": true
     },
     {
@@ -544,27 +495,17 @@
     },
     {
       "source": "/announcements/search",
-      "destination": "/announcements.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
       "source": "/announcements/search/:path*",
-      "destination": "/announcements.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
       "source": "/blog-feed.xml",
       "destination": "/sitemap.xml",
-      "permanent": true
-    },
-    {
-      "source": "/tools",
-      "destination": "/tools.html",
-      "permanent": true
-    },
-    {
-      "source": "/bios/james-varley",
-      "destination": "/bios/james-varley.html",
       "permanent": true
     },
     {
@@ -574,227 +515,182 @@
     },
     {
       "source": "/members-area/jackson-kevin99012606/members-area",
-      "destination": "/client-login.html",
+      "destination": "/client-login",
       "permanent": true
     },
     {
       "source": "/our-people.html",
-      "destination": "/team.html",
+      "destination": "/team",
       "permanent": true
     },
     {
       "source": "/our-people",
-      "destination": "/team.html",
-      "permanent": true
-    },
-    {
-      "source": "/client-login",
-      "destination": "/client-login.html",
+      "destination": "/team",
       "permanent": true
     },
     {
       "source": "/jim-vogt",
-      "destination": "/bios/jim-vogt.html",
+      "destination": "/bios/jim-vogt",
       "permanent": true
     },
     {
       "source": "/bios/james-varley,-aams",
-      "destination": "/bios/james-varley.html",
+      "destination": "/bios/james-varley",
       "permanent": true
     },
     {
       "source": "/retirement-income-calculator",
-      "destination": "/tools.html",
+      "destination": "/tools",
       "permanent": true
     },
     {
       "source": "/bios/corey-fisher,-crpc\u00ae,--fps\u00ae",
-      "destination": "/bios/corey-fisher.html",
+      "destination": "/bios/corey-fisher",
       "permanent": true
     },
     {
       "source": "/bios/corey-fisher%2C-crpc\u00ae%2C\u2013fps\u00ae",
-      "destination": "/bios/corey-fisher.html",
+      "destination": "/bios/corey-fisher",
       "permanent": true
     },
     {
       "source": "/advisor/harry-morad",
-      "destination": "/bios/harry-morad.html",
+      "destination": "/bios/harry-morad",
       "permanent": true
     },
     {
       "source": "/advisor/joseph-duncan",
-      "destination": "/bios/joseph-duncan.html",
+      "destination": "/bios/joseph-duncan",
       "permanent": true
     },
     {
       "source": "/advisor/mike-modica",
-      "destination": "/bios/mike-modica.html",
+      "destination": "/bios/mike-modica",
       "permanent": true
     },
     {
       "source": "/advisor/nick-lampone",
-      "destination": "/bios/nick-lampone.html",
+      "destination": "/bios/nick-lampone",
       "permanent": true
     },
     {
       "source": "/advisor/chris-oneill",
-      "destination": "/bios/chris-oneill.html",
+      "destination": "/bios/chris-oneill",
       "permanent": true
     },
     {
       "source": "/advisor/jason-braatz",
-      "destination": "/bios/jason-braatz.html",
+      "destination": "/bios/jason-braatz",
       "permanent": true
     },
     {
       "source": "/advisor/jonathan-markoe",
-      "destination": "/bios/jonathan-markoe.html",
+      "destination": "/bios/jonathan-markoe",
       "permanent": true
     },
     {
       "source": "/advisor/kate-fay",
-      "destination": "/bios/kate-fay.html",
+      "destination": "/bios/kate-fay",
       "permanent": true
     },
     {
       "source": "/team/harry-morad",
-      "destination": "/bios/harry-morad.html",
+      "destination": "/bios/harry-morad",
       "permanent": true
     },
     {
       "source": "/team/joseph-duncan",
-      "destination": "/bios/joseph-duncan.html",
+      "destination": "/bios/joseph-duncan",
       "permanent": true
     },
     {
       "source": "/team/mike-modica",
-      "destination": "/bios/mike-modica.html",
+      "destination": "/bios/mike-modica",
       "permanent": true
     },
     {
       "source": "/team/nick-lampone",
-      "destination": "/bios/nick-lampone.html",
+      "destination": "/bios/nick-lampone",
       "permanent": true
     },
     {
       "source": "/team/chris-oneill",
-      "destination": "/bios/chris-oneill.html",
+      "destination": "/bios/chris-oneill",
       "permanent": true
     },
     {
       "source": "/team/jason-braatz",
-      "destination": "/bios/jason-braatz.html",
+      "destination": "/bios/jason-braatz",
       "permanent": true
     },
     {
       "source": "/team/jonathan-markoe",
-      "destination": "/bios/jonathan-markoe.html",
+      "destination": "/bios/jonathan-markoe",
       "permanent": true
     },
     {
       "source": "/team/kate-fay",
-      "destination": "/bios/kate-fay.html",
+      "destination": "/bios/kate-fay",
       "permanent": true
     },
     {
       "source": "/meet-your-team",
-      "destination": "/team.html",
+      "destination": "/team",
       "permanent": true
     },
     {
       "source": "/our-services",
-      "destination": "/services.html",
-      "permanent": true
-    },
-    {
-      "source": "/contact",
-      "destination": "/contact.html",
+      "destination": "/services",
       "permanent": true
     },
     {
       "source": "/company-announcements",
-      "destination": "/announcements.html",
-      "permanent": true
-    },
-    {
-      "source": "/morning-core",
-      "destination": "/morning-core.html",
+      "destination": "/announcements",
       "permanent": true
     },
     {
       "source": "/the-morning-core",
-      "destination": "/morning-core.html",
+      "destination": "/morning-core",
       "permanent": true
     },
     {
       "source": "/portals",
-      "destination": "/client-login.html",
+      "destination": "/client-login",
       "permanent": true
     },
     {
       "source": "/financial-calculators",
-      "destination": "/tools.html",
+      "destination": "/tools",
       "permanent": true
     },
     {
       "source": "/calculators",
-      "destination": "/tools.html",
-      "permanent": true
-    },
-    {
-      "source": "/rightcapital",
-      "destination": "/rightcapital.html",
+      "destination": "/tools",
       "permanent": true
     },
     {
       "source": "/right-capital",
-      "destination": "/rightcapital.html",
-      "permanent": true
-    },
-    {
-      "source": "/monarch",
-      "destination": "/monarch.html",
+      "destination": "/rightcapital",
       "permanent": true
     },
     {
       "source": "/monarch-money",
-      "destination": "/monarch.html",
-      "permanent": true
-    },
-    {
-      "source": "/schwab",
-      "destination": "/schwab.html",
+      "destination": "/monarch",
       "permanent": true
     },
     {
       "source": "/charles-schwab",
-      "destination": "/schwab.html",
-      "permanent": true
-    },
-    {
-      "source": "/altruist",
-      "destination": "/altruist.html",
-      "permanent": true
-    },
-    {
-      "source": "/emoney",
-      "destination": "/emoney.html",
+      "destination": "/schwab",
       "permanent": true
     },
     {
       "source": "/e-money",
-      "destination": "/emoney.html",
-      "permanent": true
-    },
-    {
-      "source": "/tamarac",
-      "destination": "/tamarac.html",
+      "destination": "/emoney",
       "permanent": true
     },
     {
       "source": "/wealthview",
-      "destination": "/tamarac.html",
+      "destination": "/tamarac",
       "permanent": true
     },
     {
@@ -809,7 +705,7 @@
     },
     {
       "source": "/bios/corey-fisher%2C-crpc%C2%AE%2C-fps%C2%AE",
-      "destination": "/bios/corey-fisher.html",
+      "destination": "/bios/corey-fisher",
       "permanent": true
     }
   ],
