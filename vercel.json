@@ -429,6 +429,21 @@
       "permanent": true
     },
     {
+      "source": "/retirement-expenses-worksheet",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/post/nicholas-lampone-named-chief-strategy-officer-cso-at-pvi",
+      "destination": "/announcements",
+      "permanent": true
+    },
+    {
+      "source": "/event-details/market-outlook-happy-hour-hosted-by-nick-lampone-of-pvi",
+      "destination": "/announcements",
+      "permanent": true
+    },
+    {
       "source": "/jake-markoe",
       "destination": "/bios/jake-markoe",
       "permanent": true
@@ -476,6 +491,16 @@
     {
       "source": "/bios/max-schatow.html",
       "destination": "/bios/max-schatzow",
+      "permanent": true
+    },
+    {
+      "source": "/bios/max-schatzow.html",
+      "destination": "/bios/max-schatzow",
+      "permanent": true
+    },
+    {
+      "source": "/bios/jake-markoe.html",
+      "destination": "/bios/jake-markoe",
       "permanent": true
     },
     {
@@ -549,12 +574,22 @@
       "permanent": true
     },
     {
+      "source": "/bios/james-varley%2C-aams",
+      "destination": "/bios/james-varley",
+      "permanent": true
+    },
+    {
       "source": "/retirement-income-calculator",
       "destination": "/services",
       "permanent": true
     },
     {
       "source": "/bios/corey-fisher,-crpc\u00ae,--fps\u00ae",
+      "destination": "/bios/corey-fisher",
+      "permanent": true
+    },
+    {
+      "source": "/bios/corey-fisher%2C-crpc\u00ae%2C--fps\u00ae",
       "destination": "/bios/corey-fisher",
       "permanent": true
     },
