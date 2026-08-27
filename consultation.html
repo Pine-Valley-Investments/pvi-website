@@ -325,6 +325,7 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function() {
       var formId = form.getAttribute('action') || 'unknown';
       var formType = formId.indexOf('xpqyylag') > -1 ? 'schedule_consultation' :
+                     formId.indexOf('xljerbza') > -1 ? 'consultation_remarketing_landing' :
                      formId.indexOf('xbdpyzgz') > -1 ? 'contact_form' :
                      formId.indexOf('mvzvrwkr') > -1 ? 'advisor_inquiry' : 'form_submit';
       gtag('event', 'generate_lead', {
