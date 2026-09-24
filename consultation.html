@@ -288,10 +288,20 @@ document.addEventListener('DOMContentLoaded', function() {
         body: new FormData(form),
         headers: { 'Accept': 'application/json' }
       }).then(function(res) {
+        var redirected = false;
+        function goToThankYou() {
+          if (redirected) return;
+          redirected = true;
+          window.location.href = 'thank-you.html';
+        }
         gtag('event', 'conversion', {
-          'send_to': 'AW-845605548/-SjJCKC13oIdEKzVm5MD'
+          'send_to': 'AW-845605548/-SjJCKC13oIdEKzVm5MD',
+          'value': 1.0,
+          'currency': 'USD',
+          'event_callback': goToThankYou
         });
-        window.location.href = 'thank-you.html';
+        // Fallback in case the conversion beacon is blocked/delayed (ad blockers, etc.)
+        setTimeout(goToThankYou, 1000);
       }).catch(function() {
         window.location.href = 'thank-you.html';
       });
