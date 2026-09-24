@@ -288,10 +288,8 @@ document.addEventListener('DOMContentLoaded', function() {
         body: new FormData(form),
         headers: { 'Accept': 'application/json' }
       }).then(function(res) {
-        // TODO: replace CONVERSION_LABEL with the real value from Google Ads
-        // (Tools > Conversions > "Form submissions" goal > Tag setup) once provided.
         gtag('event', 'conversion', {
-          'send_to': 'AW-845605548/CONVERSION_LABEL'
+          'send_to': 'AW-845605548/-SjJCKC13oIdEKzVm5MD'
         });
         window.location.href = 'thank-you.html';
       }).catch(function() {
