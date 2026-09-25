@@ -90,17 +90,26 @@
     @media (max-width:768px){nav{padding:16px 24px}nav.scrolled{padding:12px 24px}.nav-logo img{height:32px}.nav-links{display:none}.nav-toggle{display:flex}.page-hero{padding:100px 24px 48px}.policy-wrap{padding:0 24px 72px}footer{padding:56px 24px 32px}.footer-top{grid-template-columns:1fr 1fr;gap:36px}.footer-brand{grid-column:1 / -1}.footer-bottom{flex-direction:column}}
     @media (max-width:480px){.footer-top{grid-template-columns:1fr}}
   </style>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QCY47K50CY"></script>
+<!-- Google tag (gtag.js) - deferred until cookie consent -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-QCY47K50CY', {
-    'send_page_view': true
-  });
-  gtag('config', 'AW-18275481880');
-  gtag('config', 'AW-845605548');
+  function pviLoadAnalytics(){
+    if (window.pviAnalyticsLoaded) return;
+    window.pviAnalyticsLoaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-QCY47K50CY';
+    document.head.appendChild(s);
+    gtag('js', new Date());
+    gtag('config', 'G-QCY47K50CY', {
+      'send_page_view': true
+    });
+    gtag('config', 'AW-18275481880');
+    gtag('config', 'AW-845605548');
+  }
+  window.pviLoadAnalytics = pviLoadAnalytics;
+  if (localStorage.getItem('pvi_cookie_consent') === 'accept') { pviLoadAnalytics(); }
 </script>
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Terms of Service | Pine Valley Investments">
@@ -349,6 +358,7 @@ document.querySelectorAll('.nav-dropdown').forEach(function(d){d.addEventListene
 (function(){
   function pviCookieChoice(choice){
     localStorage.setItem('pvi_cookie_consent', choice);
+    if(choice === 'accept' && window.pviLoadAnalytics){ window.pviLoadAnalytics(); }
     var b = document.getElementById('cookie-banner');
     if(b){ b.style.transition='opacity 0.3s'; b.style.opacity='0'; setTimeout(function(){ b.style.display='none'; }, 300); }
   }

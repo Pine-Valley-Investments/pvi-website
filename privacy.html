@@ -104,17 +104,26 @@
     @media (max-width:480px){.footer-top{grid-template-columns:1fr}}
     :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
   </style>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QCY47K50CY"></script>
+<!-- Google tag (gtag.js) - deferred until cookie consent -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-QCY47K50CY', {
-    'send_page_view': true
-  });
-  gtag('config', 'AW-18275481880');
-  gtag('config', 'AW-845605548');
+  function pviLoadAnalytics(){
+    if (window.pviAnalyticsLoaded) return;
+    window.pviAnalyticsLoaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-QCY47K50CY';
+    document.head.appendChild(s);
+    gtag('js', new Date());
+    gtag('config', 'G-QCY47K50CY', {
+      'send_page_view': true
+    });
+    gtag('config', 'AW-18275481880');
+    gtag('config', 'AW-845605548');
+  }
+  window.pviLoadAnalytics = pviLoadAnalytics;
+  if (localStorage.getItem('pvi_cookie_consent') === 'accept') { pviLoadAnalytics(); }
 </script>
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Privacy Policy | Pine Valley Investments">
@@ -415,6 +424,7 @@ document.querySelectorAll('.nav-dropdown').forEach(function(d){d.addEventListene
 (function(){
   function pviCookieChoice(choice){
     localStorage.setItem('pvi_cookie_consent', choice);
+    if(choice === 'accept' && window.pviLoadAnalytics){ window.pviLoadAnalytics(); }
     var b = document.getElementById('cookie-banner');
     if(b){ b.style.transition='opacity 0.3s'; b.style.opacity='0'; setTimeout(function(){ b.style.display='none'; }, 300); }
   }

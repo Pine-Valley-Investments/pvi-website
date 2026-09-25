@@ -22,10 +22,25 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QCY47K50CY"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QCY47K50CY');
-  gtag('config', 'AW-18275481880');
-  gtag('config', 'AW-845605548');</script>
+  <!-- Google tag (gtag.js) - deferred until cookie consent -->
+  <script>
+  window.dataLayer=window.dataLayer||[];
+  function gtag(){dataLayer.push(arguments);}
+  function pviLoadAnalytics(){
+    if (window.pviAnalyticsLoaded) return;
+    window.pviAnalyticsLoaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-QCY47K50CY';
+    document.head.appendChild(s);
+    gtag('js',new Date());
+    gtag('config','G-QCY47K50CY');
+    gtag('config', 'AW-18275481880');
+    gtag('config', 'AW-845605548');
+  }
+  window.pviLoadAnalytics = pviLoadAnalytics;
+  if (localStorage.getItem('pvi_cookie_consent') === 'accept') { pviLoadAnalytics(); }
+  </script>
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "FinancialService",
@@ -296,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 <script>
 (function(){
-  function pviCookieChoice(choice){ localStorage.setItem('pvi_cookie_consent',choice); var b=document.getElementById('cookie-banner'); if(b){b.style.transition='opacity 0.3s';b.style.opacity='0';setTimeout(function(){b.style.display='none';},300);} }
+  function pviCookieChoice(choice){ localStorage.setItem('pvi_cookie_consent',choice); if(choice === 'accept' && window.pviLoadAnalytics){ window.pviLoadAnalytics(); } var b=document.getElementById('cookie-banner'); if(b){b.style.transition='opacity 0.3s';b.style.opacity='0';setTimeout(function(){b.style.display='none';},300);} }
   window.pviCookieChoice=pviCookieChoice;
   document.addEventListener('DOMContentLoaded',function(){ var consent=localStorage.getItem('pvi_cookie_consent'); if(!consent){var b=document.getElementById('cookie-banner');if(b){b.style.display='flex';b.style.opacity='0';setTimeout(function(){b.style.transition='opacity 0.4s';b.style.opacity='1';},100);}} });
 })();
