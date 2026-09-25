@@ -75,7 +75,7 @@
     .mobile-phone{color:var(--gold) !important}
 
     /* HERO */
-    .page-hero{padding:140px 56px 72px;max-width:1100px;margin:0 auto;box-sizing:border-box;width:100%}
+    .page-hero{padding:140px 56px 72px;max-width:1100px;margin:0 auto}
     .page-hero-label{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;gap:14px}
     .page-hero-label::before{content:'';display:block;width:28px;height:1px;background:var(--gold)}
     .page-hero h1{font-size:clamp(42px,6vw,82px);font-weight:300;line-height:1.05;color:var(--white);margin-bottom:28px}
@@ -88,7 +88,7 @@
     .toc a:hover{border-color:var(--gold);color:var(--gold)}
 
     /* SECTIONS */
-    .section{max-width:1200px;margin:0 auto;padding:80px 56px;box-sizing:border-box;width:100%}
+    .section{max-width:1200px;margin:0 auto;padding:80px 56px}
     .section-label{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;gap:14px}
     .section-label::before{content:'';display:block;width:28px;height:1px;background:var(--gold)}
     .section-title{font-size:clamp(28px,3.5vw,50px);font-weight:300;line-height:1.1;color:var(--white);margin-bottom:24px}
@@ -152,7 +152,7 @@
     .btn-outline:hover{border-color:var(--gold);color:var(--gold)}
 
     /* FOOTER */
-    footer{background:rgba(0,0,0,0.35);border-top:1px solid rgba(186,186,185,0.1);padding:72px 56px 36px;margin-top:0;box-sizing:border-box;width:100%;overflow-x:hidden}
+    footer{background:rgba(0,0,0,0.35);border-top:1px solid rgba(186,186,185,0.1);padding:72px 56px 36px;margin-top:0}
     .footer-inner{max-width:1200px;margin:0 auto}
     .footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:52px;margin-bottom:52px}
     .footer-brand p{font-size:14px;font-weight:300;line-height:1.8;color:var(--gray);margin-top:18px;max-width:270px}
@@ -228,7 +228,6 @@
 <body>
 
 <!-- NAV -->
-<div style="overflow-x:hidden;max-width:100%;position:relative;">
 <nav id="nav">
   <a href="index.html" class="nav-logo"><img src="pviwhite.png" alt="Pine Valley Investments"/></a>
   <ul class="nav-links">
@@ -308,7 +307,7 @@
 
 <style>
   /* Hero glow */
-  .page-hero{position:relative;overflow:hidden;}
+  .page-hero{position:relative;}
   .page-hero::before{content:'';position:absolute;top:60px;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 20% 40%,rgba(201,169,110,0.07) 0%,transparent 60%);pointer-events:none;z-index:0;}
   .page-hero > *{position:relative;z-index:1;}
   /* H1 */
@@ -339,7 +338,7 @@
 </div>
 
 <style>
-  .toc-sticky-bar{position:sticky;top:72px;z-index:90;background:rgba(3,33,61,0.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid rgba(186,186,185,0.08);border-bottom:1px solid rgba(186,186,185,0.1);padding:12px 56px;width:100%;max-width:100vw;box-sizing:border-box;left:0;}
+  .toc-sticky-bar{position:sticky;top:72px;z-index:90;background:rgba(3,33,61,0.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid rgba(186,186,185,0.08);border-bottom:1px solid rgba(186,186,185,0.1);padding:12px 56px;width:100%;left:0;}
   .toc-inner-scroll{display:flex;gap:8px;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;flex-wrap:nowrap;align-items:center;-webkit-mask-image:linear-gradient(to right,transparent 0,black 24px,black calc(100% - 24px),transparent 100%);mask-image:linear-gradient(to right,transparent 0,black 24px,black calc(100% - 24px),transparent 100%);padding:2px 8px;}
   .toc-inner-scroll::-webkit-scrollbar{display:none;}
   .toc-pill{font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);border:1px solid rgba(186,186,185,0.15);border-radius:100px;padding:7px 16px;white-space:nowrap;text-decoration:none;background:none;cursor:pointer;transition:border-color 0.2s,color 0.2s,background 0.2s;flex-shrink:0;}
@@ -1304,6 +1303,5 @@
 </script>
 <script>
 </script>
-</div>
 </body>
 </html>
