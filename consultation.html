@@ -155,7 +155,7 @@
     <h2>Schedule a <em>Consultation</em></h2>
     <form id="scheduleForm" action="https://formspree.io/f/xljerbza" method="POST">
       <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none !important" />
-        <input type="hidden" name="_next" value="https://www.pinevalleyinvestments.com/thank-you" />
+        <input type="hidden" name="_next" value="https://www.pinevalleyinvestments.com/thank-you-consultation" />
       <input type="hidden" name="_subject" value="[PVI Consultation] Remarketing Landing Page Submission" />
       <input type="hidden" name="_replyto" value="" id="replyto-mirror" />
 
@@ -274,37 +274,16 @@
 // GA4 Conversion Event Tracking + Form AJAX
 document.addEventListener('DOMContentLoaded', function() {
 
-  // --- Schedule Form: intercept submit and redirect to branded thank-you page ---
+  // --- Schedule Form: show a brief "sending" state, then let the browser submit
+  // natively so Formspree's own _next redirect fires the thank-you page (where the
+  // Google Ads conversion tag lives). No JS/fetch interception here on purpose —
+  // that previously blocked Formspree's redirect and made the conversion depend on
+  // JS timing.
   var scheduleForm = document.getElementById('scheduleForm');
   if (scheduleForm) {
-    scheduleForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      var form = this;
-      var btn = form.querySelector('[type="submit"]');
-      var origText = btn ? btn.textContent : '';
+    scheduleForm.addEventListener('submit', function() {
+      var btn = this.querySelector('[type="submit"]');
       if (btn) { btn.textContent = 'Sending\u2026'; btn.disabled = true; }
-      fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      }).then(function(res) {
-        var redirected = false;
-        function goToThankYou() {
-          if (redirected) return;
-          redirected = true;
-          window.location.href = 'thank-you.html';
-        }
-        gtag('event', 'conversion', {
-          'send_to': 'AW-845605548/-SjJCKC13oIdEKzVm5MD',
-          'value': 1.0,
-          'currency': 'USD',
-          'event_callback': goToThankYou
-        });
-        // Fallback in case the conversion beacon is blocked/delayed (ad blockers, etc.)
-        setTimeout(goToThankYou, 1000);
-      }).catch(function() {
-        window.location.href = 'thank-you.html';
-      });
     });
   }
 
