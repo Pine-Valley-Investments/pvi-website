@@ -26,8 +26,8 @@
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{--navy:#03213d;--blue:#294d6b;--white:#ffffff;--gray:#babab9;--gold:#c9a96e;--cream:#f0e6d3;--light-bg:#f5f5f3;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Montserrat',Arial,sans-serif}
-    html{scroll-behavior:smooth;overflow-x:clip}
-    body{background:var(--navy);color:var(--white);font-family:var(--serif);overflow-x:clip;position:relative}
+    html{scroll-behavior:smooth}
+    body{background:var(--navy);color:var(--white);font-family:var(--serif);overflow-x:hidden}
     ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--navy)}::-webkit-scrollbar-thumb{background:var(--blue);border-radius:2px}
 
     /* DRAFT BANNER */
@@ -228,6 +228,7 @@
 <body>
 
 <!-- NAV -->
+<div style="overflow-x:hidden;max-width:100%;position:relative;">
 <nav id="nav">
   <a href="index.html" class="nav-logo"><img src="pviwhite.png" alt="Pine Valley Investments"/></a>
   <ul class="nav-links">
@@ -1303,5 +1304,6 @@
 </script>
 <script>
 </script>
+</div>
 </body>
 </html>
