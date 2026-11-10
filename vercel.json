@@ -298,11 +298,6 @@
       "permanent": true
     },
     {
-      "source": "/mark-magarian",
-      "destination": "https://www.pinevalleyinvestments.com/bios/mark-magarian",
-      "permanent": true
-    },
-    {
       "source": "/scott-walden",
       "destination": "https://www.pinevalleyinvestments.com/bios/scott-walden",
       "permanent": true
@@ -314,7 +309,12 @@
     },
     {
       "source": "/keval-patel",
-      "destination": "https://www.pinevalleyinvestments.com/team.html",
+      "destination": "https://www.pinevalleyinvestments.com/team",
+      "permanent": true
+    },
+    {
+      "source": "/bios/keval-patel",
+      "destination": "https://www.pinevalleyinvestments.com/team",
       "permanent": true
     },
     {
