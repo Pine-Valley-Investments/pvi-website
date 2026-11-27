@@ -743,6 +743,26 @@
       "permanent": true
     },
     {
+      "source": "/insights/index.html",
+      "destination": "https://www.pinevalleyinvestments.com/insights",
+      "permanent": true
+    },
+    {
+      "source": "/insights/:slug.html",
+      "destination": "https://www.pinevalleyinvestments.com/insights/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/morning-core/:date.html",
+      "destination": "https://www.pinevalleyinvestments.com/morning-core/:date",
+      "permanent": true
+    },
+    {
+      "source": "/bios/:slug.html",
+      "destination": "https://www.pinevalleyinvestments.com/bios/:slug",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [
         {
